@@ -5,6 +5,7 @@
   <main>
     <main id="mainContent" class="main-content">
       <h1>Visualização</h1>
+      <VButton>AAAAAAA</VButton>
       <router-view />
     </main>
   </main>
