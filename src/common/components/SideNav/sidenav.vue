@@ -1,11 +1,16 @@
+<script lang="ts" setup>
+const router = useRouter()
+const goTo = (pageName: string) => router.push(`/${pageName}`)
+</script>
+
 <template>
   <nav class="sidenav">
     <h4>Dashboards</h4>
     <ul>
-      <li><a href="#" data-section="section1">Produtos</a></li>
-      <li><a href="#" data-section="section2">Clientes</a></li>
-      <li><a href="#" data-section="section2">Vendas</a></li>
-      <li><a href="#" data-section="section2">Relatórios</a></li>
+      <li><a data-section="section1" @click="goTo('products')">Produtos</a></li>
+      <li><a data-section="section2" @click="goTo('clients')">Clientes</a></li>
+      <li><a data-section="section3" @click="goTo('sales')">Vendas</a></li>
+      <li><a data-section="section4" @click="goTo('reports')">Relatórios</a></li>
     </ul>
   </nav>
 </template>

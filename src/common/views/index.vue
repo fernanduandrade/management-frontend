@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import SideNav from '~/common/components/SideNav/sidenav.vue'
 </script>
 
 <template>
   <main>
-    <SideNav />
     <main id="mainContent" class="main-content">
+      <h1>Visualização</h1>
       <router-view />
     </main>
   </main>
