@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import SideNav from '../components/SideNav/sidenav.vue'
 </script>
 
 <template>
-  <main>
+  <main id="container">
     <SideNav />
-    <main id="mainContent" class="main-content">
-      <router-view />
-    </main>
+    <div class="main-content">
+      <Header />
+      <div><h1>conteudo das páginas</h1></div>
+    </div>
   </main>
 </template>
 
-<style scoped>
+<style>
+#container {
+  display: flex;
+  flex-direction: column;
+}
 .main-content {
-  margin-left: 250px;
   padding: 20px;
 }
 
-.content-section {
-  display: block;
-}
 </style>

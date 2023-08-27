@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Header: typeof import('./src/common/components/Header/header.vue')['default']
     Sidenav: typeof import('./src/common/components/SideNav/sidenav.vue')['default']
   }
 }

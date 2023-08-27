@@ -1,20 +1,20 @@
 <template>
   <nav id="sidenav" class="sidenav">
+    <h4>Dashboards</h4>
     <ul>
-      <li><a href="#" data-section="section1">Section 1</a></li>
-      <li><a href="#" data-section="section2">Seasdsadsadasdsad</a></li>
+      <li><a href="#" data-section="section1">Produtos</a></li>
+      <li><a href="#" data-section="section2">Clientes</a></li>
+      <li><a href="#" data-section="section2">Vendas</a></li>
     </ul>
   </nav>
 </template>
 
 <style>
 .sidenav {
-  position: fixed;
-  top: 0;
-  left: 0;
+  flex: 25%;
   width: 200px;
-  height: 100%;
-  background-color: red;
+  height: 100vh;
+  background-color: #333;
   color: white;
   padding: 20px;
 }

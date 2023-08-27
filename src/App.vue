@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: 'Controle de produtos',
-  meta: [{ name: 'description', content: 'Controle de produtos' }],
+  title: 'Gestão de produtos',
+  meta: [{ name: 'description', content: 'Gestão de produtos' }],
 })
 
 </script>
