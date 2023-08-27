@@ -3,10 +3,10 @@
 
 <template>
   <main id="container">
-    <SideNav />
+    <sidenav />
     <div class="main-content">
       <Header />
-      <div><h1>conteudo das páginas</h1></div>
+      <div><router-view /></div>
     </div>
   </main>
 </template>
@@ -14,10 +14,12 @@
 <style>
 #container {
   display: flex;
-  flex-direction: column;
 }
 .main-content {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 </style>

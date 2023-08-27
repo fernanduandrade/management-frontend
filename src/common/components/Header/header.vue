@@ -3,7 +3,7 @@
 
 <template>
   <main id="container">
-    <header>
+    <header class="header">
       <h1>Gestão de produtos</h1>
     </header>
   </main>
@@ -12,5 +12,8 @@
 <style scoped>
 #container {
   background-color: pink;
+}
+.header {
+  padding: 2em;
 }
 </style>
