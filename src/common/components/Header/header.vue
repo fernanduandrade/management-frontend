@@ -4,16 +4,22 @@
 <template>
   <main id="container">
     <header class="header">
-      <h1>Gestão de produtos</h1>
+      <div></div>
+      <div><h2>Gestão de produtos</h2></div>
+      <div></div>
     </header>
   </main>
 </template>
 
 <style scoped>
 #container {
-  background-color: pink;
+  background-color: #F1F1F1;
 }
 .header {
   padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 </style>
