@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import FontAwesomeIcon from '~/common/modules/fontawesome'
 const router = useRouter()
 const currentPage = ref('')
 
@@ -7,7 +8,6 @@ const goTo = (pageName: string) => {
   router.push(`/${pageName}`)
 }
 
-// 4 links
 const productPage = ref('products')
 const clientPage = ref('clients')
 const salePage = ref('sales')
@@ -21,16 +21,16 @@ const reportPage = ref('reports')
     </spam>
     <ul class="sindenav__links">
       <li class="sindenav__link" :class="{ active: (currentPage === productPage) }" @click="goTo('products')">
-        Produtos
+        <spam><font-awesome-icon icon="fa-box-open" width="15" height="15" /></spam> &nbsp; Produtos
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === clientPage) }" @click="goTo('clients')">
-        Clientes
+        <spam><font-awesome-icon icon="fa-users" width="15" height="15" /></spam> &nbsp; Clientes
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === salePage) }" @click="goTo('sales')">
-        Vendas
+        <spam><font-awesome-icon icon="fa-cart-shopping" width="15" height="15" /></spam> &nbsp; Vendas
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === reportPage) }" @click="goTo('reports')">
-        Relatórios
+        <spam><font-awesome-icon icon="fa-file-lines" width="15" height="15" /></spam> &nbsp; Relatórios
       </li>
     </ul>
   </nav>
