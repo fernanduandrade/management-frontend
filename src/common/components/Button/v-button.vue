@@ -7,7 +7,7 @@ type ButtonProps = {
 
 const algo = ref(0)
 
-const props = withDefaults(defineProps<ButtonProps>(), {
+withDefaults(defineProps<ButtonProps>(), {
   backgroundColor: '#2684FF',
   funcCallBack: () => 1 + 1,
 })

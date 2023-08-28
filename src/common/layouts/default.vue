@@ -1,11 +1,20 @@
 <script lang="ts" setup>
+const router = useRouter()
+onMounted(() => router.push('products'))
+
+const showSideNav = ref(true)
+const changeSideNavState = (state: boolean) => {
+  showSideNav.value = state
+}
 </script>
 
 <template>
   <main id="container">
-    <sidenav />
+    <Transition>
+      <sidenav v-show="showSideNav" />
+    </Transition>
     <div class="main-content">
-      <Header />
+      <Header @side-nav-event="changeSideNavState" />
       <div><router-view /></div>
     </div>
   </main>
@@ -22,4 +31,16 @@
   height: 100%;
 }
 
+.v-enter-active {
+  animation: leave-in 0.1s;
+}
+.v-leave-active {
+  animation: leave-in 0.1s reverse;
+}
+
+@keyframes leave-in {
+  100% {
+    transform: translateX(-20px);
+  }
+}
 </style>
