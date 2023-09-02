@@ -19,14 +19,14 @@ const modifySideNav = () => {
   <main id="container">
     <header class="header">
       <div>
-        <spam class="header__sidenav--modify">
+        <em class="header__sidenav--modify">
           <font-awesome-icon
             icon="fa-bars"
             width="15"
             height="15"
             @click="modifySideNav"
           />
-        </spam>
+        </em>
         Usuário / {{ t(`pages.${router.currentRoute.value.name as string}`) }}
       </div>
       <div><h1>Gestão de produtos</h1></div>

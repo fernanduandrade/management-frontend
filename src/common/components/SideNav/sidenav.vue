@@ -16,21 +16,21 @@ const reportPage = ref('reports')
 
 <template>
   <nav class="sidenav">
-    <spam class="sidenav__dashboard">
+    <h4 class="sidenav__dashboard">
       Dashboards
-    </spam>
+    </h4>
     <ul class="sindenav__links">
       <li class="sindenav__link" :class="{ active: (currentPage === productPage) }" @click="goTo('products')">
-        <spam><font-awesome-icon icon="fa-box-open" width="15" height="15" /></spam> &nbsp; Produtos
+        <em><font-awesome-icon icon="fa-box-open" width="15" height="15" /></em> &nbsp; Produtos
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === clientPage) }" @click="goTo('clients')">
-        <spam><font-awesome-icon icon="fa-users" width="15" height="15" /></spam> &nbsp; Clientes
+        <em><font-awesome-icon icon="fa-users" width="15" height="15" /></em> &nbsp; Clientes
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === salePage) }" @click="goTo('sales')">
-        <spam><font-awesome-icon icon="fa-cart-shopping" width="15" height="15" /></spam> &nbsp; Vendas
+        <em><font-awesome-icon icon="fa-cart-shopping" width="15" height="15" /></em> &nbsp; Vendas
       </li>
       <li class="sindenav__link" :class="{ active: (currentPage === reportPage) }" @click="goTo('reports')">
-        <spam><font-awesome-icon icon="fa-file-lines" width="15" height="15" /></spam> &nbsp; Relatórios
+        <em><font-awesome-icon icon="fa-file-lines" width="15" height="15" /></em> &nbsp; Relatórios
       </li>
     </ul>
   </nav>

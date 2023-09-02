@@ -15,7 +15,9 @@ const changeSideNavState = (state: boolean) => {
     </Transition>
     <div class="main-content">
       <Header @side-nav-event="changeSideNavState" />
-      <div><router-view /></div>
+      <div class="content">
+        <router-view />
+      </div>
     </div>
   </main>
 </template>
@@ -41,5 +43,9 @@ const changeSideNavState = (state: boolean) => {
 .slide-fade-enter-from, .slide-fade-leave-to {
   opacity: 0;
   transform: translateX(-100%);
+}
+
+.content {
+  padding: 2rem;
 }
 </style>
