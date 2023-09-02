@@ -36,3 +36,10 @@ pages:
   sales: Vendas
   reports: Relatórios
   clients: Clientes
+
+default_keys:
+  name: Nome
+  description: Descrição
+  price: Preço
+  quantity: Quantidade
+  isAvaliable: Em estoque

@@ -7,6 +7,7 @@ import {
   faBoxOpen,
   faBars,
   faSort,
+  faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -16,6 +17,7 @@ library.add(
   faBoxOpen,
   faBars,
   faSort,
+  faEllipsisVertical,
 )
 
 export default FontAwesomeIcon

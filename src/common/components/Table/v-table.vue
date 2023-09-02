@@ -1,41 +1,44 @@
 <script lang="ts" setup>
 import { sort, prop, ascend, descend } from 'ramda'
 import FontAwesomeIcon from '~/common/modules/fontawesome'
+const { t } = useI18n()
 type TableProps<T> = {
   columns: string[]
   data: T[]
 }
-const props = defineProps<TableProps<any>>()
 
-const updateData = ref<any[]>([])
-
-onMounted(() => {
-  updateData.value = props.data
+const currencyBR = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
 })
+const props = defineProps<TableProps<any>>()
 
 const sortOrderAsc = ref(false)
 
 const toggleSortOrder = () => {
   sortOrderAsc.value = !sortOrderAsc.value
 }
-
+const tableData = ref<any>()
 const sortTable = (column: string) => {
   const propName = prop<string>(column)
   toggleSortOrder()
   const sortingFn = sortOrderAsc.value
     ? ascend(propName)
     : descend(propName)
-  updateData.value = sort(sortingFn, props.data)
+  tableData.value = sort(sortingFn, props.data)
 }
 
 const search = ref('')
-const filteredList = computed(() => {
-  return updateData.value.filter((item: any) => {
-    return (
-      item.name.toLowerCase().includes(search.value.toLowerCase())
-    )
-  })
-})
+// const filteredList = computed(() => {
+//   return tableData.value.filter((item: any) => {
+//     return (
+//       item.name.toLowerCase().includes(search.value.toLowerCase())
+//     )
+//   })
+// })
+
+onUpdated(async() => (tableData.value = props.data))
+
 </script>
 
 <template>
@@ -47,7 +50,7 @@ const filteredList = computed(() => {
     <thead class="table__header">
       <tr>
         <th v-for="(field, index) in columns" :key="index">
-          {{ field }} <em class="table__sort-icon">
+          {{ t(`default_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
             <font-awesome-icon
               icon="fa-sort"
               width="15"
@@ -60,11 +63,25 @@ const filteredList = computed(() => {
       </tr>
     </thead>
     <tbody class="table__body">
-      <tr v-for="item in filteredList" :key="item.id">
+      <tr v-for="item in tableData" :key="item.id">
         <td v-for="field in columns" :key="field">
-          {{ item[field] }}
+          <spam v-if="field==='price'">
+            {{ currencyBR.format(item[field]) }}
+          </spam>
+          <spam v-else>
+            {{ item[field] }}
+          </spam>
         </td>
         <td>
+          <em>
+            <font-awesome-icon
+              icon="fa-solid fa-ellipsis-vertical"
+            >
+              width="15"
+              height="15"
+              @click="sortTable(field)"
+              />
+            </font-awesome-icon></em>
           <slot name="actions">
           </slot>
         </td>
