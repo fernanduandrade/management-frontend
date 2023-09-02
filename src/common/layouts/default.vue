@@ -10,7 +10,7 @@ const changeSideNavState = (state: boolean) => {
 
 <template>
   <main id="container">
-    <Transition>
+    <Transition name="slide-fade" mode="out-in">
       <sidenav v-show="showSideNav" />
     </Transition>
     <div class="main-content">
@@ -30,17 +30,16 @@ const changeSideNavState = (state: boolean) => {
   width: 100%;
   height: 100%;
 }
-
-.v-enter-active {
-  animation: leave-in 0.1s;
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
 }
-.v-leave-active {
-  animation: leave-in 0.1s reverse;
+.slide-fade-enter, .slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
 }
 
-@keyframes leave-in {
-  100% {
-    transform: translateX(-20px);
-  }
+.slide-fade-enter-from, .slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
 }
 </style>
