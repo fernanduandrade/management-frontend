@@ -38,7 +38,7 @@ const modifySideNav = () => {
 <style scoped>
 #container {
   background-color: #F1F1F1;
-  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.9);
 
 }
 .header {
@@ -47,7 +47,7 @@ const modifySideNav = () => {
   justify-content: space-around;
   align-items: center;
   gap: 50px;
-  width: 100%
+  width: 100%;
 }
 
 .header__sidenav--modify {

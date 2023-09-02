@@ -33,7 +33,7 @@ const changeSideNavState = (state: boolean) => {
   height: 100%;
 }
 .slide-fade-enter-active, .slide-fade-leave-active {
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.1s, transform 0.1s;
 }
 .slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
@@ -46,6 +46,7 @@ const changeSideNavState = (state: boolean) => {
 }
 
 .content {
+  background-color: #FFFFFF;
   padding: 2rem;
 }
 </style>

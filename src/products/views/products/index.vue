@@ -26,5 +26,9 @@ const products = ref<Product[]>([
   <VTable
     :columns="produtosColumns"
     :data="products"
-  />
+  >
+    <template #actions>
+      ações
+    </template>
+  </VTable>
 </template>

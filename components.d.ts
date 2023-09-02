@@ -7,6 +7,7 @@ declare module 'vue' {
     Header: typeof import('./src/common/components/Header/header.vue')['default']
     Sidenav: typeof import('./src/common/components/SideNav/sidenav.vue')['default']
     VButton: typeof import('./src/common/components/Button/v-button.vue')['default']
+    VInputSearch: typeof import('./src/common/components/Inputs/InputText/v-input-search.vue')['default']
     VTable: typeof import('./src/common/components/Table/v-table.vue')['default']
   }
 }

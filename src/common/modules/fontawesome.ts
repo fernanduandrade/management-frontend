@@ -6,6 +6,7 @@ import {
   faCartShopping,
   faBoxOpen,
   faBars,
+  faSort,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -14,6 +15,7 @@ library.add(
   faCartShopping,
   faBoxOpen,
   faBars,
+  faSort,
 )
 
 export default FontAwesomeIcon
