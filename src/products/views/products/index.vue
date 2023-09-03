@@ -7,7 +7,7 @@ const productsColumn = ref<string[]>([
 
 const products = ref<Product[]>([])
 
-onBeforeMount(async() => {
+onMounted(async() => {
   const result = await ProductApi.getProductSPaginate({ pageNumber: 1, pageSize: 10 })
   products.value = result.data.items
 })

@@ -1,10 +1,18 @@
 <script lang="ts" setup>
+import VInfoModalWindow from '../components/Modal/v-info-modal-window.vue'
+import useModal from '../logic/use-modal'
+
 const router = useRouter()
 onMounted(() => router.push('products'))
+const store = useModal()
 
 const showSideNav = ref(true)
 const changeSideNavState = (state: boolean) => {
   showSideNav.value = state
+}
+
+function openInfoModal() {
+  store.openModal({ component: VInfoModalWindow })
 }
 </script>
 
@@ -16,7 +24,11 @@ const changeSideNavState = (state: boolean) => {
     <div class="main-content">
       <Header @side-nav-event="changeSideNavState" />
       <div class="content">
+        <button @click="openInfoModal">
+          teste
+        </button>
         <router-view />
+        <VModalWindow />
       </div>
     </div>
   </main>

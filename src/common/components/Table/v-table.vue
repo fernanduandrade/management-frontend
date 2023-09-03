@@ -18,27 +18,27 @@ const sortOrderAsc = ref(false)
 const toggleSortOrder = () => {
   sortOrderAsc.value = !sortOrderAsc.value
 }
-const tableData = ref<any>()
+
+const search = ref('')
+
+const updateTable = ref<any>()
+
 const sortTable = (column: string) => {
   const propName = prop<string>(column)
   toggleSortOrder()
   const sortingFn = sortOrderAsc.value
     ? ascend(propName)
     : descend(propName)
-  tableData.value = sort(sortingFn, props.data)
+  updateTable.value = sort(sortingFn, props.data)
 }
 
-const search = ref('')
-// const filteredList = computed(() => {
-//   return tableData.value.filter((item: any) => {
+// const filteredTable = computed(() => {
+//   return updateTable.value.filter((item: any) => {
 //     return (
 //       item.name.toLowerCase().includes(search.value.toLowerCase())
 //     )
 //   })
 // })
-
-onUpdated(async() => (tableData.value = props.data))
-
 </script>
 
 <template>
@@ -63,7 +63,7 @@ onUpdated(async() => (tableData.value = props.data))
       </tr>
     </thead>
     <tbody class="table__body">
-      <tr v-for="item in tableData" :key="item.id">
+      <tr v-for="item in updateTable" :key="item.id">
         <td v-for="field in columns" :key="field">
           <spam v-if="field==='price'">
             {{ currencyBR.format(item[field]) }}
@@ -79,7 +79,6 @@ onUpdated(async() => (tableData.value = props.data))
             >
               width="15"
               height="15"
-              @click="sortTable(field)"
               />
             </font-awesome-icon></em>
           <slot name="actions">
