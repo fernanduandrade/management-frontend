@@ -58,7 +58,7 @@ function openInfoModal() {
 }
 
 .content {
-  background-color: #FFFFFF;
+  background-color: var(--background-color-primary);
   padding: 2rem;
 }
 </style>

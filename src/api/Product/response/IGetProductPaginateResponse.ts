@@ -1,4 +1,6 @@
-export type Product = {
+import { IPaginationResponse } from '~/common/types/index'
+
+export type ProductDTO = {
   id: number
   description: string
   name: string
@@ -7,16 +9,4 @@ export type Product = {
   isAvaliable: boolean
 }
 
-export interface IGetProductPaginateResponse {
-  message: string
-  data: {
-    items: Product[]
-    pageNumber: number
-    totalPages: number
-    totalCount: number
-    hasPreviousPage: boolean
-    hasNextPage: boolean
-  }
-  errors: string[]
-  type: string
-}
+export type GetProductPaginateResponse = IPaginationResponse<ProductDTO>

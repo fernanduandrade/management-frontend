@@ -1,6 +1,10 @@
-import { IProductGetPaginate } from './request/IGetProductPaginate'
-import { IGetProductPaginateResponse } from './response/IGetProductPaginateResponse'
+import { GetProductsPaginate } from './request/IGetProductPaginate'
+import { GetProductPaginateResponse } from './response/IGetProductPaginateResponse'
 
 export default interface IProductApi {
-  getProductSPaginate(query: IProductGetPaginate): Promise<IGetProductPaginateResponse>
+  getProductsPaginate(query: GetProductsPaginate): Promise<GetProductPaginateResponse>
+  createProduct(): Promise<void>
+  updateProduct(): Promise<void>
+  deleteProduct(): Promise<void>
+  getProductById(): Promise<void>
 }

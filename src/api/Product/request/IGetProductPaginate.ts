@@ -1,4 +1,4 @@
-export interface IProductGetPaginate {
-  pageSize: number
-  pageNumber: number
+export type GetProductsPaginate = {
+  pageSize?: number
+  pageNumber?: number
 }
