@@ -1,12 +1,4 @@
 import { IPaginationResponse } from '~/common/types/index'
-
-export type ProductDTO = {
-  id: number
-  description: string
-  name: string
-  price: number
-  quantity: number
-  isAvaliable: boolean
-}
+import { ProductDTO } from '~/products/types/index'
 
 export type GetProductPaginateResponse = IPaginationResponse<ProductDTO>

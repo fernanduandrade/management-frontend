@@ -19,8 +19,6 @@ const toggleSortOrder = () => {
   sortOrderAsc.value = !sortOrderAsc.value
 }
 
-const search = ref('')
-
 const updateTable = ref<any>()
 
 const sortTable = (column: string) => {
@@ -32,20 +30,9 @@ const sortTable = (column: string) => {
   updateTable.value = sort(sortingFn, props.data)
 }
 
-// const filteredTable = computed(() => {
-//   return updateTable.value.filter((item: any) => {
-//     return (
-//       item.name.toLowerCase().includes(search.value.toLowerCase())
-//     )
-//   })
-// })
 </script>
 
 <template>
-  <div>
-    <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
-    <br>
-  </div>
   <table id="tableComponent">
     <thead class="table__header">
       <tr>
@@ -63,7 +50,7 @@ const sortTable = (column: string) => {
       </tr>
     </thead>
     <tbody class="table__body">
-      <tr v-for="item in updateTable" :key="item.id">
+      <tr v-for="item in data" :key="item.id">
         <td v-for="field in columns" :key="field">
           <spam v-if="field==='price'">
             {{ currencyBR.format(item[field]) }}

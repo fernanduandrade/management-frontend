@@ -30,7 +30,7 @@ const modifySideNav = () => {
         Usuário / {{ t(`pages.${router.currentRoute.value.name as string}`) }}
       </div>
       <div><h1>Gestão de produtos</h1></div>
-      <div>pesquisar</div>
+      <div></div>
     </header>
   </main>
 </template>
