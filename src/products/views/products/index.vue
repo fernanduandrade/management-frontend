@@ -27,10 +27,11 @@ const filteredProducts = computed(() => {
 const storeModal = useModal()
 
 function createProductModal() {
-  storeModal.openModal({ component: ProductForm })
+  storeModal.openModal({ component: markRaw(ProductForm) })
 }
 
 // TODO sort in view
+// TODO emit product created to parent
 
 </script>
 <template>

@@ -48,7 +48,7 @@ const changeSideNavState = (state: boolean) => {
 }
 
 .content {
-  background-color: var(--background-color-secondary);
+  background-color: var(--background-color-tertiary);
   padding: 2rem;
 }
 </style>

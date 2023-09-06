@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 const attrs = useAttrs()
+
 type InputSearchProp = {
   placeholder: string
   modelValue: string | number
+  type?: string
 }
-const props = defineProps<InputSearchProp>()
+const props = withDefaults(defineProps<InputSearchProp>(), {
+  type: 'text',
+})
 defineEmits(['update:modelValue'])
 
 const hasInput = computed(() => {
@@ -30,7 +34,7 @@ const cssClasses = computed(() => {
       :placeholder="placeholder"
       :value="modelValue"
       v-bind="$attrs"
-      type="text"
+      :type="type"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </div>
