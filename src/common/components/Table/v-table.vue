@@ -37,7 +37,7 @@ const sortTable = (column: string) => {
     <thead class="table__header">
       <tr>
         <th v-for="(field, index) in columns" :key="index">
-          {{ t(`default_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
+          {{ t(`default_domain_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
             <font-awesome-icon
               icon="fa-sort"
               width="15"
@@ -52,12 +52,15 @@ const sortTable = (column: string) => {
     <tbody class="table__body">
       <tr v-for="item in data" :key="item.id">
         <td v-for="field in columns" :key="field">
-          <spam v-if="field==='price'">
+          <span v-if="field==='price'">
             {{ currencyBR.format(item[field]) }}
-          </spam>
-          <spam v-else>
+          </span>
+          <span v-else-if="field.toLowerCase().includes('date')">
+            {{ new Date(item[field]).toLocaleDateString('pt-BR') }}
+          </span>
+          <span v-else>
             {{ item[field] }}
-          </spam>
+          </span>
         </td>
         <td>
           <em>

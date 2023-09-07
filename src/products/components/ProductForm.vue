@@ -18,11 +18,10 @@ const emit = defineEmits(['createProduct'])
 // TODO add toast messages
 // Emit
 async function createProduct() {
+  emit('createProduct', 'aaaa')
   const response = await ProductApi.createProduct(form)
-  if (response.type === 'Success') {
-    emit('createProduct', response.data)
+  if (response.type === 'Success')
     store.closeModal()
-  }
 }
 </script>
 
