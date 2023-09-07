@@ -10,6 +10,7 @@ const saleColumn = ref<string[]>([
 
 const sales = ref<SaleDTO[]>([])
 const { search, data } = useFilter(sales, 'clientName')
+
 onMounted(async() => {
   const result = await SaleApi.getSalesPaginate({ pageNumber: 1, pageSize: 10 })
   sales.value = result.data.items
@@ -21,9 +22,6 @@ onMounted(async() => {
 //   storeModal.openModal({ component: markRaw(ProductForm) })
 // }
 
-// TODO sort in view
-// TODO emit product created to parent
-// TODO intercionalizar
 </script>
 <template>
   <main class="container">

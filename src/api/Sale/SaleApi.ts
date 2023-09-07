@@ -1,13 +1,13 @@
 import apiService from '../api-service'
 import ISaleApi from './ISaleApi'
-import { GetSalesPaginate, PostSaleRequest } from './request'
+import { PostSaleRequest } from './request'
 import { GetSalePaginateResponse } from './response/IGetSalePaginateResponse'
-import { IResponseDTO } from '~/common/types'
+import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { SaleDTO } from '~/sales/types'
 
 class SaleApi implements ISaleApi {
   constructor() {}
-  async getSalesPaginate(query: GetSalesPaginate): Promise<GetSalePaginateResponse> {
+  async getSalesPaginate(query: PaginateRequest): Promise<GetSalePaginateResponse> {
     const url = `http://localhost:5019/api/v1/sales?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetSalePaginateResponse>(url)
     const result = reponse.get()

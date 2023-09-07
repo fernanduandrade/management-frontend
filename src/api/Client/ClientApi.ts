@@ -1,13 +1,13 @@
 import apiService from '../api-service'
 import IClientApi from './IClientApi'
-import { GetClientsPaginate, PostClientRequest } from './request'
+import { PostClientRequest } from './request'
 import { GetClientPaginateResponse } from './response/IGetClientPaginateResponse'
-import { IResponseDTO } from '~/common/types'
+import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { ClientDTO } from '~/clients/types'
 
 class ClientApi implements IClientApi {
   constructor() {}
-  async getClientsPaginate(query: GetClientsPaginate): Promise<GetClientPaginateResponse> {
+  async getClientsPaginate(query: PaginateRequest): Promise<GetClientPaginateResponse> {
     const url = `http://localhost:5019/api/v1/clients?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetClientPaginateResponse>(url)
     const result = reponse.get()

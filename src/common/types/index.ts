@@ -1,2 +1,2 @@
-export * from './IPagination'
-export * from './IResponseDTO'
+export * from './Pagination'
+export * from './ResponseDTO'

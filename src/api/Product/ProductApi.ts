@@ -1,8 +1,8 @@
 import apiService from '../api-service'
 import IProductApi from './IProductApi'
-import { GetProductsPaginate, PostProductRequest } from './request'
+import { PostProductRequest } from './request'
 import { GetProductPaginateResponse } from './response/IGetProductPaginateResponse'
-import { IResponseDTO } from '~/common/types'
+import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { ProductDTO } from '~/products/types'
 
 class ProductApi implements IProductApi {
@@ -26,7 +26,7 @@ class ProductApi implements IProductApi {
     throw new Error('Method not implemented.')
   }
 
-  async getProductsPaginate(query: GetProductsPaginate): Promise<GetProductPaginateResponse> {
+  async getProductsPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse> {
     const url = `http://localhost:5019/api/v1/Products?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetProductPaginateResponse>(url)
     const result = reponse.get()

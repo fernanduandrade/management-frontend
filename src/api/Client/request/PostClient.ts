@@ -1,3 +1,3 @@
 import { CreateClientDTO } from '~/clients/types/index'
 
-export type PostClientRequest = CreateClientDTO
+export interface PostClientRequest extends CreateClientDTO {}

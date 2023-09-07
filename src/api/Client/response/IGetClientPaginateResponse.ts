@@ -1,4 +1,4 @@
-import { IPaginationResponse } from '~/common/types/index'
+import { PaginationResponse } from '~/common/types/index'
 import { ClientDTO } from '~/clients/types/index'
 
-export type GetClientPaginateResponse = IPaginationResponse<ClientDTO>
+export type GetClientPaginateResponse = PaginationResponse<ClientDTO>
