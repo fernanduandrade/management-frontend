@@ -1,6 +1,13 @@
-export type IResponseDTO<T> = {
+export enum ResultType {
+  none = 'None',
+  success = 'Success',
+  error = 'Error',
+  warning = 'Warning'
+}
+
+export interface IResponseDTO<T> {
   data: T
   errors?: string[]
-  type: string
+  type: ResultType
   message: string
 }

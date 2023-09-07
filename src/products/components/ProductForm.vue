@@ -2,6 +2,7 @@
 import { CreateProductDTO } from '~/products/types/index'
 import ProductApi from '~/api/Product/ProductApi'
 import useModal from '~/common/logic/use-modal'
+import { ResultType } from '~/common/types/ResponseDTO'
 
 const store = useModal()
 
@@ -13,14 +14,11 @@ const form = reactive<CreateProductDTO>({
 
 })
 
-const emit = defineEmits(['createProduct'])
-
 // TODO add toast messages
 // Emit
 async function createProduct() {
-  emit('createProduct', 'aaaa')
   const response = await ProductApi.createProduct(form)
-  if (response.type === 'Success')
+  if (response.type === ResultType.success)
     store.closeModal()
 }
 </script>
