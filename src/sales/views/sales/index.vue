@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import SaleApi from '~/api/Sale/SaleApi'
 import { SaleDTO } from '~/sales/types/index'
+import { useFilter } from '~/composables/index'
 // import useModal from '~/common/logic/use-modal'
 // import ProductForm from '~/products/components/ProductForm.vue'
 const saleColumn = ref<string[]>([
@@ -8,20 +9,10 @@ const saleColumn = ref<string[]>([
 ])
 
 const sales = ref<SaleDTO[]>([])
-
+const { search, data } = useFilter(sales, 'clientName')
 onMounted(async() => {
   const result = await SaleApi.getSalesPaginate({ pageNumber: 1, pageSize: 10 })
   sales.value = result.data.items
-})
-
-const search = ref<string>('')
-
-const filteredSales = computed(() => {
-  return sales.value.filter((item: SaleDTO) => {
-    return (
-      item.clientName.toLowerCase().includes(search.value.toLowerCase())
-    )
-  })
 })
 
 // const storeModal = useModal()
@@ -44,7 +35,7 @@ const filteredSales = computed(() => {
     </div>
     <VTable
       :columns="saleColumn"
-      :data="filteredSales"
+      :data="data"
     >
       <template #actions>
       </template>

@@ -46,7 +46,7 @@ const sortTable = (column: string) => {
             />
           </em>
         </th>
-        <th>Ações</th>
+        <th>{{ t('table.actions') }}</th>
       </tr>
     </thead>
     <tbody class="table__body">
@@ -62,7 +62,7 @@ const sortTable = (column: string) => {
             {{ item[field] }}
           </span>
         </td>
-        <td>
+        <td class="table__actions">
           <em>
             <font-awesome-icon
               icon="fa-solid fa-ellipsis-vertical"
@@ -104,5 +104,13 @@ table {
   text-align: center;
   color: #7D7D7D;
   font-size: 1.4rem;
+}
+
+.table__actions {
+  transition: all .2s ease-in;
+}
+
+.table__actions:hover {
+  cursor: pointer;
 }
 </style>

@@ -1,3 +1,8 @@
+pages:
+  products: Products
+  sales: Sales
+  reports: Reports
+  clients: Clients
 default_domain_keys:
   name: Nome
   description: Descrição
@@ -14,3 +19,6 @@ default_domain_keys:
   productId: 1
   priceperunit: Preço da unidade
   totalprice: Total
+
+table:
+  actions: Ações
