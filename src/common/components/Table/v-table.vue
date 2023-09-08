@@ -13,23 +13,28 @@ const currencyBR = new Intl.NumberFormat('pt-BR', {
 })
 const props = defineProps<TableProps<any>>()
 
+const sortedItems = ref<any[]>([])
+
+watch(
+  () => props.data,
+  (newItems) => {
+    sortedItems.value = newItems
+  },
+)
+
 const sortOrderAsc = ref(false)
 
 const toggleSortOrder = () => {
   sortOrderAsc.value = !sortOrderAsc.value
 }
-
-const updateTable = ref<any>()
-
 const sortTable = (column: string) => {
   const propName = prop<string>(column)
   toggleSortOrder()
   const sortingFn = sortOrderAsc.value
     ? ascend(propName)
     : descend(propName)
-  updateTable.value = sort(sortingFn, props.data)
+  sortedItems.value = sort(sortingFn, props.data)
 }
-
 </script>
 
 <template>
@@ -50,7 +55,7 @@ const sortTable = (column: string) => {
       </tr>
     </thead>
     <tbody class="table__body">
-      <tr v-for="item in data" :key="item.id">
+      <tr v-for="item in sortedItems" :key="item.id">
         <td v-for="field in columns" :key="field">
           <span v-if="field==='price'">
             {{ currencyBR.format(item[field]) }}
