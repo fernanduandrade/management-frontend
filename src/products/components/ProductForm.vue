@@ -11,15 +11,13 @@ const form = reactive<CreateProductDTO>({
   name: '',
   price: 0,
   quantity: 0,
-
 })
-
-// TODO add toast messages
-// Emit
 async function createProduct() {
   const response = await ProductApi.createProduct(form)
-  if (response.type === ResultType.success)
+  if (response.type === ResultType.success) {
+    store.setFormValue(response.data)
     store.closeModal()
+  }
 }
 </script>
 

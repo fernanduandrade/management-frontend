@@ -12,12 +12,13 @@ interface IModalProps {
 
 interface IModalState {
   modalState: IModalProps
+  modalEmitValue: unknown
 }
 
 const basicState = { component: null, props: { } }
 
 export default defineStore('modal-store', {
-  state: (): IModalState => ({ modalState: basicState }),
+  state: (): IModalState => ({ modalState: basicState, modalEmitValue: null }),
   actions: {
     openModal(payload: IModalProps) {
       const { props, component } = payload
@@ -25,6 +26,9 @@ export default defineStore('modal-store', {
     },
     closeModal() {
       this.modalState = basicState
+    },
+    setFormValue(value: unknown) {
+      this.modalEmitValue = value
     },
   },
   getters: {},

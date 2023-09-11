@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import ProductApi from '~/api/Product/ProductApi'
 import { ProductDTO } from '~/products/types/index'
 import useModal from '~/common/logic/use-modal'
@@ -11,15 +12,19 @@ const productsColumn = ref<string[]>([
 
 const products = ref<ProductDTO[]>([])
 const { search, data } = useFilter(products, 'name')
-
 const storeModal = useModal()
+const { modalEmitValue } = storeToRefs(storeModal)
+
+watch(modalEmitValue, (value) => {
+  products.value.push(value as ProductDTO)
+})
 
 function createProductModal() {
   storeModal.openModal({ component: markRaw(ProductForm) })
 }
 
 onMounted(async() => {
-  const result = await ProductApi.getProductsPaginate({ pageNumber: 1, pageSize: 10 })
+  const result = await ProductApi.getProductsPaginate({ pageNumber: 1, pageSize: 15 })
   products.value = result.data.items
 })
 </script>
