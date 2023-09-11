@@ -44,6 +44,7 @@ specifiers:
   vue-i18n: ^9.1.7
   vue-router: ^4.0.11
   vue-tsc: ^0.3.0
+  vue3-toastify: ^0.1.12
 
 dependencies:
   '@vueuse/core': 6.7.3_vue@3.2.20
@@ -56,6 +57,7 @@ dependencies:
   vue-demi: 0.11.4_vue@3.2.20
   vue-i18n: 9.1.9_vue@3.2.20
   vue-router: 4.0.12_vue@3.2.20
+  vue3-toastify: 0.1.12_vue@3.2.20
 
 devDependencies:
   '@antfu/eslint-config': 0.8.2_wnilx7boviscikmvsfkd6ljepe
@@ -6273,6 +6275,18 @@ packages:
       '@vue/runtime-dom': 3.2.20
       '@vue/server-renderer': 3.2.20_vue@3.2.20
       '@vue/shared': 3.2.20
+
+  /vue3-toastify/0.1.12_vue@3.2.20:
+    resolution: {integrity: sha512-OQJPMt6dIpn+1vG+EZMO+QE5STAxoc0+Owo7sRjUyVw22Uxs6daVHq/sek75s4JMxbzePHtUqVfTZRgqLHmikw==}
+    engines: {node: '>=16', npm: '>=7'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    peerDependenciesMeta:
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.20
+    dev: false
 
   /w3c-hr-time/1.0.2:
     resolution: {integrity: sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ==}
