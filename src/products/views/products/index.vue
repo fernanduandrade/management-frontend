@@ -24,7 +24,7 @@ function createProductModal() {
 }
 
 onMounted(async() => {
-  const result = await ProductApi.getProductsPaginate({ pageNumber: 1, pageSize: 15 })
+  const result = await ProductApi.getProductsPaginate({ pageNumber: 1, pageSize: 10 })
   products.value = result.data.items
 })
 </script>

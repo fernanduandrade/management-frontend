@@ -38,10 +38,22 @@ async function createProduct() {
 <template>
   <div class="wrapper">
     <form class="form">
-      <VInputText v-model="form.name" placeholder="Nome" />
-      <VInputText v-model="form.description" placeholder="Descrição" />
-      <VInputText v-model="form.price" type="number" placeholder="Preço" />
-      <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
+      <div>
+        <label for="">Nome do produto</label>
+        <VInputText v-model="form.name" placeholder="Nome" />
+      </div>
+      <div>
+        <label for="">Descrição</label>
+        <VInputText v-model="form.description" placeholder="Descrição" />
+      </div>
+      <div>
+        <label for="">Preço</label>
+        <VInputText v-model="form.price" type="number" placeholder="Preço" />
+      </div>
+      <div>
+        <label for="">Quantidade</label>
+        <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
+      </div>
     </form>
     <div class="form__button">
       <VButton @click="createProduct">
@@ -55,7 +67,7 @@ async function createProduct() {
 
 .wrapper {
   width: 600px;
-  height: 400px;
+  height: 450px;
   background-color: #FFFFFF;
   padding: 1rem;
 
