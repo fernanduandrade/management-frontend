@@ -4,8 +4,11 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
     Header: typeof import('./src/common/components/Header/header.vue')['default']
     ProductForm: typeof import('./src/products/components/ProductForm.vue')['default']
+    ReportForm: typeof import('./src/reports/components/ReportForm.vue')['default']
+    SaleForm: typeof import('./src/sales/components/SaleForm.vue')['default']
     Sidenav: typeof import('./src/common/components/SideNav/sidenav.vue')['default']
     VButton: typeof import('./src/common/components/Button/v-button.vue')['default']
     VInfoModalWindow: typeof import('./src/common/components/Modal/v-info-modal-window.vue')['default']

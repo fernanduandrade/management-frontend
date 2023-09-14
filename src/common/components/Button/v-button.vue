@@ -17,7 +17,7 @@ const add = () => algo.value += (1 + 1)
 
 <template>
   <div class="wrapper-button">
-    <button class="button" @click="add">
+    <button type="button" class="button" @click="add">
       <slot></slot>
     </button>
   </div>

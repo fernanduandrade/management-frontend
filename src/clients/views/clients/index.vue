@@ -1,9 +1,10 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import ProductApi from '~/api/Client/ClientApi'
 import { ClientDTO } from '~/clients/types/index'
 import { useFilter } from '~/composables/useFilter'
-// import useModal from '~/common/logic/use-modal'
-// import ProductForm from '~/products/components/ProductForm.vue'
+import useModal from '~/common/logic/use-modal'
+import ClientForm from '~/clients/components/ClientForm.vue'
 const clientColumn = ref<string[]>([
   'name', 'lastName', 'isActive', 'phone', 'debt', 'credit',
 ])
@@ -16,21 +17,24 @@ onMounted(async() => {
   clients.value = result.data.items
 })
 
-// const storeModal = useModal()
+const storeModal = useModal()
 
-// function createProductModal() {
-//   storeModal.openModal({ component: markRaw(ProductForm) })
-// }
+function createClientModal() {
+  storeModal.openModal({ component: markRaw(ClientForm) })
+}
 
-// TODO sort in view
-// TODO emit product created to parent
+const { modalEmitValue } = storeToRefs(storeModal)
+
+watch(modalEmitValue, (value) => {
+  clients.value.push(value as ClientDTO)
+})
 
 </script>
 <template>
   <main class="container">
     <div class="client__actions">
       <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
-      <VButton>
+      <VButton @click="createClientModal">
         Novo cliente
       </VButton>
     </div>
