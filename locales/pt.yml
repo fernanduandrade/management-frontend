@@ -9,7 +9,7 @@ default_domain_keys:
   price: Preço
   quantity: Quantidade
   isavaliable: Em estoque
-  isactive: Ativo
+  isactive: Status
   phone: Telefone
   debt: Débito
   credit: Crédito

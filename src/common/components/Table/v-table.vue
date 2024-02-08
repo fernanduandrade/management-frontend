@@ -1,16 +1,12 @@
 <script lang="ts" setup>
 import { sort, prop, ascend, descend } from 'ramda'
 import FontAwesomeIcon from '~/common/modules/fontawesome'
+import { formatCurrency } from '~/common/logic'
 const { t } = useI18n()
 type TableProps<T> = {
   columns: string[]
   data: T[]
 }
-
-const currencyBR = new Intl.NumberFormat('pt-BR', {
-  style: 'currency',
-  currency: 'BRL',
-})
 const props = defineProps<TableProps<any>>()
 
 const sortedItems = ref<any[]>([])
@@ -58,7 +54,10 @@ const sortTable = (column: string) => {
       <tr v-for="item in sortedItems" :key="item.id">
         <td v-for="field in columns" :key="field">
           <span v-if="field==='price'">
-            {{ currencyBR.format(item[field]) }}
+            {{ formatCurrency(item[field]) }}
+          </span>
+          <span v-else-if="field==='isActive'">
+            {{ item[field] ? 'ativo' : 'desativado' }}
           </span>
           <span v-else-if="field.toLowerCase().includes('date')">
             {{ new Date(item[field]).toLocaleDateString('pt-BR') }}

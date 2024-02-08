@@ -4,6 +4,7 @@ import { CreateSaleDTO } from '~/sales/types/index'
 import SaleApi from '~/api/Sale/SaleApi'
 import useModal from '~/common/logic/use-modal'
 import { ResultType } from '~/common/types/ResponseDTO'
+import { formatCurrency } from '~/common/logic'
 import 'vue3-toastify/dist/index.css'
 const store = useModal()
 
@@ -18,7 +19,7 @@ const form = reactive<CreateSaleDTO>({
 const totalSold = computed(() => {
   const soldValue = form.quantity * form.pricePerUnit
   form.totalPrice = soldValue
-  return soldValue
+  return formatCurrency(soldValue)
 })
 
 async function createSale() {
