@@ -6,6 +6,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
     Header: typeof import('./src/common/components/Header/header.vue')['default']
+    Order: typeof import('./src/orders/components/Order.vue')['default']
     ProductForm: typeof import('./src/products/components/ProductForm.vue')['default']
     ReportForm: typeof import('./src/reports/components/ReportForm.vue')['default']
     SaleForm: typeof import('./src/sales/components/SaleForm.vue')['default']

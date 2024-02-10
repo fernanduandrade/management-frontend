@@ -29,7 +29,7 @@ const modifySideNav = () => {
         </em>
         Usuário / {{ t(`pages.${router.currentRoute.value.name as string}`) }}
       </div>
-      <div><h1>Zaza Bar</h1></div>
+      <div><h1>Weeeeeeeeeeeeeeeeeeeeeeeeeee</h1></div>
       <div></div>
     </header>
   </main>

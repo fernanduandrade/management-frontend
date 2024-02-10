@@ -3,6 +3,7 @@ pages:
   sales: Sales
   reports: Reports
   clients: Clients
+  orders: Pedidos
 default_domain_keys:
   name: Nome
   description: Descrição

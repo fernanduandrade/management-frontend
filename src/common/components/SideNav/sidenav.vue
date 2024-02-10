@@ -3,15 +3,25 @@ import FontAwesomeIcon from '~/common/modules/fontawesome'
 const router = useRouter()
 const currentPage = ref('')
 
-const goTo = (pageName: string) => {
-  currentPage.value = pageName
-  router.push(`/${pageName}`)
+interface Page {
+  icon: string
+  link: string
+  name: string
 }
 
-const productPage = ref('products')
-const clientPage = ref('clients')
-const salePage = ref('sales')
-const reportPage = ref('reports')
+const goTo = (page: Page) => {
+  currentPage.value = page.name
+  router.push(page.link)
+}
+
+const pages: Page[] = [
+  { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
+  { name: 'Clientes', link: '/clients', icon: 'fa-users' },
+  { name: 'Vendas', link: '/sales', icon: 'fa-cart-shopping' },
+  { name: 'Relatórios', link: '/reports', icon: 'fa-file-lines' },
+  { name: 'Pedidos', link: '/orders', icon: 'fa-file-lines' },
+]
+
 </script>
 
 <template>
@@ -19,18 +29,9 @@ const reportPage = ref('reports')
     <h4 class="sidenav__dashboard">
       Dashboards
     </h4>
-    <ul class="sindenav__links">
-      <li class="sindenav__link" :class="{ active: (currentPage === productPage) }" @click="goTo('products')">
-        <em><font-awesome-icon icon="fa-box-open" width="15" height="15" /></em> &nbsp; Produtos
-      </li>
-      <li class="sindenav__link" :class="{ active: (currentPage === clientPage) }" @click="goTo('clients')">
-        <em><font-awesome-icon icon="fa-users" width="15" height="15" /></em> &nbsp; Clientes
-      </li>
-      <li class="sindenav__link" :class="{ active: (currentPage === salePage) }" @click="goTo('sales')">
-        <em><font-awesome-icon icon="fa-cart-shopping" width="15" height="15" /></em> &nbsp; Vendas
-      </li>
-      <li class="sindenav__link" :class="{ active: (currentPage === reportPage) }" @click="goTo('reports')">
-        <em><font-awesome-icon icon="fa-file-lines" width="15" height="15" /></em> &nbsp; Relatórios
+    <ul v-for="(page, i) in pages" :key="i" class="sindenav__links">
+      <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
+        <em><font-awesome-icon :icon="`${page.icon}`" width="15" height="15" /></em> &nbsp; {{ page.name }}
       </li>
     </ul>
   </nav>
