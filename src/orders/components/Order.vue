@@ -1,19 +1,23 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Order } from '../types'
-import { formatCurrency } from '~/common/logic'
 
+const router = useRouter()
 const props = defineProps({
   order: Object as PropType<Order>,
 })
 
 const orderStatus = {
   ABERTO: '#6ee7b7',
-  ANDAMENTO: '#fcd34d',
+  AGUARDANDO: '#fcd34d',
   FECHADO: '#f87171',
 }
 
 const orderStatusColor = ref('')
+
+function goToOrder() {
+  router.push(`/orders/${props.order?.id}`)
+}
 
 onMounted(() => {
   orderStatusColor.value = orderStatus[props.order!.status]
@@ -28,8 +32,10 @@ onMounted(() => {
     </div>
 
     <div class="order__button">
-      <span>Total: {{ formatCurrency(order!.total) }} </span>
-      <vButton>Visualizar</vButton>
+      <span>Total: aaa </span>
+      <vButton @click="goToOrder">
+        Visualizar
+      </vButton>
     </div>
   </main>
 </template>

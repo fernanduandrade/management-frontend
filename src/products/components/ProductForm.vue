@@ -85,7 +85,6 @@ async function createProduct() {
 
 .form__button {
   align-self: center;
-
 }
 
 </style>

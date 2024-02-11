@@ -3,7 +3,6 @@ export type OrderStatus = 'ABERTO' | 'AGUARDANDO' | 'FECHADO'
 export type Order = {
   status: OrderStatus
   clientName: string
-  id: string
 }
 
 export type OrderDto = {
