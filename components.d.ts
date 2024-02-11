@@ -4,20 +4,21 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AutoComplete: typeof import('./src/common/components/AutoComplete/auto-complete.vue')['default']
     ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
     Header: typeof import('./src/common/components/Header/header.vue')['default']
     Order: typeof import('./src/orders/components/Order.vue')['default']
     OrderForm: typeof import('./src/orders/components/OrderForm.vue')['default']
+    OrderProductForm: typeof import('./src/orders/components/OrderProductForm.vue')['default']
     ProductForm: typeof import('./src/products/components/ProductForm.vue')['default']
-    ReportForm: typeof import('./src/reports/components/ReportForm.vue')['default']
     SaleForm: typeof import('./src/sales/components/SaleForm.vue')['default']
     Sidenav: typeof import('./src/common/components/SideNav/sidenav.vue')['default']
+    VAutoComplete: typeof import('./src/common/components/AutoComplete/v-autoComplete.vue')['default']
     VButton: typeof import('./src/common/components/Button/v-button.vue')['default']
     VInfoModalWindow: typeof import('./src/common/components/Modal/v-info-modal-window.vue')['default']
     VInputSearch: typeof import('./src/common/components/Inputs/v-input-search.vue')['default']
     VInputText: typeof import('./src/common/components/Inputs/v-input-text.vue')['default']
     VModalWindow: typeof import('./src/common/components/Modal/v-modal-window.vue')['default']
-    VModalWindows: typeof import('./src/common/components/Modal/v-modal-windows.vue')['default']
     VTable: typeof import('./src/common/components/Table/v-table.vue')['default']
   }
 }

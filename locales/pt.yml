@@ -4,6 +4,7 @@ pages:
   reports: Reports
   clients: Clients
   orders: Pedidos
+  orders-id: Pedido
 default_domain_keys:
   name: Nome
   description: Descrição
