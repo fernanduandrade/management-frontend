@@ -8,6 +8,8 @@ import {
   faBars,
   faSort,
   faEllipsisVertical,
+  faDollarSign,
+  faNoteSticky,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -18,6 +20,8 @@ library.add(
   faBars,
   faSort,
   faEllipsisVertical,
+  faDollarSign,
+  faNoteSticky,
 )
 
 export default FontAwesomeIcon

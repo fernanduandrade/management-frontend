@@ -32,7 +32,6 @@ onMounted(() => {
     </div>
 
     <div class="order__button">
-      <span>Total: aaa </span>
       <vButton @click="goToOrder">
         Visualizar
       </vButton>
@@ -81,9 +80,6 @@ onMounted(() => {
 }
 
 .order__button {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 500;
+  align-self: flex-end;
 }
 </style>

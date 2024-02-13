@@ -5,26 +5,30 @@ import { ProductDTO } from '~/products/types'
 
 const productInput = ref('')
 const isLoadingAutoComplete = ref(false)
-const autocompleteOptions = ref<ProductDTO[]>([])
+const autocompleteOptions = ref<string[]>([])
+const productOptions = ref<ProductDTO[]>([])
+const selectedProduct = ref<ProductDTO>()
 const clearInput = () => {
   productInput.value = ''
   autocompleteOptions.value = []
 }
 const modal = useModal()
 async function addProduct() {
+  modal.setFormValue(selectedProduct.value)
   modal.closeModal()
 }
 
-const onSelectProduct = (evt: any) => {
-  console.log(evt)
+const onSelectProduct = (evt: string) => {
+  const product = productOptions.value.find(x => x.name === evt)
+  selectedProduct.value = product
 }
 
 const searchAutocomplete = async(input: string) => {
   isLoadingAutoComplete.value = true
-  console.log(input)
 
   const result = await ProductApi.getProductAutoComplete(input)
-  autocompleteOptions.value = result.data
+  productOptions.value = result.data
+  autocompleteOptions.value = result.data.map(product => product.name)
   isLoadingAutoComplete.value = false
 }
 </script>

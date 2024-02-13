@@ -17,9 +17,9 @@ const goTo = (page: Page) => {
 const pages: Page[] = [
   { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
   { name: 'Clientes', link: '/clients', icon: 'fa-users' },
-  { name: 'Vendas', link: '/sales', icon: 'fa-cart-shopping' },
+  { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
+  { name: 'Vendas', link: '/sales', icon: 'fa-dollar-sign' },
   { name: 'Relatórios', link: '/reports', icon: 'fa-file-lines' },
-  { name: 'Pedidos', link: '/orders', icon: 'fa-file-lines' },
 ]
 
 </script>
@@ -29,11 +29,13 @@ const pages: Page[] = [
     <h4 class="sidenav__dashboard">
       Dashboards
     </h4>
-    <ul v-for="(page, i) in pages" :key="i" class="sindenav__links">
-      <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-        <em><font-awesome-icon :icon="`${page.icon}`" width="15" height="15" /></em> &nbsp; {{ page.name }}
-      </li>
-    </ul>
+    <div class="sindenav__links">
+      <ul v-for="(page, i) in pages" :key="i">
+        <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
+          <em><font-awesome-icon :icon="`${page.icon}`" width="15" height="15" /></em> &nbsp; {{ page.name }}
+        </li>
+      </ul>
+    </div>
   </nav>
 </template>
 
@@ -43,7 +45,7 @@ const pages: Page[] = [
   background-color: #333;
   color: white;
   padding: 20px;
-  flex: 0 0 15%
+  flex: 0 0 15%;
 }
 
 .sidenav__dashboard {
@@ -55,6 +57,10 @@ const pages: Page[] = [
 
 .sindenav__links {
   margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
 }
 
 .sindenav__link {

@@ -6,7 +6,7 @@ export type CreateProductDTO = {
 }
 
 export type ProductDTO = {
-  id: number
+  id: string
   description: string
   name: string
   price: number

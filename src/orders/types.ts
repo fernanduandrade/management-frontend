@@ -1,3 +1,5 @@
+import { ProductDTO } from '~/products/types'
+
 export type OrderStatus = 'ABERTO' | 'AGUARDANDO' | 'FECHADO'
 
 export type Order = {
@@ -10,4 +12,5 @@ export type OrderDto = {
   id: string
   status: OrderStatus
   clientName: string
+  products: ProductDTO[]
 }

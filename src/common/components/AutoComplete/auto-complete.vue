@@ -116,7 +116,9 @@ const emit = defineEmits(['update:modelValue', 'shouldSearch', 'select', 'clearI
 const emitUpdateModelValue = () => emit('update:modelValue', keyword.value)
 
 const formatText = (value) => {
+  // eslint-disable-next-line prefer-regex-literals
   const DIACRITCS_REGEXP_PATTERN = new RegExp(/[\u0300-\u036F]/gi)
+  // eslint-disable-next-line prefer-regex-literals
   const SPECIAL_CHARACTERS_REGEXP_PATTERN = new RegExp(/[^A-Za-z\d\s]/g)
   return value.normalize('NFD').replace(DIACRITCS_REGEXP_PATTERN, '').replace(SPECIAL_CHARACTERS_REGEXP_PATTERN, ' ').replace(/ +(?= )/g, '').trim().toUpperCase()
 }
@@ -251,6 +253,7 @@ const onKeydown = (event) => {
       break
     case 'Enter':
       event.preventDefault()
+      // eslint-disable-next-line no-case-declarations
       const selected = mutableOptions.value[arrowCount.value]
       onSelect(selected)
       break
