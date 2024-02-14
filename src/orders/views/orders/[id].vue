@@ -9,11 +9,6 @@ import { ProductDTO } from '~/products/types'
 import { formatCurrency } from '~/common/logic'
 import { PaymentType } from '~/sales/types'
 
-interface OrderResume {
-  name: string
-  count: number
-}
-
 const router = useRoute()
 const order = ref<OrderDto>()
 const modal = useModal()
