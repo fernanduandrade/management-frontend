@@ -10,6 +10,8 @@ import {
   faEllipsisVertical,
   faDollarSign,
   faNoteSticky,
+  faAngleRight,
+  faAngleLeft,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -22,6 +24,8 @@ library.add(
   faEllipsisVertical,
   faDollarSign,
   faNoteSticky,
+  faAngleRight,
+  faAngleLeft,
 )
 
 export default FontAwesomeIcon

@@ -2,24 +2,44 @@
 import useModal from '~/common/logic/use-modal'
 import OrderForm from '~/orders/components/OrderForm.vue'
 import OrderApi from '~/api/Order/OrderApi'
-import { OrderDto } from '~/orders/types'
+import { OrderDto, OrderStatus } from '~/orders/types'
 const storeModal = useModal()
 
 const orders = ref<OrderDto[]>()
+
+const currentStatus = ref<OrderStatus>('ABERTO')
 
 function createOrderModal() {
   storeModal.openModal({ component: markRaw(OrderForm) })
 }
 
 onMounted(async() => {
-  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: 'ABERTO' })
+  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: currentStatus.value })
   orders.value = response.data.items
 })
+
+async function filterByStatus(status: OrderStatus) {
+  currentStatus.value = status
+  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: currentStatus.value })
+  orders.value = response.data.items
+}
 </script>
 
 <template>
   <main class="wrapper">
     <div class="order__actions">
+      <div class="order__status">
+        <span
+          class="order__status__item"
+          :class="{active : currentStatus === 'ABERTO'}"
+          @click="filterByStatus('ABERTO')"
+        >ABERTO</span>
+        <span
+          class="order__status__item"
+          :class="{active : currentStatus === 'FECHADO'}"
+          @click="filterByStatus('FECHADO')"
+        >FECHADO</span>
+      </div>
       <VButton @click="createOrderModal">
         Novo pedido
       </VButton>
@@ -49,5 +69,37 @@ onMounted(async() => {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  align-items: center;
+}
+
+.order__status {
+  background-color: #F1F5F9;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.order__status .active {
+  font-weight: 500;
+  color: black;
+  background-color: #FFFFFF;
+  display: block;
+}
+
+.order__status__item {
+  font-weight: 500;
+  color: #64748b;
+  transition: all .2s ease-in;
+  display: block;
+  border-radius: 9px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.order__status__item:not(.active):hover {
+  color: #333;
 }
 </style>

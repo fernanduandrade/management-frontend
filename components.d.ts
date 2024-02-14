@@ -10,6 +10,7 @@ declare module 'vue' {
     Order: typeof import('./src/orders/components/Order.vue')['default']
     OrderForm: typeof import('./src/orders/components/OrderForm.vue')['default']
     OrderProductForm: typeof import('./src/orders/components/OrderProductForm.vue')['default']
+    Pagination: typeof import('./src/common/components/Pagination/pagination.vue')['default']
     ProductForm: typeof import('./src/products/components/ProductForm.vue')['default']
     SaleForm: typeof import('./src/sales/components/SaleForm.vue')['default']
     Sidenav: typeof import('./src/common/components/SideNav/sidenav.vue')['default']
