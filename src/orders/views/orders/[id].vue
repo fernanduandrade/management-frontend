@@ -7,15 +7,22 @@ import { OrderDto } from '~/orders/types'
 import OrderApi from '~/api/Order/OrderApi'
 import { ProductDTO } from '~/products/types'
 import { formatCurrency } from '~/common/logic'
+import { PaymentType } from '~/sales/types'
+
+interface OrderResume {
+  name: string
+  count: number
+}
 
 const router = useRoute()
 const order = ref<OrderDto>()
 const modal = useModal()
+const selectPayment = ref<PaymentType>()
+
 function addProduct() {
   return modal.openModal({ component: markRaw(OrderProductForm) })
 }
 
-const distinctProducts = ref([])
 const { modalEmitValue } = storeToRefs(modal)
 
 const totalIncoming = computed(() => {
@@ -23,15 +30,25 @@ const totalIncoming = computed(() => {
   if (!value) return 0
 
   return R.pipe(
-    R.map<ProductDTO, number>(R.prop('price')),
+    R.map<ProductDTO, number>(p => p.price * p.quantity),
     R.sum,
   )(value)
 })
 
+async function closeOrder() {
+  await OrderApi.closeOrder(order.value!.id, selectPayment.value!)
+}
+
 watch(modalEmitValue, async(value) => {
   const product = value as ProductDTO
-  await OrderApi.addProductToOrder({ orderId: order.value!.id, productId: product.id })
-  order.value?.products.push(product)
+  const result = await OrderApi.addProductToOrder({ orderId: order.value!.id, productId: product.id })
+  if (order.value?.products.filter(p => p.name === product.name).length === 0) {
+    order.value?.products.push({ ...product, quantity: result.data.quantity })
+    return
+  }
+
+  const index = order.value?.products.findIndex(p => p.name === product.name)
+  order.value!.products[index!].quantity = result.data.quantity
 })
 
 onMounted(async() => {
@@ -40,18 +57,6 @@ onMounted(async() => {
   order.value = response.data
 })
 
-watchEffect(() => {
-  distinctProducts.value = order.value?.products.reduce((acc, product) => {
-    const existingProduct = acc.find(p => p.name === product.name)
-
-    if (existingProduct)
-      existingProduct.count += 1
-    else
-      acc.push({ name: product.name, count: 1 })
-
-    return acc
-  }, [])
-})
 </script>
 
 <template>
@@ -66,12 +71,26 @@ watchEffect(() => {
 
     <h3>Pedidos:</h3>
 
-    <div v-for="(product, index) in distinctProducts" :key="index">
-      {{ product.count }}x {{ product.name }}
+    <div v-for="product in order?.products" :key="product.id">
+      {{ product.quantity }}x {{ product.name }}
     </div>
 
     <div class="order__actions">
       <span class="order__total">Total {{ formatCurrency(totalIncoming) }}</span>
+      <select v-model="selectPayment">
+        <option disabled value="">
+          Forma de pagamento
+        </option>
+        <option>
+          PIX
+        </option>
+        <option>
+          DINHEIRO
+        </option>
+        <option>
+          CARTAO
+        </option>
+      </select>
       <VButton background-color="#f87171" @click="closeOrder">
         ENCERRAR
       </VButton>

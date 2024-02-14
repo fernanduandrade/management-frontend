@@ -14,3 +14,10 @@ export type OrderDto = {
   clientName: string
   products: ProductDTO[]
 }
+
+export type OrderProductDto = {
+  id: string
+  orderId: string
+  productId: string
+  quantity: number
+}

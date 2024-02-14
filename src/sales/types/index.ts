@@ -9,3 +9,5 @@ export type SaleDTO = {
 }
 
 export type CreateSaleDTO = Omit<SaleDTO, 'id'>
+
+export type PaymentType = 'PIX' | 'DINHEIRO' | 'CARTAO'
