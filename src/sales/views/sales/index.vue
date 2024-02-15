@@ -7,7 +7,7 @@ import useModal from '~/common/logic/use-modal'
 import SaleForm from '~/sales/components/SaleForm.vue'
 import { formatCurrency } from '~/common/logic'
 const saleColumn = ref<string[]>([
-  'clientName', 'totalPrice', 'pricePerUnit', 'saleDate', 'quantity',
+  'clientName', 'totalPrice', 'pricePerUnit', 'date', 'quantity',
 ])
 
 const sales = ref<SaleDTO[]>([])

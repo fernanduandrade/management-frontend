@@ -6,9 +6,11 @@ import { OrderDto, OrderStatus } from '~/orders/types'
 const storeModal = useModal()
 
 const orders = ref<OrderDto[]>()
-
+const currentPage = ref(1)
 const currentStatus = ref<OrderStatus>('ABERTO')
-
+const hasNextPage = ref(false)
+const hasPreviousPage = ref(false)
+const totalPages = ref(0)
 function createOrderModal() {
   storeModal.openModal({ component: markRaw(OrderForm) })
 }
@@ -16,12 +18,20 @@ function createOrderModal() {
 onMounted(async() => {
   const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: currentStatus.value })
   orders.value = response.data.items
+  hasPreviousPage.value = response.data.hasPreviousPage
+  hasNextPage.value = response.data.hasNextPage
+  totalPages.value = response.data.totalPages
 })
 
-async function filterByStatus(status: OrderStatus) {
+async function filterByStatus(status: OrderStatus, page: number) {
+  if (currentStatus.value !== status)
+    page = 1
   currentStatus.value = status
-  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: currentStatus.value })
+  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: page, pageSize: 10, status: currentStatus.value })
   orders.value = response.data.items
+  hasPreviousPage.value = response.data.hasPreviousPage
+  hasNextPage.value = response.data.hasNextPage
+  totalPages.value = response.data.totalPages
 }
 </script>
 
@@ -32,12 +42,12 @@ async function filterByStatus(status: OrderStatus) {
         <span
           class="order__status__item"
           :class="{active : currentStatus === 'ABERTO'}"
-          @click="filterByStatus('ABERTO')"
+          @click="filterByStatus('ABERTO', currentPage)"
         >ABERTO</span>
         <span
           class="order__status__item"
           :class="{active : currentStatus === 'FECHADO'}"
-          @click="filterByStatus('FECHADO')"
+          @click="filterByStatus('FECHADO', currentPage)"
         >FECHADO</span>
       </div>
       <VButton @click="createOrderModal">
@@ -49,6 +59,14 @@ async function filterByStatus(status: OrderStatus) {
         <Order :order="order" />
       </div>
     </div>
+    <Pagination
+      :has-next-page="hasNextPage"
+      :has-previous-page="hasPreviousPage"
+      :current-page="currentPage"
+      :total-page="totalPages"
+      @change-page="filterByStatus(currentStatus, $event)"
+      @update-current-page="currentPage = $event"
+    />
   </main>
 </template>
 

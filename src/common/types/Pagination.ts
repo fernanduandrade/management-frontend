@@ -1,4 +1,10 @@
-type Pagination<T> = {
+
+export type PaginateRequest = {
+  pageSize: number
+  pageNumber: number
+}
+
+export interface Paginate<T> {
   items: T[]
   pageNumber: number
   totalPages: number
@@ -9,12 +15,7 @@ type Pagination<T> = {
 
 export type PaginationResponse<T> = {
   message: string
-  data: Pagination<T>
+  data: Paginate<T>
   errors?: string[]
   type: string
-}
-
-export type PaginateRequest = {
-  pageSize: number
-  pageNumber: number
 }
