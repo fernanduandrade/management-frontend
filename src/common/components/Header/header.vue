@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import FontAwesomeIcon from '~/common/modules/fontawesome'
 const router = useRouter()
 const { t } = useI18n()
@@ -29,8 +29,6 @@ const modifySideNav = () => {
         </em>
         Usuário / {{ t(`pages.${router.currentRoute.value.name as string}`) }}
       </div>
-      <div><h1>weeeeee</h1></div>
-      <div></div>
     </header>
   </main>
 </template>
@@ -53,4 +51,4 @@ const modifySideNav = () => {
 .header__sidenav--modify {
   cursor: pointer;
 }
-</style>
+</style> -->

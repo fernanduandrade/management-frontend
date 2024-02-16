@@ -26,13 +26,13 @@ const pages: Page[] = [
 
 <template>
   <nav class="sidenav">
-    <h4 class="sidenav__dashboard">
-      Dashboards
-    </h4>
+    <h1 class="sidenav__app_name">
+      Bar Zaza
+    </h1>
     <div class="sindenav__links">
       <ul v-for="(page, i) in pages" :key="i">
         <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-          <em><font-awesome-icon :icon="`${page.icon}`" width="15" height="15" /></em> &nbsp; {{ page.name }}
+          <em><font-awesome-icon :icon="`${page.icon}`" :class="{ active: (currentPage === page.name) }" width="35" height="35" /></em> &nbsp; {{ page.name }}
         </li>
       </ul>
     </div>
@@ -40,45 +40,55 @@ const pages: Page[] = [
 </template>
 
 <style scoped>
+
 .sidenav {
   height: 100vh;
-  background-color: #333;
-  color: white;
+  background-color: var(--background-color-primary);
+  color: var(--text-black);
   padding: 20px;
-  flex: 0 0 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 17%;
+  gap: 3rem;
 }
 
-.sidenav__dashboard {
-  font-weight: 300;
-  color: rgb(186, 184, 184);
-  margin-bottom: 14px;
+.sidenav__app_name {
+  color: var(--background--hover--text);
+  font-weight: 600;
+  font-size: 3rem;
   display: block;
+  user-select: none;
 }
 
 .sindenav__links {
-  margin-left: 15px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-
+  width: 100%;
 }
 
 .sindenav__link {
-  font-size: 18px;
-  padding: 0px 10px 0px 10px;
-  border-radius: 4px;
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
+  padding: .5rem;
+  border-radius: 12px;
   transition: ease-in .2s;
   font-weight: 400;
+  width: 100%;
+  color: #333;
 }
 
 .sindenav__link.active {
-  border-left: 8px grey solid;
-  background-color: #262626;
+  color: var(--background--hover--text);
+  background-color: var(--background--hover);
 }
 
 .sindenav__link:hover {
   cursor: pointer;
-  background-color: #262626;
+  color: var(--background--hover--text);
+  background-color: var(--background--hover);
 }
 
 .sindenav__link:not(:last-child) {

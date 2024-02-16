@@ -1,21 +1,23 @@
 <script lang="ts" setup>
+import TheSideNav from '../components/SideNav/TheSideNav.vue'
+
 const router = useRouter()
 onMounted(() => router.push('products'))
 
 const showSideNav = ref(true)
-const changeSideNavState = (state: boolean) => {
-  showSideNav.value = state
-}
+// const changeSideNavState = (state: boolean) => {
+//   showSideNav.value = state
+// }
 
 </script>
 
 <template>
   <main id="container">
     <Transition name="slide-fade" mode="out-in">
-      <sidenav v-show="showSideNav" />
+      <TheSideNav v-show="showSideNav" />
     </Transition>
     <div class="main-content">
-      <Header @side-nav-event="changeSideNavState" />
+      <!-- <Header @side-nav-event="changeSideNavState" /> -->
       <div class="content">
         <router-view />
         <VModalWindow />

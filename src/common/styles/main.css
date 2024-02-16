@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --background-color-primary: #ebebeb;
+  --background-color-primary: #FFFDFE;
   --background-color-secondary: #fafafa;
   --background-color-tertiary: #F9FAFE;
   --accent-color: #F5F5F5;
@@ -10,6 +10,9 @@
   --text-secondary-color: #858585;
   --divider-color: #F5F5F5;
   --text-secondary-color: #858585;
+
+  --background--hover: #EBE7FE;
+  --background--hover--text: #5243A0;
 }
 
 /* Define styles for the root window with dark - mode preference */
