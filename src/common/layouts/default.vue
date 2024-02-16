@@ -5,9 +5,9 @@ const router = useRouter()
 onMounted(() => router.push('products'))
 
 const showSideNav = ref(true)
-// const changeSideNavState = (state: boolean) => {
-//   showSideNav.value = state
-// }
+const changeSideNavState = (state: boolean) => {
+  showSideNav.value = state
+}
 
 </script>
 
@@ -17,7 +17,7 @@ const showSideNav = ref(true)
       <TheSideNav v-show="showSideNav" />
     </Transition>
     <div class="main-content">
-      <!-- <Header @side-nav-event="changeSideNavState" /> -->
+      <TheHeader @side-nav-event="changeSideNavState" />
       <div class="content">
         <router-view />
         <VModalWindow />

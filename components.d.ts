@@ -13,6 +13,7 @@ declare module 'vue' {
     Pagination: typeof import('./src/common/components/Pagination/pagination.vue')['default']
     ProductForm: typeof import('./src/products/components/ProductForm.vue')['default']
     SaleForm: typeof import('./src/sales/components/SaleForm.vue')['default']
+    TheHeader: typeof import('./src/common/components/Header/TheHeader.vue')['default']
     TheSideNav: typeof import('./src/common/components/SideNav/TheSideNav.vue')['default']
     VAutoComplete: typeof import('./src/common/components/AutoComplete/v-autoComplete.vue')['default']
     VButton: typeof import('./src/common/components/Button/v-button.vue')['default']

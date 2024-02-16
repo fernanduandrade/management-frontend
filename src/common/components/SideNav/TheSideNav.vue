@@ -32,7 +32,7 @@ const pages: Page[] = [
     <div class="sindenav__links">
       <ul v-for="(page, i) in pages" :key="i">
         <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-          <em><font-awesome-icon :icon="`${page.icon}`" :class="{ active: (currentPage === page.name) }" width="35" height="35" /></em> &nbsp; {{ page.name }}
+          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em> &nbsp; {{ page.name }}
         </li>
       </ul>
     </div>
@@ -51,6 +51,7 @@ const pages: Page[] = [
   align-items: center;
   flex: 0 0 17%;
   gap: 3rem;
+  border-right: var(--accent-color) solid 1px;
 }
 
 .sidenav__app_name {
@@ -71,13 +72,12 @@ const pages: Page[] = [
 .sindenav__link {
   display: flex;
   gap: 1rem;
-  font-size: 2rem;
-  padding: .5rem;
-  border-radius: 12px;
+  font-size: 1.4rem;
+  padding: 1rem;
+  border-radius: 18px;
   transition: ease-in .2s;
   font-weight: 400;
   width: 100%;
-  color: #333;
 }
 
 .sindenav__link.active {
