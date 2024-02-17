@@ -1,102 +1,97 @@
 <script lang="ts" setup>
-import FontAwesomeIcon from '~/common/modules/fontawesome'
-const props = defineProps({
-  totalPage: {
-    type: Number,
-    required: true,
-  },
-  hasPreviousPage: {
-    type: Boolean,
-    required: true,
-  },
-  hasNextPage: {
-    type: Boolean,
-    required: true,
-  },
-  currentPage: {
-    type: Number,
-    required: true,
-  },
-})
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Dropdown from 'primevue/dropdown'
+import { prop } from 'ramda'
 
-const showPages = ref<number>(4)
+interface Pagination {
+  pageNumber: number
+  totalCount: number
+  pageSize: number
+  totalPages: number
+}
 
-const pages = computed(() => {
-  const numShown = Math.min(showPages.value, props.totalPage)
-  let first = props.currentPage - Math.floor(numShown / 2)
-  first = Math.max(first, 1)
-  first = Math.min(first, props.totalPage - numShown + 1)
-  return [...Array(numShown)].map((k, i) => i + first)
-})
+type PageValue = Pick<Pagination, 'pageNumber' | 'pageSize'>
 
 const emit = defineEmits<{
-  (event: 'change-page', value: number): void
-  (event: 'update-current-page', value: number): void
+  (event: 'update-page', value: PageValue): void
 }>()
 
-const eventChangePage = (page: number): void => {
-  emit('change-page', page)
-  emit('update-current-page', page)
-}
-</script>
+const props = defineProps<Pagination>()
 
+const pageSizeOptions = ([
+  { name: '10', value: 10 },
+  { name: '20', value: 20 },
+  { name: '50', value: 50 },
+  { name: '75', value: 75 },
+  { name: '100', value: 100 },
+])
+
+const pageNumberOptions = computed(() => {
+  return Array.from({ length: props.totalPages }, (_, index) => ({
+    name: String(index + 1),
+    value: index + 1,
+  }))
+})
+
+const currentPageSize = ref(10)
+const currentPage = ref(1)
+
+const emitEventPageChange = (pageSize: number, pageNumber: number): void => {
+  const pageValue: PageValue = {
+    pageNumber,
+    pageSize,
+  }
+  emit('update-page', pageValue)
+}
+
+const updatePage = () => {
+  const pageSize = prop('value', currentPageSize.value) || 10
+  const pageNumber = prop('value', currentPage.value) || 1
+  emitEventPageChange(pageSize, pageNumber)
+}
+
+function updateOnArrow(pageNumber: number) {
+  updatePage()
+}
+
+</script>
 <template>
-  <div class="main">
-    <previous-page v-if="hasPreviousPage" class="page" @click="eventChangePage(currentPage - 1)">
-      <font-awesome-icon icon="fa-angle-left" />
-    </previous-page>
-    <div
-      v-for="(page, index) in pages"
-      :key="index"
-      :class="currentPage === page ? 'active-page' : ''"
-      class="page"
-      @click="eventChangePage(page)"
-    >
-      <span class="page-number">{{ page }}</span>
+  <div class="flex justify-between items-center border-t-[1px] p-[10px] border-[#bec1ca]">
+    <div class="flex items-center font-medium text-xl gap-5 text-[#53545C]">
+      <Dropdown
+        v-model="currentPageSize"
+        class="shadow-md"
+        :options="pageSizeOptions"
+        option-label="name"
+        placeholder="10"
+        @update:modelValue="updatePage"
+      />
+
+      <span>Itens por página</span>
+      <span>1-{{ pageSize }} de {{ totalCount }} registros</span>
     </div>
-    <next-page v-if="hasNextPage" class="page" @click="eventChangePage(currentPage + 1)">
-      <font-awesome-icon icon="fa-angle-right" color="#333" />
-    </next-page>
+    <div class="flex items-center text-xl gap-5 text-[#53545C]">
+      <Dropdown
+        v-model="currentPage"
+        class="shadow-md"
+        :options="pageNumberOptions"
+        option-label="name"
+        placeholder="1"
+        @update:modelValue="updatePage"
+      />
+      <span>de {{ totalPages }} páginas</span>
+      <div class="flex gap-4">
+        <font-awesome-icon
+          class="hover:cursor-pointer"
+          icon="fa-angle-left"
+          @click="updateOnArrow(currentPage -= 1)"
+        />
+        <font-awesome-icon
+          class="hover:cursor-pointer"
+          icon="fa-angle-right"
+          @click="updateOnArrow(currentPage += 1)"
+        />
+      </div>
+    </div>
   </div>
 </template>
-
-<style>
-.main {
-  display: flex;
-  max-width: 200px;
-  height: 30px;
-  margin: 0 50px 10px 0;
-  gap: 7px;
-}
-
-.active-page {
-  background-color: purple;
-  color: #ddd;
-}
-
-.active-page:not(.dark-theme) {
-  color: #FFF;
-}
-
-.page {
-  width: 35px;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 7px;
-  color: #333;
-  transition: .2s ease;
-  border: solid 1px #333;
-}
-
-.page:hover {
-  cursor: pointer;
-  background-color: #edcfed;
-}
-
-.page-number {
-  font-size: 14px;
-  font-weight: bold;
-}
-</style>

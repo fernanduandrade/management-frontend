@@ -1,11 +1,9 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import Dropdown from 'primevue/dropdown'
 import ProductApi from '~/api/Product/ProductApi'
 import { ProductDTO } from '~/products/types/index'
 import useModal from '~/common/logic/use-modal'
 import ProductForm from '~/products/components/ProductForm.vue'
-import FontAwesomeIcon from '~/common/modules/fontawesome'
 import { useFilter } from '~/composables/useFilter'
 const productsColumn = ref<string[]>([
   'name', 'price', 'description', 'quantity',
@@ -30,8 +28,8 @@ function createProductModal() {
   storeModal.openModal({ component: markRaw(ProductForm) })
 }
 
-async function getProducts(pageNumber: number) {
-  const { data } = await ProductApi.getProductsPaginate({ pageNumber, pageSize: 10 })
+async function getProducts(pageNumber: number, pageSize: number) {
+  const { data } = await ProductApi.getProductsPaginate({ pageNumber, pageSize })
   products.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
@@ -39,34 +37,19 @@ async function getProducts(pageNumber: number) {
   totalCount.value = data.totalCount
 }
 
+async function changeProductPage(evt: any) {
+  await getProducts(evt.pageNumber, evt.pageSize)
+}
+
 onMounted(async() => {
-  const { data } = await ProductApi.getProductsPaginate({ pageNumber: 1, pageSize: 10 })
-  products.value = data.items
-  hasPreviousPage.value = data.hasPreviousPage
-  hasNextPage.value = data.hasNextPage
-  totalPages.value = data.totalPages
-  totalCount.value = data.totalCount
+  await getProducts(1, 10)
 })
 
-const pageNumberOptions = computed(() => {
-  return Array.from({ length: totalPages.value }, (_, index) => ({
-    name: String(index + 1),
-    value: index + 1,
-  }))
-})
-
-const pageSizeOptions = ref([
-  { name: 10, value: 10 },
-  { name: 20, value: 20 },
-  { name: 50, value: 10 },
-  { name: 75, value: 75 },
-  { name: 10, value: 10 },
-])
 </script>
 <template>
   <main class="container">
     <div class="product__header">
-      <h3 style="color: var(--text-secondary-dark);">
+      <h3 class="text-[25px]">
         Cadastrado de produtos
       </h3>
       <div class="product__actions">
@@ -83,34 +66,13 @@ const pageSizeOptions = ref([
       <template #actions>
       </template>
     </VTable>
-    <div class="flex justify-between items-center border-t-[1px] p-[10px] border-[#bec1ca]">
-      <div class="flex items-center font-medium text-xl gap-5 text-[#53545C]">
-        <Dropdown
-          v-model="pageSize"
-          class="shadow-md"
-          :options="pageSizeOptions"
-          option-label="name"
-          placeholder="10"
-        />
-
-        <span>Itens por página</span>
-        <span>1-{{ pageSize }} de {{ totalCount }} registros</span>
-      </div>
-      <div class="flex items-center text-xl gap-5 text-[#53545C]">
-        <Dropdown
-          v-model="currentPage"
-          class="shadow-md"
-          :options="pageNumberOptions"
-          option-label="name"
-          placeholder="1"
-        />
-        <span>de {{ totalPages }} páginas</span>
-        <div class="flex gap-4">
-          <font-awesome-icon class="hover:cursor-pointer" icon="fa-angle-left" />
-          <font-awesome-icon class="hover:cursor-pointer" icon="fa-angle-right" />
-        </div>
-      </div>
-    </div>
+    <Pagination
+      :total-count="totalCount"
+      :total-pages="totalPages"
+      :page-number="currentPage"
+      :page-size="pageSize"
+      @update-page="changeProductPage"
+    />
   </main>
 </template>
 
