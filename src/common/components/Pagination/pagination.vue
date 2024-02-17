@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-
+import FontAwesomeIcon from '~/common/modules/fontawesome'
 const props = defineProps({
   totalPage: {
     type: Number,
@@ -55,12 +55,12 @@ const eventChangePage = (page: number): void => {
       <span class="page-number">{{ page }}</span>
     </div>
     <next-page v-if="hasNextPage" class="page" @click="eventChangePage(currentPage + 1)">
-      <font-awesome-icon icon="fa-angle-right" />
+      <font-awesome-icon icon="fa-angle-right" color="#333" />
     </next-page>
   </div>
 </template>
 
-<style scoped>
+<style>
 .main {
   display: flex;
   max-width: 200px;
@@ -85,18 +85,18 @@ const eventChangePage = (page: number): void => {
   justify-content: center;
   align-items: center;
   border-radius: 7px;
-  color: #ddd;
+  color: #333;
   transition: .2s ease;
+  border: solid 1px #333;
 }
 
 .page:hover {
-  color: #FFF;
-    cursor: pointer;
-    background-color: #edcfed;
+  cursor: pointer;
+  background-color: #edcfed;
 }
 
 .page-number {
   font-size: 14px;
-
+  font-weight: bold;
 }
 </style>

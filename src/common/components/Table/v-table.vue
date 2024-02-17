@@ -31,12 +31,17 @@ const sortTable = (column: string) => {
     : descend(propName)
   sortedItems.value = sort(sortingFn, props.data)
 }
+
+const selectAll = ref(false)
 </script>
 
 <template>
   <table id="tableComponent">
     <thead class="table__header">
       <tr>
+        <th>
+          <v-checkbox v-model="selectAll" />
+        </th>
         <th v-for="(field, index) in columns" :key="index">
           {{ t(`default_domain_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
             <font-awesome-icon
@@ -52,6 +57,9 @@ const sortTable = (column: string) => {
     </thead>
     <tbody class="table__body">
       <tr v-for="item in sortedItems" :key="item.id">
+        <td>
+          <v-checkbox v-model="selectAll" />
+        </td>
         <td v-for="field in columns" :key="field">
           <span v-if="field==='price'">
             {{ formatCurrency(item[field]) }}
@@ -71,8 +79,6 @@ const sortTable = (column: string) => {
             <font-awesome-icon
               icon="fa-solid fa-ellipsis-vertical"
             >
-              width="15"
-              height="15"
               />
             </font-awesome-icon></em>
           <slot name="actions">
@@ -85,15 +91,29 @@ const sortTable = (column: string) => {
 
 <style scoped>
 table {
-  width: 100%;
   border-collapse: collapse;
+  margin: 15px 0px;
 }
 
 .table__header {
   height: 48px;
-  text-transform: uppercase;
-  color: #3A3541;
-  border: #B9B9B9 solid 1px;
+  font-size: 18px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  color: var(--text-secondary-dark);
+  border-top: #bec1ca solid 1px;
+  border-bottom: #bec1ca solid 1px;
+  text-align: left;
+}
+
+#tableComponent thead tr {
+  text-align: left;
+}
+
+#tableComponent th,
+#tableComponent td {
+  padding: 4px;
+  text-align: left;
 }
 
 .table__sort-icon {
@@ -106,8 +126,9 @@ table {
 
 .table__body {
   text-align: center;
-  color: #7D7D7D;
-  font-size: 1.4rem;
+  color: var(--text-secondary-dark);
+  font-weight: 500;
+  font-size: 1.2em;
 }
 
 .table__actions {

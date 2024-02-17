@@ -12,6 +12,8 @@ import {
   faNoteSticky,
   faAngleRight,
   faAngleLeft,
+  faHome,
+  faMessage,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -26,6 +28,8 @@ library.add(
   faNoteSticky,
   faAngleRight,
   faAngleLeft,
+  faHome,
+  faMessage,
 )
 
 export default FontAwesomeIcon

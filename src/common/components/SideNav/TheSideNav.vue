@@ -15,9 +15,11 @@ const goTo = (page: Page) => {
 }
 
 const pages: Page[] = [
+  { name: 'Dashboard', link: '/dashboards', icon: 'fa-home' },
+  { name: 'Mensagens', link: '/messages', icon: 'fa-message' },
+  { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
   { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
   { name: 'Clientes', link: '/clients', icon: 'fa-users' },
-  { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
   { name: 'Vendas', link: '/sales', icon: 'fa-dollar-sign' },
   { name: 'Relatórios', link: '/reports', icon: 'fa-file-lines' },
 ]
@@ -52,6 +54,13 @@ const pages: Page[] = [
   flex: 0 0 17%;
   gap: 3rem;
   border-right: var(--accent-color) solid 1px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+@media(max-width: 1280px) {
+  .sidenav {
+    flex: 0 0 20%
+  }
 }
 
 .sidenav__app_name {
@@ -72,12 +81,13 @@ const pages: Page[] = [
 .sindenav__link {
   display: flex;
   gap: 1rem;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   padding: 1rem;
   border-radius: 18px;
   transition: ease-in .2s;
   font-weight: 400;
   width: 100%;
+  color: var(--text-secondary-dark);
 }
 
 .sindenav__link.active {

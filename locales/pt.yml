@@ -1,10 +1,12 @@
 pages:
-  products: Products
-  sales: Sales
-  reports: Reports
-  clients: Clients
+  products: Produtos
+  sales: Vendas e Ganhos
+  reports: Relátorios
+  clients: Clientes
   orders: Pedidos
   orders-id: Pedido
+  messages: Mensagens
+  dashboards: Dashboard
 default_domain_keys:
   name: Nome
   description: Descrição

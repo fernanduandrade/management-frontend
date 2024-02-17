@@ -17,6 +17,7 @@ declare module 'vue' {
     TheSideNav: typeof import('./src/common/components/SideNav/TheSideNav.vue')['default']
     VAutoComplete: typeof import('./src/common/components/AutoComplete/v-autoComplete.vue')['default']
     VButton: typeof import('./src/common/components/Button/v-button.vue')['default']
+    VCheckbox: typeof import('./src/common/components/Checkbox/v-checkbox.vue')['default']
     VInfoModalWindow: typeof import('./src/common/components/Modal/v-info-modal-window.vue')['default']
     VInputSearch: typeof import('./src/common/components/Inputs/v-input-search.vue')['default']
     VInputText: typeof import('./src/common/components/Inputs/v-input-text.vue')['default']

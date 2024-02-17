@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background-color-primary: #FFFDFE;
@@ -9,7 +12,7 @@
   --element-size: 6rem;
   --text-secondary-color: #858585;
   --divider-color: #F5F5F5;
-  --text-secondary-color: #858585;
+  --text-secondary-dark: #53545C;
 
   --background--hover: #EBE7FE;
   --background--hover--text: #5243A0;
