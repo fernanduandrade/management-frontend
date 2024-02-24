@@ -35,6 +35,7 @@ const pageNumberOptions = computed(() => {
 
 const currentPageSize = ref(10)
 const currentPage = ref(1)
+const refPage = ref(1)
 
 const emitEventPageChange = (pageSize: number, pageNumber: number): void => {
   const pageValue: PageValue = {
@@ -44,14 +45,25 @@ const emitEventPageChange = (pageSize: number, pageNumber: number): void => {
   emit('update-page', pageValue)
 }
 
-const updatePage = () => {
+function updatePage(changeOnArrow = false) {
   const pageSize = prop('value', currentPageSize.value) || 10
+  if (changeOnArrow) {
+    emitEventPageChange(pageSize, currentPage.value)
+    return
+  }
   const pageNumber = prop('value', currentPage.value) || 1
+  refPage.value = pageNumber
   emitEventPageChange(pageSize, pageNumber)
 }
 
-function updateOnArrow(pageNumber: number) {
-  updatePage()
+function updateOnArrow(action: number) {
+  if ((refPage.value + action) < 1 || (refPage.value + action) > props.totalPages)
+    return
+
+  refPage.value += action
+  currentPage.value = refPage.value
+
+  updatePage(true)
 }
 
 </script>
@@ -63,12 +75,12 @@ function updateOnArrow(pageNumber: number) {
         class="shadow-md"
         :options="pageSizeOptions"
         option-label="name"
-        placeholder="10"
-        @update:modelValue="updatePage"
+        :placeholder="`${currentPageSize}`"
+        @update:modelValue="updatePage(false)"
       />
 
       <span>Itens por página</span>
-      <span>1-{{ pageSize }} de {{ totalCount }} registros</span>
+      <span>1-{{ currentPageSize }} de {{ totalCount }} registros</span>
     </div>
     <div class="flex items-center text-xl gap-5 text-[#53545C]">
       <Dropdown
@@ -76,20 +88,20 @@ function updateOnArrow(pageNumber: number) {
         class="shadow-md"
         :options="pageNumberOptions"
         option-label="name"
-        placeholder="1"
-        @update:modelValue="updatePage"
+        :placeholder="`${currentPage}`"
+        @update:modelValue="updatePage(false)"
       />
       <span>de {{ totalPages }} páginas</span>
       <div class="flex gap-4">
         <font-awesome-icon
           class="hover:cursor-pointer"
           icon="fa-angle-left"
-          @click="updateOnArrow(currentPage -= 1)"
+          @click="updateOnArrow(-1)"
         />
         <font-awesome-icon
           class="hover:cursor-pointer"
           icon="fa-angle-right"
-          @click="updateOnArrow(currentPage += 1)"
+          @click="updateOnArrow(1)"
         />
       </div>
     </div>
