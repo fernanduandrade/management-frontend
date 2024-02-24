@@ -36,6 +36,7 @@ const pageNumberOptions = computed(() => {
 const currentPageSize = ref(10)
 const currentPage = ref(1)
 const refPage = ref(1)
+const refSize = ref(10)
 
 const emitEventPageChange = (pageSize: number, pageNumber: number): void => {
   const pageValue: PageValue = {
@@ -53,6 +54,7 @@ function updatePage(changeOnArrow = false) {
   }
   const pageNumber = prop('value', currentPage.value) || 1
   refPage.value = pageNumber
+  refSize.value = pageSize
   emitEventPageChange(pageSize, pageNumber)
 }
 
@@ -80,7 +82,7 @@ function updateOnArrow(action: number) {
       />
 
       <span>Itens por página</span>
-      <span>1-{{ currentPageSize }} de {{ totalCount }} registros</span>
+      <span>1-{{ refSize }} de {{ totalCount }} registros</span>
     </div>
     <div class="flex items-center text-xl gap-5 text-[#53545C]">
       <Dropdown

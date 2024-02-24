@@ -61,7 +61,7 @@ const selectAll = ref(false)
           <v-checkbox v-model="selectAll" />
         </td>
         <td v-for="field in columns" :key="field">
-          <span v-if="field==='price'">
+          <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">
             {{ formatCurrency(item[field]) }}
           </span>
           <span v-else-if="field==='isActive'">
@@ -108,6 +108,15 @@ table {
 
 #tableComponent thead tr {
   text-align: left;
+}
+
+#tableComponent .table__body tr{
+  border-radius: 8px;
+  transition: all .2s ease-in-out;
+}
+
+#tableComponent .table__body tr:hover {
+  background-color: #bec1ca;
 }
 
 #tableComponent th,

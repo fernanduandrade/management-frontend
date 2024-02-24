@@ -12,11 +12,26 @@ const saleColumn = ref<string[]>([
 
 const sales = ref<SaleDTO[]>([])
 const todaySales = ref(0)
+const currentPage = ref(1)
+const pageSize = ref(10)
+const hasPreviousPage = ref(false)
+const hasNextPage = ref(false)
+const totalPages = ref(0)
+const totalCount = ref(0)
+
 const { search, data } = useFilter(sales, 'clientName')
 
+async function getSales(pageNumber: number, pageSize: number) {
+  const { data } = await SaleApi.getSalesPaginate({ pageNumber, pageSize })
+  sales.value = data.items
+  hasPreviousPage.value = data.hasPreviousPage
+  hasNextPage.value = data.hasNextPage
+  totalPages.value = data.totalPages
+  totalCount.value = data.totalCount
+}
+
 onMounted(async() => {
-  const result = await SaleApi.getSalesPaginate({ pageNumber: 1, pageSize: 10 })
-  sales.value = result.data.items
+  await getSales(1, 10)
 
   const salesOfToday = await SaleApi.todaySales()
   todaySales.value = salesOfToday.data
@@ -32,6 +47,10 @@ watch(modalEmitValue, (value) => {
 
 function createSaleModal() {
   storeModal.openModal({ component: markRaw(SaleForm) })
+}
+
+async function changeSalesPage(evt: any) {
+  await getSales(evt.pageNumber, evt.pageSize)
 }
 
 </script>
@@ -55,6 +74,14 @@ function createSaleModal() {
       <template #actions>
       </template>
     </VTable>
+
+    <Pagination
+      :total-count="totalCount"
+      :total-pages="totalPages"
+      :page-number="currentPage"
+      :page-size="pageSize"
+      @update-page="changeSalesPage"
+    />
   </main>
 </template>
 
@@ -63,7 +90,12 @@ function createSaleModal() {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: var(--background-color-primary);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  padding: 1.5rem;
 }
+
 .sale__actions {
   display: flex;
   justify-content: space-between;
