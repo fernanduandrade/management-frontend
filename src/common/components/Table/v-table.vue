@@ -7,6 +7,13 @@ type TableProps<T> = {
   columns: string[]
   data: T[]
 }
+
+const orderStatus = {
+  ABERTO: { bg: '#E3E5FC', color: '#537BFA' },
+  FECHADO: { bg: '#DFEDE6', color: '#7FB48E' },
+  AGUARDANDO: { bg: '#FFF2E3', color: '#333' },
+}
+
 const props = defineProps<TableProps<any>>()
 
 const sortedItems = ref<any[]>([])
@@ -66,6 +73,13 @@ const selectAll = ref(false)
           </span>
           <span v-else-if="field==='isActive'">
             {{ item[field] ? 'ativo' : 'desativado' }}
+          </span>
+          <span
+            v-else-if="field==='status'"
+            :style="`background-color: ${(orderStatus as any)[item[field]].bg}; color: ${(orderStatus as any)[item[field]].color}`"
+            :class="`block rounded-md p-1 w-fit font-bold`"
+          >
+            {{ item[field] }} {{ }}
           </span>
           <span v-else-if="field.toLowerCase().includes('date')">
             {{ new Date(item[field]).toLocaleDateString('pt-BR') }}

@@ -7,7 +7,7 @@ import { useFilter } from '~/composables'
 const storeModal = useModal()
 
 const orderColumns = ref<string[]>([
-  'clientName', 'status',
+  'clientName', 'date', 'status',
 ])
 
 const orders = ref<OrderDto[]>([])
