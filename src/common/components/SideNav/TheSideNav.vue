@@ -14,6 +14,9 @@ const goTo = (page: Page) => {
   router.push(page.link)
 }
 
+onMounted(() => {
+  currentPage.value = 'dashboards'
+})
 const pages: Page[] = [
   { name: 'Dashboard', link: '/dashboards', icon: 'fa-home' },
   { name: 'Mensagens', link: '/messages', icon: 'fa-message' },

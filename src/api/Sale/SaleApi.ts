@@ -28,6 +28,13 @@ class SaleApi implements ISaleApi {
     return result
   }
 
+  async monthSales(): Promise<IResponseDTO<number>> {
+    const url = 'http://localhost:5019/api/v1/saleshistory/month'
+    const reponse = await apiService.get<IResponseDTO<number>>(url)
+    const result = reponse.get()
+    return result
+  }
+
   updateSale(): Promise<void> {
     throw new Error('Method not implemented.')
   }

@@ -5,13 +5,11 @@ import { SaleDTO } from '~/sales/types/index'
 import { useFilter } from '~/composables/index'
 import useModal from '~/common/logic/use-modal'
 import SaleForm from '~/sales/components/SaleForm.vue'
-import { formatCurrency } from '~/common/logic'
 const saleColumn = ref<string[]>([
-  'clientName', 'totalPrice', 'pricePerUnit', 'date', 'quantity',
+  'clientName', 'totalPrice', 'pricePerUnit', 'productName', 'date', 'quantity',
 ])
 
 const sales = ref<SaleDTO[]>([])
-const todaySales = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(10)
 const hasPreviousPage = ref(false)
@@ -32,9 +30,6 @@ async function getSales(pageNumber: number, pageSize: number) {
 
 onMounted(async() => {
   await getSales(1, 10)
-
-  const salesOfToday = await SaleApi.todaySales()
-  todaySales.value = salesOfToday.data
 })
 
 const storeModal = useModal()
@@ -57,9 +52,6 @@ async function changeSalesPage(evt: any) {
 <template>
   <main class="container">
     <div class="sale__actions">
-      <h2 class="sale__made">
-        Vendas do dia {{ formatCurrency(todaySales) }}
-      </h2>
       <div class="sale__inputs">
         <VInputSearch v-model="search" placeholder="Pesquise pelo nome do cliente" />
         <VButton @click="createSaleModal">

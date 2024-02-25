@@ -24,6 +24,7 @@ default_domain_keys:
   priceperunit: Preço da unidade
   totalprice: Total
   date: Data
+  productname: Produto
 
 table:
   actions: Ações

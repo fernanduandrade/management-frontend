@@ -2,7 +2,7 @@
 import TheSideNav from '../components/SideNav/TheSideNav.vue'
 
 const router = useRouter()
-onMounted(() => router.push('products'))
+onMounted(() => router.push('dashboards'))
 
 const showSideNav = ref(true)
 const changeSideNavState = (state: boolean) => {
