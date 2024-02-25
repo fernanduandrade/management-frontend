@@ -1,6 +1,6 @@
 import { ProductDTO } from '~/products/types'
 
-export type OrderStatus = 'ABERTO' | 'AGUARDANDO' | 'FECHADO'
+export type OrderStatus = 'ABERTO' | 'AGUARDANDO' | 'FECHADO' | 'TODOS'
 
 export type Order = {
   status: OrderStatus

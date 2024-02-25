@@ -3,78 +3,103 @@ import useModal from '~/common/logic/use-modal'
 import OrderForm from '~/orders/components/OrderForm.vue'
 import OrderApi from '~/api/Order/OrderApi'
 import { OrderDto, OrderStatus } from '~/orders/types'
+import { useFilter } from '~/composables'
 const storeModal = useModal()
 
-const orders = ref<OrderDto[]>()
+const orderColumns = ref<string[]>([
+  'clientName', 'status',
+])
+
+const orders = ref<OrderDto[]>([])
 const currentPage = ref(1)
-const currentStatus = ref<OrderStatus>('ABERTO')
-const hasNextPage = ref(false)
+const currentPageSize = ref(10)
+const currentStatus = ref<OrderStatus>('TODOS')
+const pageSize = ref(10)
 const hasPreviousPage = ref(false)
+const hasNextPage = ref(false)
 const totalPages = ref(0)
+const totalCount = ref(0)
+
+const { search, data } = useFilter(orders, 'clientName')
+
 function createOrderModal() {
   storeModal.openModal({ component: markRaw(OrderForm) })
 }
 
+async function getOrders(pageSize: number, pageNumber: number) {
+  const { data } = await OrderApi.getOrderStatusPaginated({ pageNumber, pageSize, status: currentStatus.value })
+  orders.value = data.items
+  hasPreviousPage.value = data.hasPreviousPage
+  hasNextPage.value = data.hasNextPage
+  totalPages.value = data.totalPages
+  totalCount.value = data.totalCount
+}
+
 onMounted(async() => {
-  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: 1, pageSize: 10, status: currentStatus.value })
-  orders.value = response.data.items
-  hasPreviousPage.value = response.data.hasPreviousPage
-  hasNextPage.value = response.data.hasNextPage
-  totalPages.value = response.data.totalPages
+  await getOrders(10, 1)
 })
 
-async function filterByStatus(status: OrderStatus, page: number) {
-  if (currentStatus.value !== status)
-    page = 1
+async function changeOrderPage(evt: any) {
+  currentPage.value = evt.pageNumber
+  currentPageSize.value = evt.pageSize
+  await getOrders(evt.pageSize, evt.pageNumber)
+}
+
+async function filterByStatus(status: OrderStatus) {
+  orders.value = orders.value = []
   currentStatus.value = status
-  const response = await OrderApi.getOrderStatusPaginated({ pageNumber: page, pageSize: 10, status: currentStatus.value })
-  orders.value = response.data.items
-  hasPreviousPage.value = response.data.hasPreviousPage
-  hasNextPage.value = response.data.hasNextPage
-  totalPages.value = response.data.totalPages
+  await getOrders(currentPageSize.value, currentPage.value)
 }
 </script>
 
 <template>
-  <main class="wrapper">
+  <main class="container">
     <div class="order__actions">
       <div class="order__status">
         <span
           class="order__status__item"
+          :class="{active : currentStatus === 'TODOS'}"
+          @click="filterByStatus('TODOS')"
+        >TODOS</span>
+        <span
+          class="order__status__item"
           :class="{active : currentStatus === 'ABERTO'}"
-          @click="filterByStatus('ABERTO', currentPage)"
+          @click="filterByStatus('ABERTO')"
         >ABERTO</span>
         <span
           class="order__status__item"
           :class="{active : currentStatus === 'FECHADO'}"
-          @click="filterByStatus('FECHADO', currentPage)"
+          @click="filterByStatus('FECHADO')"
         >FECHADO</span>
       </div>
       <VButton @click="createOrderModal">
         Novo pedido
       </VButton>
     </div>
-    <div class="order">
-      <div v-for="order in orders" :key="order.id">
-        <Order :order="order" />
-      </div>
-    </div>
+    <VTable
+      :columns="orderColumns"
+      :data="data"
+    />
     <Pagination
-      :has-next-page="hasNextPage"
-      :has-previous-page="hasPreviousPage"
-      :current-page="currentPage"
-      :total-page="totalPages"
-      @change-page="filterByStatus(currentStatus, $event)"
-      @update-current-page="currentPage = $event"
+      :total-count="totalCount"
+      :total-pages="totalPages"
+      :page-number="currentPage"
+      :page-size="pageSize"
+      @update-page="changeOrderPage"
     />
   </main>
 </template>
 
 <style scoped>
-.wrapper {
+
+.container {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: var(--background-color-primary);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  padding: 1.5rem;
 }
 
 .order {

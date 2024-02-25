@@ -19,12 +19,13 @@ default_domain_keys:
   credit: Crédito
   lastname: Sobrenome
   saledate: Data da venda
-  clientname: Nome do cliente
+  clientname: Cliente
   productId: 1
   priceperunit: Preço da unidade
   totalprice: Total
   date: Data
   productname: Produto
+  status: Status
 
 table:
   actions: Ações
