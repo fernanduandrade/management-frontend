@@ -6,16 +6,21 @@ import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { ClientDTO } from '~/clients/types'
 
 class ClientApi implements IClientApi {
-  constructor() {}
+  private uri: string
+
+  constructor() {
+    this.uri = import.meta.env.VITE_API
+  }
+
   async getClientsPaginate(query: PaginateRequest): Promise<GetClientPaginateResponse> {
-    const url = `http://localhost:5019/api/v1/clients?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
+    const url = `${this.uri}clients?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetClientPaginateResponse>(url)
     const result = reponse.get()
     return result
   }
 
   async createClient(payload: PostClientRequest): Promise<IResponseDTO<ClientDTO>> {
-    const url = 'http://localhost:5019/api/v1/clients'
+    const url = `${this.uri}clients`
     const reponse = await apiService.post<PostClientRequest, IResponseDTO<ClientDTO>>(url, payload)
     const result = reponse.get()
     return result

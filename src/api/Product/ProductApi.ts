@@ -7,9 +7,14 @@ import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { ProductDTO } from '~/products/types'
 
 class ProductApi implements IProductApi {
-  constructor() {}
+  private uri
+
+  constructor() {
+    this.uri = import.meta.env.VITE_API
+  }
+
   async createProduct(payload: PostProductRequest): Promise<IResponseDTO<ProductDTO>> {
-    const url = 'http://localhost:5019/api/v1/products'
+    const url = `${this.uri}products`
     const reponse = await apiService.post<PostProductRequest, IResponseDTO<ProductDTO>>(url, payload)
     const result = reponse.get()
     return result
@@ -28,14 +33,14 @@ class ProductApi implements IProductApi {
   }
 
   async getProductsPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse> {
-    const url = `http://localhost:5019/api/v1/Products?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
+    const url = `${this.uri}Products?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetProductPaginateResponse>(url)
     const result = reponse.get()
     return result
   }
 
   async getProductAutoComplete(search: string): Promise<GetProductAutoCompleteResponse> {
-    const url = `http://localhost:5019/api/v1/Products/AutoComplete?search=${search}`
+    const url = `${this.uri}Products/AutoComplete?search=${search}`
     const reponse = await apiService.get<GetProductAutoCompleteResponse>(url)
     const result = reponse.get()
     return result
