@@ -62,9 +62,8 @@ onMounted(async() => {
     <VTable
       :columns="productsColumn"
       :data="data"
+      page="products"
     >
-      <template #actions>
-      </template>
     </VTable>
     <Pagination
       :total-count="totalCount"

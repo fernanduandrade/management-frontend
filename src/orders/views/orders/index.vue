@@ -72,6 +72,7 @@ async function filterByStatus(status: OrderStatus) {
           @click="filterByStatus('FECHADO')"
         >FECHADO</span>
       </div>
+      <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
       <VButton @click="createOrderModal">
         Novo pedido
       </VButton>
@@ -79,7 +80,9 @@ async function filterByStatus(status: OrderStatus) {
     <VTable
       :columns="orderColumns"
       :data="data"
-    />
+      page="orders"
+    >
+    </VTable>
     <Pagination
       :total-count="totalCount"
       :total-pages="totalPages"

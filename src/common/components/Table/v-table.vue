@@ -3,9 +3,11 @@ import { sort, prop, ascend, descend } from 'ramda'
 import FontAwesomeIcon from '~/common/modules/fontawesome'
 import { formatCurrency } from '~/common/logic'
 const { t } = useI18n()
+const router = useRouter()
 type TableProps<T> = {
   columns: string[]
   data: T[]
+  page: string
 }
 
 const orderStatus = {
@@ -39,16 +41,16 @@ const sortTable = (column: string) => {
   sortedItems.value = sort(sortingFn, props.data)
 }
 
-const selectAll = ref(false)
+function goTo(id: string) {
+  console.log(props.page)
+  router.push(`/${props.page}/${id}`)
+}
 </script>
 
 <template>
   <table id="tableComponent">
     <thead class="table__header">
       <tr>
-        <th>
-          <v-checkbox v-model="selectAll" />
-        </th>
         <th v-for="(field, index) in columns" :key="index">
           {{ t(`default_domain_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
             <font-awesome-icon
@@ -64,9 +66,6 @@ const selectAll = ref(false)
     </thead>
     <tbody class="table__body">
       <tr v-for="item in sortedItems" :key="item.id">
-        <td>
-          <v-checkbox v-model="selectAll" />
-        </td>
         <td v-for="field in columns" :key="field">
           <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">
             {{ formatCurrency(item[field]) }}
@@ -89,11 +88,10 @@ const selectAll = ref(false)
           </span>
         </td>
         <td class="table__actions">
-          <em>
+          <em @click="goTo(item['id'])">
             <font-awesome-icon
-              icon="fa-solid fa-ellipsis-vertical"
+              icon="fa-chevron-right"
             >
-              />
             </font-awesome-icon></em>
           <slot name="actions">
           </slot>

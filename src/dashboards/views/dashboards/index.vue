@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import OrderApi from '~/api/Order/OrderApi'
 import SaleApi from '~/api/Sale/SaleApi'
 import { formatCurrency, useOdometer } from '~/common/logic'
 import FontAwesomeIcon from '~/common/modules/fontawesome'
@@ -6,11 +7,21 @@ import FontAwesomeIcon from '~/common/modules/fontawesome'
 const todaySales = ref(0)
 const monthSales = ref(0)
 
+const totalOrder = ref(0)
+const totalOpen = ref(0)
+const totalClosed = ref(0)
+
 onMounted(async() => {
   const salesOfToday = await SaleApi.todaySales()
   useOdometer(todaySales, salesOfToday.data, 1200)
   const salesOfMonth = await SaleApi.monthSales()
   useOdometer(monthSales, salesOfMonth.data, 1200)
+
+  const orderAnalytics = await OrderApi.analytics()
+
+  useOdometer(totalOrder, orderAnalytics.data.total, 400)
+  useOdometer(totalOpen, orderAnalytics.data.open, 400)
+  useOdometer(totalClosed, orderAnalytics.data.closed, 400)
 })
 </script>
 
@@ -32,6 +43,28 @@ onMounted(async() => {
         </div>
       </div>
     </div>
+
+    <div class="today__sale__stats">
+      <div class="flex gap-3 justify-between">
+        <font-awesome-icon icon="fa-note-sticky" color="#5243A0" class="bg-purple-200 p-3 rounded-md" />
+        <span class="today__sale__header">Análise de pedidos</span>
+      </div>
+      <div class="sale__made flex justify-around w-[100%]">
+        <div class="flex flex-col items-center">
+          <span class="text-gray-600 text-lg">Total</span>
+          <span class="font-bold"> {{ totalOrder }} </span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="text-gray-600 text-lg">Em Abertos</span>
+          <span class="font-bold"> {{ totalOpen }} </span>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <span class="text-gray-600 text-lg">Fechados</span>
+          <span class="font-bold"> {{ totalClosed }} </span>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -39,6 +72,7 @@ onMounted(async() => {
 .wrapper {
   display: flex;
   flex-wrap: wrap;
+  gap: 30px;
 }
 
 .today__sale__stats {

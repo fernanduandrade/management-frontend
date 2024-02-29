@@ -60,10 +60,8 @@ async function changeClientPage(evt: any) {
     <VTable
       :columns="clientColumn"
       :data="data"
-    >
-      <template #actions>
-      </template>
-    </VTable>
+      page="clients"
+    />
     <Pagination
       :total-count="totalCount"
       :total-pages="totalPages"

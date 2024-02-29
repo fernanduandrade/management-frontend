@@ -14,6 +14,7 @@ import {
   faAngleLeft,
   faHome,
   faMessage,
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -30,6 +31,7 @@ library.add(
   faAngleLeft,
   faHome,
   faMessage,
+  faChevronRight,
 )
 
 export default FontAwesomeIcon

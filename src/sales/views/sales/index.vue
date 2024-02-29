@@ -62,6 +62,7 @@ async function changeSalesPage(evt: any) {
     <VTable
       :columns="saleColumn"
       :data="data"
+      page="sales"
     >
       <template #actions>
       </template>

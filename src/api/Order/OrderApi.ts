@@ -3,6 +3,7 @@ import { AddOrderRequest } from './request/AddOrderRequest'
 import { AddProductToOrderRequest } from './request/AddProductToOrder'
 import { GetOrderStatusPaginatedRequest } from './request/GetOrderStatusPaginatedRequest'
 import { GetOrderPaginateResponse } from './response/GetOrderPaginatedResponse'
+import { AnalyticsDto } from './response/AnalyticsResponse'
 import { OrderDto, OrderProductDto } from '~/orders/types'
 import { IResponseDTO } from '~/common/types'
 import { PaymentType } from '~/sales/types'
@@ -49,6 +50,12 @@ class OrderApi {
   async closeOrder(id: string, paymentType: PaymentType): Promise<void> {
     const url = `${this.uri}orders/close?orderId=${id}&paymentType=${paymentType}`
     await apiService.get<IResponseDTO<any>>(url)
+  }
+
+  async analytics(): Promise<IResponseDTO<AnalyticsDto>> {
+    const url = `${this.uri}orders/analytics`
+    const response = await apiService.get<IResponseDTO<AnalyticsDto>>(url)
+    return response.get()
   }
 }
 
