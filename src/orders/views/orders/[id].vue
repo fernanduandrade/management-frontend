@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import * as R from 'ramda'
+import Dropdown from 'primevue/dropdown'
+import PrimeButton from 'primevue/button'
 import useModal from '~/common/logic/use-modal'
 import OrderProductForm from '~/orders/components/OrderProductForm.vue'
 import { OrderDto } from '~/orders/types'
@@ -8,6 +10,9 @@ import OrderApi from '~/api/Order/OrderApi'
 import { ProductDTO } from '~/products/types'
 import { formatCurrency } from '~/common/logic'
 import { PaymentType } from '~/sales/types'
+import useToast from '~/composables/useToast'
+
+const toast = useToast()
 
 const router = useRoute()
 const order = ref<OrderDto>()
@@ -34,8 +39,23 @@ async function closeOrder() {
   await OrderApi.closeOrder(order.value!.id, selectPayment.value!)
 }
 
+const findProduct = (list: ProductDTO[], name: string) => {
+  const operation = R.pipe(
+    R.map<ProductDTO, string>(x => x.name),
+    R.includes(name),
+  )
+
+  return operation(list)
+}
+
 watch(modalEmitValue, async(value) => {
   const product = value as ProductDTO
+  const hasProduct = findProduct(order.value!.products, product.name)
+  if (hasProduct) {
+    toast.info('Produto já incluido.')
+    return
+  }
+
   const result = await OrderApi.addProductToOrder({ orderId: order.value!.id, productId: product.id })
   if (order.value?.products.filter(p => p.name === product.name).length === 0) {
     order.value?.products.push({ ...product, quantity: result.data.quantity })
@@ -52,43 +72,63 @@ onMounted(async() => {
   order.value = response.data
 })
 
+const paymentOptions = [
+  { value: 'PIX', name: 'PIX' },
+  { value: 'CARTAO', name: 'CARTÃO' },
+  { value: 'DINHEIRO', name: 'DINHEIRO' },
+]
+
+const selectedPayment = ref({ name: '', value: '' })
 </script>
 
 <template>
-  <main class="wrapper">
+  <main class="wrapper shadow-sm">
     <div class="order__actions">
+      <h1 class="text-2xl font-mono">
+        {{ order?.clientName }}
+      </h1>
       <VButton @click="addProduct">
         Incluir produto
       </VButton>
     </div>
 
-    <h1>{{ order?.clientName }}</h1>
+    <div class="flex gap-2 flex-col">
+      <h3 class="text-xl">
+        Pedidos:
+      </h3>
 
-    <h3>Pedidos:</h3>
+      <div v-for="product in order?.products" :key="product.id" class="flex gap-1 flex-col">
+        <div class="flex items-center gap-1">
+          <span>
+            {{ product.name }}
+          </span>
+          <div class="rounded-md border-solid border-2 border-gray-200 p-1 flex gap-2 items-center">
+            <PrimeButton label="+" class="w-[20px] font-bold text-xl text-blue-500 h-[25px]" />
+            <span>{{ product.quantity }}</span>
+            <PrimeButton label="-" class="w-[20px] font-bold text-xl text-blue-500 h-[25px] " />
+          </div>
+        </div>
+      </div>
 
-    <div v-for="product in order?.products" :key="product.id">
-      {{ product.quantity }}x {{ product.name }}
+      <hr class="w-[30%]" />
+
+      <span class="order__total">Total {{ formatCurrency(totalIncoming) }}</span>
     </div>
 
     <div class="order__actions">
-      <span class="order__total">Total {{ formatCurrency(totalIncoming) }}</span>
-      <select v-model="selectPayment">
-        <option disabled value="">
-          Forma de pagamento
-        </option>
-        <option>
-          PIX
-        </option>
-        <option>
-          DINHEIRO
-        </option>
-        <option>
-          CARTAO
-        </option>
-      </select>
-      <VButton background-color="#f87171" @click="closeOrder">
-        ENCERRAR
-      </VButton>
+      <div></div>
+      <div class="flex gap-2">
+        <Dropdown
+          v-model="selectedPayment"
+          class="shadow-md w-[150px]"
+          :options="paymentOptions"
+          option-label="name"
+          placeholder="Forma de pagamento"
+        />
+        <VButton background-color="#f87171" @click="closeOrder">
+          ENCERRAR
+        </VButton>
+      </div>
     </div>
   </main>
 </template>
@@ -98,11 +138,14 @@ onMounted(async() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: #FFFFFF;
+  padding: 2rem;
+  border-radius: 9px;
 }
 
 .order__actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
   align-items: center;
 }

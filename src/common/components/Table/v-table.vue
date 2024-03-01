@@ -42,7 +42,6 @@ const sortTable = (column: string) => {
 }
 
 function goTo(id: string) {
-  console.log(props.page)
   router.push(`/${props.page}/${id}`)
 }
 </script>
@@ -128,7 +127,7 @@ table {
 }
 
 #tableComponent .table__body tr:hover {
-  background-color: #bec1ca;
+  background-color: #f0f1f3;
 }
 
 #tableComponent th,
@@ -154,9 +153,11 @@ table {
 
 .table__actions {
   transition: all .2s ease-in;
+
 }
 
 .table__actions:hover {
   cursor: pointer;
+  transform: scale(0.90);
 }
 </style>
