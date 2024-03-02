@@ -20,7 +20,7 @@ onUnmounted(() => {
 
 <template>
   <Teleport to="body">
-    <Transition>
+    <Transition name="top-to-middle">
       <div
         v-if="store.modalState.component"
         class="modal-wrapper"
@@ -39,14 +39,19 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.v-enteder-from,
-.v-enter-to {
-  opacity: 0;
+.top-to-middle-enter-active,
+.top-to-middle-leave-active {
+  transition: transform 0.5s;
 }
 
-.v-enter-active,
-.v-leaver-active {
-  transition: 0.25s ease all;
+.top-to-middle-enter-from,
+.top-to-middle-leave-to {
+  transform: translateY(-100%);
+}
+
+.top-to-middle-enter-to,
+.top-to-middle-leave-from {
+  transform: translateY(0);
 }
 
 .modal-wrapper {
@@ -54,10 +59,9 @@ onUnmounted(() => {
   left: 0;
   top: 0;
   z-index: 500;
-
   width: 100vw;
-  height: 100vh;
   background: rgba(0, 0, 0, 0.2);
+  height: 100vh;
   display: grid;
   place-items: center;
 }
