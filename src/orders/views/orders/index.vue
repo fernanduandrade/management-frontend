@@ -47,6 +47,12 @@ async function changeOrderPage(evt: any) {
 
 async function filterByStatus(status: OrderStatus) {
   orders.value = orders.value = []
+
+  if (currentStatus.value !== status) {
+    currentPage.value = 1
+    currentPageSize.value = 10
+  }
+
   currentStatus.value = status
   await getOrders(currentPageSize.value, currentPage.value)
 }

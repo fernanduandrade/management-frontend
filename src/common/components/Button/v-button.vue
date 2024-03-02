@@ -2,6 +2,7 @@
 
 type ButtonProps = {
   backgroundColor?: string
+  disabled?: boolean
   funcCallBack?: Function
 }
 
@@ -17,7 +18,7 @@ const add = () => algo.value += (1 + 1)
 
 <template>
   <div class="wrapper-button">
-    <button type="button" class="button" @click="add">
+    <button type="button" class="button" :disabled="disabled" @click="add">
       <slot></slot>
     </button>
   </div>
@@ -45,5 +46,9 @@ const add = () => algo.value += (1 + 1)
 .button:hover {
   opacity: 0.9;
   cursor: pointer;
+}
+
+button:disabled {
+  @apply bg-slate-300 hover:cursor-not-allowed
 }
 </style>

@@ -66,6 +66,20 @@ watch(modalEmitValue, async(value) => {
   order.value!.products[index!].quantity = result.data.quantity
 })
 
+async function incrementProduct(id: string) {
+  const index = order.value?.products.findIndex(p => p.id === id)
+  order.value!.products[index!].quantity += 1
+  await OrderApi.addProductToOrder({ orderId: order.value!.id, productId: id })
+}
+
+async function decrementProduct(id: string) {
+  await OrderApi.removeProduct(id, order.value!.id)
+  const index = order.value?.products.findIndex(p => p.id === id)
+  order.value!.products[index!].quantity -= 1
+  if (order.value!.products[index!].quantity === 0)
+    order.value?.products.splice(index!, 1)
+}
+
 onMounted(async() => {
   const orderId = router.params.id as string
   const response = await OrderApi.getById(orderId)
@@ -87,7 +101,7 @@ const selectedPayment = ref({ name: '', value: '' })
       <h1 class="text-2xl font-mono">
         {{ order?.clientName }}
       </h1>
-      <VButton @click="addProduct">
+      <VButton :disabled="order?.status === 'FECHADO'" @click="addProduct">
         Incluir produto
       </VButton>
     </div>
@@ -103,9 +117,19 @@ const selectedPayment = ref({ name: '', value: '' })
             {{ product.name }}
           </span>
           <div class="rounded-md border-solid border-2 border-gray-200 p-1 flex gap-2 items-center">
-            <PrimeButton label="+" class="w-[20px] font-bold text-xl text-blue-500 h-[25px]" />
+            <PrimeButton
+              label="+"
+              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
+              :disabled="order?.status === 'FECHADO'"
+              @click="incrementProduct(product.id)"
+            />
             <span>{{ product.quantity }}</span>
-            <PrimeButton label="-" class="w-[20px] font-bold text-xl text-blue-500 h-[25px] " />
+            <PrimeButton
+              label="-"
+              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
+              :disabled="order?.status === 'FECHADO'"
+              @click="decrementProduct(product.id)"
+            />
           </div>
         </div>
       </div>
@@ -125,7 +149,7 @@ const selectedPayment = ref({ name: '', value: '' })
           option-label="name"
           placeholder="Forma de pagamento"
         />
-        <VButton background-color="#f87171" @click="closeOrder">
+        <VButton background-color="#f87171" :disabled="order?.status === 'FECHADO'" @click="closeOrder">
           ENCERRAR
         </VButton>
       </div>
