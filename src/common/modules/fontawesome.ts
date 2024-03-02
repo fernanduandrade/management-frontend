@@ -15,6 +15,7 @@ import {
   faHome,
   faMessage,
   faChevronRight,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { UserModule } from '~/types'
 
@@ -33,6 +34,7 @@ library.add(
   faHome,
   faMessage,
   faChevronRight,
+  faXmark,
 )
 
 export const install: UserModule = ({ app }) => {

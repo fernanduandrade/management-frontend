@@ -12,11 +12,12 @@ import { PaymentType } from '~/sales/types'
 import useToast from '~/composables/useToast'
 
 const toast = useToast()
+const router = useRouter()
+const route = useRoute()
 
-const router = useRoute()
 const order = ref<OrderDto>()
 const modal = useModal()
-const selectPayment = ref<PaymentType>()
+const selectPayment = ref<{name: string; value: PaymentType | null}>({ name: '', value: null })
 
 function addProduct() {
   return modal.openModal({ component: markRaw(OrderProductForm) })
@@ -35,7 +36,12 @@ const totalIncoming = computed(() => {
 })
 
 async function closeOrder() {
-  await OrderApi.closeOrder(order.value!.id, selectPayment.value!)
+  if (!selectPayment.value.value) {
+    toast.info('Selecione a forma do pagamento')
+    return
+  }
+  await OrderApi.closeOrder(order.value!.id, selectPayment.value!.value!)
+  router.back()
 }
 
 const findProduct = (list: ProductDTO[], name: string) => {
@@ -80,7 +86,7 @@ async function decrementProduct(id: string) {
 }
 
 onMounted(async() => {
-  const orderId = router.params.id as string
+  const orderId = route.params.id as string
   const response = await OrderApi.getById(orderId)
   order.value = response.data
 })
@@ -91,7 +97,6 @@ const paymentOptions = [
   { value: 'DINHEIRO', name: 'DINHEIRO' },
 ]
 
-const selectedPayment = ref({ name: '', value: '' })
 </script>
 
 <template>
@@ -142,7 +147,7 @@ const selectedPayment = ref({ name: '', value: '' })
       <div></div>
       <div class="flex gap-2">
         <Dropdown
-          v-model="selectedPayment"
+          v-model="selectPayment"
           class="shadow-md w-[150px]"
           :options="paymentOptions"
           option-label="name"

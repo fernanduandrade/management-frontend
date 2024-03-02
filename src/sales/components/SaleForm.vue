@@ -81,10 +81,6 @@ async function createSale() {
 .wrapper {
   width: 600px;
   height: 650px;
-  background-color: #FFFFFF;
-  padding: 1rem;
-
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;

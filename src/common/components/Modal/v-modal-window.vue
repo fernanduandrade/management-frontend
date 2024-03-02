@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import useModalStore from '~/common/logic/use-modal'
 
-const store = useModalStore()
+const store = useModal()
 
 function keyDownListener(event: KeyboardEvent) {
   if (event.key === 'Escape')
@@ -20,7 +19,7 @@ onUnmounted(() => {
 
 <template>
   <Teleport to="body">
-    <Transition name="top-to-middle">
+    <Transition name="modal-appear">
       <div
         v-if="store.modalState.component"
         class="modal-wrapper"
@@ -29,7 +28,22 @@ onUnmounted(() => {
         tabindex="-1"
         @click.self="store.closeModal"
       >
-        <div class="p2 bg-slate-600 rounded-md shadow-sm">
+        <div class="p-4 shadow-sm bg-white rounded-md flex flex-col gap-3">
+          <header class="flex justify-between">
+            <div class="self-center">
+              <h4 class="font-bold text-[20px]">
+                {{ store.modalState.title }}
+              </h4>
+              <span class="text-gray-600">Insira informações para abaixo</span>
+            </div>
+            <div
+              class="hover:cursor-pointer rounded-full hover:bg-slate-200 w-[30px] h-[30px] flex justify-center items-center"
+              @click="store.closeModal()"
+            >
+              <font-awesome-icon icon="fa-xmark" color="#858585" />
+            </div>
+          </header>
+          <hr class="w-[100%]" />
           <component
             :is="store.modalState.component"
             v-bind="store.modalState.props"
@@ -41,19 +55,19 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.top-to-middle-enter-active,
-.top-to-middle-leave-active {
-  transition: transform 0.5s;
+.modal-appear-active {
+  transition: opacity 0.5s, transform 0.5s;
 }
 
-.top-to-middle-enter-from,
-.top-to-middle-leave-to {
-  transform: translateY(-100%);
+.modal-appear-from,
+.modal-appear-to {
+  opacity: 0;
+  transform: scale(0);
 }
 
-.top-to-middle-enter-to,
-.top-to-middle-leave-from {
-  transform: translateY(0);
+.modal-appear-to {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .modal-wrapper {

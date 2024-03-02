@@ -131,7 +131,7 @@ table {
 
 #tableComponent th,
 #tableComponent td {
-  padding: 4px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -157,6 +157,7 @@ table {
 
 .table__actions:hover {
   cursor: pointer;
-  transform: scale(0.90);
+  transform-origin: left top;
+  scale: 1.1;
 }
 </style>

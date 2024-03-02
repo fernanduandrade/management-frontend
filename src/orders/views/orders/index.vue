@@ -21,7 +21,7 @@ const totalCount = ref(0)
 const { search, data } = useFilter(orders, 'clientName')
 
 function createOrderModal() {
-  storeModal.openModal({ component: markRaw(OrderForm) })
+  storeModal.openModal({ component: markRaw(OrderForm), title: 'Cadastro de pedido' })
 }
 
 async function getOrders(pageSize: number, pageNumber: number) {

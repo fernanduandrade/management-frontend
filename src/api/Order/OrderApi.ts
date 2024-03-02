@@ -21,9 +21,9 @@ class OrderApi {
     return result
   }
 
-  async addOrder(payload: AddOrderRequest): Promise<IResponseDTO<any>> {
+  async addOrder(payload: AddOrderRequest): Promise<IResponseDTO<OrderDto>> {
     const url = `${this.uri}orders`
-    const reponse = await apiService.post<AddOrderRequest, IResponseDTO<any>>(url, payload)
+    const reponse = await apiService.post<AddOrderRequest, IResponseDTO<OrderDto>>(url, payload)
     const result = reponse.get()
     return result
   }

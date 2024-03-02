@@ -97,7 +97,4 @@ onMounted(async() => {
   gap: 15px ;
 }
 
-/* .product__pagination {
-  border-top: 1px solid #bec1ca;
-} */
 </style>

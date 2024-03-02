@@ -2,9 +2,13 @@
 import OrderApi from '~/api/Order/OrderApi'
 
 const modal = useModal()
+const router = useRouter()
+
 const clientName = ref('')
 async function createOrder() {
-  await OrderApi.addOrder({ clientName: clientName.value })
+  const { data } = await OrderApi.addOrder({ clientName: clientName.value })
+  router.push(`/orders/${data.id}`)
+
   modal.closeModal()
 }
 </script>
@@ -16,7 +20,10 @@ async function createOrder() {
         <VInputText v-model="clientName" type="text" placeholder="Nome" />
       </div>
     </form>
-    <div class="form__button">
+    <div class="self-center flex justify-between gap-4">
+      <VButton :transparent="true" @click="modal.closeModal">
+        Cancelar
+      </VButton>
       <VButton @click="createOrder">
         Cadastrar
       </VButton>
@@ -27,10 +34,7 @@ async function createOrder() {
 <style scoped>
 .container {
   width: 600px;
-  background-color: #FFFFFF;
-  padding: 1rem;
 
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -40,9 +44,5 @@ async function createOrder() {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-}
-
-.form__button {
-  align-self: center;
 }
 </style>

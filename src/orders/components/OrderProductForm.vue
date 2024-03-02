@@ -58,10 +58,6 @@ const searchAutocomplete = async(input: string) => {
 <style scoped>
 .container {
   width: 600px;
-  background-color: #FFFFFF;
-  padding: 1rem;
-
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
