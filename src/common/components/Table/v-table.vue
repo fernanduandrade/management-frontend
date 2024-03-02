@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { sort, prop, ascend, descend } from 'ramda'
-import FontAwesomeIcon from '~/common/modules/fontawesome'
 import { formatCurrency } from '~/common/logic'
 const { t } = useI18n()
 const router = useRouter()

@@ -2,8 +2,6 @@
 import { storeToRefs } from 'pinia'
 import ClientApi from '~/api/Client/ClientApi'
 import { ClientDTO } from '~/clients/types/index'
-import { useFilter } from '~/composables/useFilter'
-import useModal from '~/common/logic/use-modal'
 import ClientForm from '~/clients/components/ClientForm.vue'
 const clientColumn = ref<string[]>([
   'name', 'lastName', 'isActive', 'phone', 'debt', 'credit',

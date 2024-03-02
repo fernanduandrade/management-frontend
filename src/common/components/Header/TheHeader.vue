@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import FontAwesomeIcon from '~/common/modules/fontawesome'
 const router = useRouter()
 const { t } = useI18n()
 

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import useModal from '~/common/logic/use-modal'
 import ProductApi from '~/api/Product/ProductApi'
 import { ProductDTO } from '~/products/types'
 

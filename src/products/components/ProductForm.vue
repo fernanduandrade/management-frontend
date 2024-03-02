@@ -2,7 +2,6 @@
 import { toast } from 'vue3-toastify'
 import { CreateProductDTO } from '~/products/types/index'
 import ProductApi from '~/api/Product/ProductApi'
-import useModal from '~/common/logic/use-modal'
 import { ResultType } from '~/common/types/ResponseDTO'
 import 'vue3-toastify/dist/index.css'
 const store = useModal()

@@ -2,9 +2,9 @@
 import { toast } from 'vue3-toastify'
 import { CreateClientDTO } from '~/clients/types/index'
 import ClientApi from '~/api/Client/ClientApi'
-import useModal from '~/common/logic/use-modal'
 import { ResultType } from '~/common/types/ResponseDTO'
 import 'vue3-toastify/dist/index.css'
+
 const store = useModal()
 
 const form = reactive<CreateClientDTO>({

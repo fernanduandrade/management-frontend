@@ -2,7 +2,6 @@
 import { toast } from 'vue3-toastify'
 import { CreateSaleDTO } from '~/sales/types/index'
 import SaleApi from '~/api/Sale/SaleApi'
-import useModal from '~/common/logic/use-modal'
 import { ResultType } from '~/common/types/ResponseDTO'
 import { formatCurrency } from '~/common/logic'
 import 'vue3-toastify/dist/index.css'

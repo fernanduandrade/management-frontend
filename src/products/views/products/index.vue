@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import ProductApi from '~/api/Product/ProductApi'
 import { ProductDTO } from '~/products/types/index'
-import useModal from '~/common/logic/use-modal'
 import ProductForm from '~/products/components/ProductForm.vue'
 import { useFilter } from '~/composables/useFilter'
 const productsColumn = ref<string[]>([

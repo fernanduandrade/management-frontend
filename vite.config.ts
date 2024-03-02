@@ -50,17 +50,16 @@ export default defineConfig({
         '@vueuse/head',
         '@vueuse/core',
       ],
+      dirs: [
+        'src/composables',
+      ],
     }),
 
     // https://github.com/antfu/unplugin-vue-components
     Components({
       // relative paths to the directory to search for components
       dirs: ['src/**/components'],
-
-      // allow auto load markdown components under `./src/components/`
       extensions: ['vue', 'md'],
-
-      // search for subdirectories
       deep: true,
 
       dts: true,

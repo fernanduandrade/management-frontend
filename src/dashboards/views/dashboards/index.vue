@@ -2,7 +2,6 @@
 import OrderApi from '~/api/Order/OrderApi'
 import SaleApi from '~/api/Sale/SaleApi'
 import { formatCurrency, useOdometer } from '~/common/logic'
-import FontAwesomeIcon from '~/common/modules/fontawesome'
 
 const todaySales = ref(0)
 const monthSales = ref(0)

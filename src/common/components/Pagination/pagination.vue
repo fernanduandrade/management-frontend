@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Dropdown from 'primevue/dropdown'
 import { prop } from 'ramda'
 

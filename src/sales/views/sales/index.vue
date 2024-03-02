@@ -2,8 +2,6 @@
 import { storeToRefs } from 'pinia'
 import SaleApi from '~/api/Sale/SaleApi'
 import { SaleDTO } from '~/sales/types/index'
-import { useFilter } from '~/composables/index'
-import useModal from '~/common/logic/use-modal'
 import SaleForm from '~/sales/components/SaleForm.vue'
 const saleColumn = ref<string[]>([
   'clientName', 'totalPrice', 'pricePerUnit', 'productName', 'date', 'quantity',

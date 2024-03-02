@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import OrderApi from '~/api/Order/OrderApi'
-import useModal from '~/common/logic/use-modal'
 
 const modal = useModal()
 const clientName = ref('')

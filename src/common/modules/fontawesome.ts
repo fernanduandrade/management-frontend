@@ -16,6 +16,7 @@ import {
   faMessage,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons'
+import { UserModule } from '~/types'
 
 library.add(
   faUsers,
@@ -34,4 +35,6 @@ library.add(
   faChevronRight,
 )
 
-export default FontAwesomeIcon
+export const install: UserModule = ({ app }) => {
+  app.component('FontAwesomeIcon', FontAwesomeIcon)
+}

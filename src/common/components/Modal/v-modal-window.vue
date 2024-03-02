@@ -29,10 +29,12 @@ onUnmounted(() => {
         tabindex="-1"
         @click.self="store.closeModal"
       >
-        <component
-          :is="store.modalState.component"
-          v-bind="store.modalState.props"
-        />
+        <div class="p2 bg-slate-600 rounded-md shadow-sm">
+          <component
+            :is="store.modalState.component"
+            v-bind="store.modalState.props"
+          />
+        </div>
       </div>
     </Transition>
   </Teleport>

@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import useModal from '~/common/logic/use-modal'
 import OrderForm from '~/orders/components/OrderForm.vue'
 import OrderApi from '~/api/Order/OrderApi'
 import { OrderDto, OrderStatus } from '~/orders/types'
-import { useFilter } from '~/composables'
 const storeModal = useModal()
 
 const orderColumns = ref<string[]>([
