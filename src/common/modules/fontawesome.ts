@@ -16,6 +16,8 @@ import {
   faMessage,
   faChevronRight,
   faXmark,
+  faSearch,
+  faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons'
 import { UserModule } from '~/types'
 
@@ -35,6 +37,8 @@ library.add(
   faMessage,
   faChevronRight,
   faXmark,
+  faSearch,
+  faMagnifyingGlass,
 )
 
 export const install: UserModule = ({ app }) => {

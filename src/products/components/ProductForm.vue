@@ -4,7 +4,8 @@ import { CreateProductDTO } from '~/products/types/index'
 import ProductApi from '~/api/Product/ProductApi'
 import { ResultType } from '~/common/types/ResponseDTO'
 import 'vue3-toastify/dist/index.css'
-const store = useModal()
+
+const modal = useModal()
 
 const form = reactive<CreateProductDTO>({
   description: '',
@@ -19,8 +20,8 @@ async function createProduct() {
       toast.success(response.message, {
         autoClose: 1000,
       })
-      store.setFormValue(response.data)
-      store.closeModal()
+      modal.setFormValue(response.data)
+      modal.closeModal()
       break
     case ResultType.warning:
       toast.warning(response.message, {
@@ -54,7 +55,10 @@ async function createProduct() {
         <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
       </div>
     </form>
-    <div class="form__button">
+    <div class="flex items-center gap-2 self-center">
+      <VButton :transparent="true" @click="modal.closeModal">
+        Cancelar
+      </VButton>
       <VButton @click="createProduct">
         Cadastrar
       </VButton>
@@ -76,10 +80,6 @@ async function createProduct() {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-}
-
-.form__button {
-  align-self: center;
 }
 
 </style>

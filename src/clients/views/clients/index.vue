@@ -33,7 +33,7 @@ onMounted(async() => {
 const storeModal = useModal()
 
 function createClientModal() {
-  storeModal.openModal({ component: markRaw(ClientForm) })
+  storeModal.openModal({ component: markRaw(ClientForm), title: 'Cadastro de Cliente' })
 }
 
 const { modalEmitValue } = storeToRefs(storeModal)

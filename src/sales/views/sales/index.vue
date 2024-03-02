@@ -39,7 +39,7 @@ watch(modalEmitValue, (value) => {
 })
 
 function createSaleModal() {
-  storeModal.openModal({ component: markRaw(SaleForm) })
+  storeModal.openModal({ component: markRaw(SaleForm), title: 'Cadastro de Vendas' })
 }
 
 async function changeSalesPage(evt: any) {
@@ -51,7 +51,7 @@ async function changeSalesPage(evt: any) {
   <main class="container">
     <div class="sale__actions">
       <div class="sale__inputs">
-        <VInputSearch v-model="search" placeholder="Pesquise pelo nome do cliente" />
+        <VInputSearch v-model="search" placeholder="Nome do cliente" />
         <VButton @click="createSaleModal">
           Nova venda
         </VButton>
@@ -89,7 +89,7 @@ async function changeSalesPage(evt: any) {
 
 .sale__actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 10px;
 }

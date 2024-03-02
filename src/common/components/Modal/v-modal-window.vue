@@ -34,7 +34,9 @@ onUnmounted(() => {
               <h4 class="font-bold text-[20px]">
                 {{ store.modalState.title }}
               </h4>
-              <span class="text-gray-600">Insira informações para abaixo</span>
+              <span class="text-gray-600">
+                {{ store.modalState.description ? store.modalState.description : 'Insira as informações para abaixo' }}
+              </span>
             </div>
             <div
               class="hover:cursor-pointer rounded-full hover:bg-slate-200 w-[30px] h-[30px] flex justify-center items-center"

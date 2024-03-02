@@ -24,7 +24,8 @@ const cssClasses = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="flex items-center">
+    <font-awesome-icon style="position: relative; left: 30px;" icon="fa-magnifying-glass" color="#333" />
     <input
       :class="cssClasses"
       :placeholder="placeholder"
@@ -39,7 +40,7 @@ const cssClasses = computed(() => {
 .input__wrapper {
   width: 100%;
   height: 44px;
-  padding: 0px 20px 0px 20px;
+  padding: 0px 20px 0px 40px;
   font-family: 'Nunito', sans-serif;
   border-radius: 6px;
   transition: .2s ease-in;

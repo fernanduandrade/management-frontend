@@ -9,6 +9,7 @@ interface IModalProps {
   component: null | VueComponent
   props?: object
   title?: string
+  description?: string
 }
 
 interface IModalState {
@@ -16,14 +17,14 @@ interface IModalState {
   modalEmitValue: unknown
 }
 
-const basicState = { component: null, title: '', props: { } }
+const basicState = { component: null, title: '', description: '', props: { } }
 
 export default defineStore('modal-store', {
   state: (): IModalState => ({ modalState: basicState, modalEmitValue: null }),
   actions: {
     openModal(payload: IModalProps) {
-      const { props, component, title } = payload
-      this.modalState = { component, props: props || {}, title }
+      const { props, component, title, description } = payload
+      this.modalState = { component, props: props || {}, title, description }
     },
     closeModal() {
       this.modalState = basicState
@@ -32,5 +33,4 @@ export default defineStore('modal-store', {
       this.modalEmitValue = value
     },
   },
-  getters: {},
 })

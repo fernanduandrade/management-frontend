@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { toast } from 'vue3-toastify'
 import { CreateClientDTO } from '~/clients/types/index'
 import ClientApi from '~/api/Client/ClientApi'
 import { ResultType } from '~/common/types/ResponseDTO'
-import 'vue3-toastify/dist/index.css'
 
-const store = useModal()
+const modal = useModal()
+const toast = useToast()
 
 const form = reactive<CreateClientDTO>({
   credit: 0,
@@ -19,17 +18,12 @@ async function createClient() {
   const response = await ClientApi.createClient(form)
   switch (response.type) {
     case ResultType.success:
-      toast.success(response.message, {
-        autoClose: 1000,
-      })
-      store.setFormValue(response.data)
-      store.closeModal()
+      toast.success(response.message)
+      modal.setFormValue(response.data)
+      modal.closeModal()
       break
     case ResultType.warning:
-      toast.warning(response.message, {
-
-        autoClose: 1000,
-      })
+      toast.warning(response.message)
       break
     default:
       break
@@ -61,7 +55,10 @@ async function createClient() {
         <VInputText v-model="form.phone" type="number" placeholder="Telefone" />
       </div>
     </form>
-    <div class="form__button">
+    <div class="flex items-center gap-2 self-center">
+      <VButton :transparent="true" @click="modal.closeModal">
+        Cancelar
+      </VButton>
       <VButton @click="createClient">
         Cadastrar
       </VButton>
@@ -83,11 +80,6 @@ async function createClient() {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-}
-
-.form__button {
-  align-self: center;
-
 }
 
 </style>

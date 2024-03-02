@@ -24,7 +24,7 @@ watch(modalEmitValue, (value) => {
 })
 
 function createProductModal() {
-  storeModal.openModal({ component: markRaw(ProductForm) })
+  storeModal.openModal({ component: markRaw(ProductForm), title: 'Cadastro de Produto' })
 }
 
 async function getProducts(pageNumber: number, pageSize: number) {

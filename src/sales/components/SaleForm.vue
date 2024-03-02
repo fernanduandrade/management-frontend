@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { toast } from 'vue3-toastify'
 import { CreateSaleDTO } from '~/sales/types/index'
 import SaleApi from '~/api/Sale/SaleApi'
 import { ResultType } from '~/common/types/ResponseDTO'
 import { formatCurrency } from '~/common/logic'
-import 'vue3-toastify/dist/index.css'
-const store = useModal()
+
+const modal = useModal()
+const toast = useToast()
 
 const form = reactive<CreateSaleDTO>({
   clientName: '',
@@ -25,17 +25,12 @@ async function createSale() {
   const response = await SaleApi.createSale(form)
   switch (response.type) {
     case ResultType.success:
-      toast.success(response.message, {
-        autoClose: 1000,
-      })
-      store.setFormValue(response.data)
-      store.closeModal()
+      toast.success(response.message)
+      modal.setFormValue(response.data)
+      modal.closeModal()
       break
     case ResultType.warning:
-      toast.warning(response.message, {
-
-        autoClose: 1000,
-      })
+      toast.warning(response.message)
       break
     default:
       break
@@ -68,10 +63,15 @@ async function createSale() {
       </div>
     </form>
     <div class="form__button">
-      <span>Total - {{ totalSold }}</span>
-      <VButton @click="createSale">
-        Cadastrar
-      </VButton>
+      <span class="font-semibold text-gray-700">Total - {{ totalSold }}</span>
+      <div class="flex items-center gap-2 self-center">
+        <VButton :transparent="true" @click="modal.closeModal">
+          Cancelar
+        </VButton>
+        <VButton @click="createSale">
+          Cadastrar
+        </VButton>
+      </div>
     </div>
   </div>
 </template>
@@ -80,7 +80,6 @@ async function createSale() {
 
 .wrapper {
   width: 600px;
-  height: 650px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -94,7 +93,7 @@ async function createSale() {
 
 .form__button {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 </style>

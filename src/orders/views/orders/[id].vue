@@ -20,7 +20,12 @@ const modal = useModal()
 const selectPayment = ref<{name: string; value: PaymentType | null}>({ name: '', value: null })
 
 function addProduct() {
-  return modal.openModal({ component: markRaw(OrderProductForm) })
+  return modal.openModal(
+    {
+      component: markRaw(OrderProductForm),
+      title: 'Adicionar produtos ao pedido',
+      description: 'Pesquise pelo produto',
+    })
 }
 
 const { modalEmitValue } = storeToRefs(modal)

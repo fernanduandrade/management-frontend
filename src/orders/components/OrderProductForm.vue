@@ -47,7 +47,10 @@ const searchAutocomplete = async(input: string) => {
         />
       </div>
     </form>
-    <div class="form__button">
+    <div class="flex items-center gap-2 self-center">
+      <VButton :transparent="true" @click="modal.closeModal">
+        Cancelar
+      </VButton>
       <VButton @click="addProduct">
         Cadastrar
       </VButton>
@@ -67,9 +70,5 @@ const searchAutocomplete = async(input: string) => {
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
-}
-
-.form__button {
-  align-self: center;
 }
 </style>
