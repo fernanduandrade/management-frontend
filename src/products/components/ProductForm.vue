@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { toast } from 'vue3-toastify'
 import { CreateProductDTO } from '~/products/types/index'
 import ProductApi from '~/api/Product/ProductApi'
 import { ResultType } from '~/common/types/ResponseDTO'
-import 'vue3-toastify/dist/index.css'
 
 const modal = useModal()
+const toast = useToast()
 
 const form = reactive<CreateProductDTO>({
   description: '',
@@ -17,17 +16,12 @@ async function createProduct() {
   const response = await ProductApi.createProduct(form)
   switch (response.type) {
     case ResultType.success:
-      toast.success(response.message, {
-        autoClose: 1000,
-      })
+      toast.success(response.message)
       modal.setFormValue(response.data)
       modal.closeModal()
       break
     case ResultType.warning:
-      toast.warning(response.message, {
-
-        autoClose: 1000,
-      })
+      toast.warning(response.message)
       break
     default:
       break

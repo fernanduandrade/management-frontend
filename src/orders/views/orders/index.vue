@@ -57,7 +57,7 @@ async function filterByStatus(status: OrderStatus) {
 </script>
 
 <template>
-  <main class="container">
+  <main class="container shadow-md">
     <div class="order__actions">
       <div class="order__status">
         <span
@@ -105,7 +105,6 @@ async function filterByStatus(status: OrderStatus) {
   gap: 10px;
   background-color: var(--background-color-primary);
   border-radius: 10px;
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   padding: 1.5rem;
 }
 

@@ -7,9 +7,16 @@ type ButtonProps = {
   funcCallBack?: Function
 }
 
-withDefaults(defineProps<ButtonProps>(), {
+const props = withDefaults(defineProps<ButtonProps>(), {
   backgroundColor: '#6552C5',
   transparent: false,
+})
+
+const cssClasses = computed(() => {
+  return {
+    primary: !props.transparent,
+    transparent: props.transparent,
+  }
 })
 
 </script>
@@ -18,11 +25,9 @@ withDefaults(defineProps<ButtonProps>(), {
   <div class="wrapper-button">
     <button
       type="button"
-      :style="[transparent
-        ? 'background-color: transparent; color: #333'
-        : `background-color: ${backgroundColor}; color: #fff`]"
       class="font-bold p-3 border-none
         rounded-lg transition-all active:translate-y-1"
+      :class="[cssClasses]"
       :disabled="disabled"
     >
       <slot></slot>
@@ -31,6 +36,17 @@ withDefaults(defineProps<ButtonProps>(), {
 </template>
 
 <style scoped>
+
+.primary {
+  background-color: v-bind(backgroundColor);
+  opacity: 0.8;
+  @apply text-white
+}
+
+.transparent {
+  @apply text-black bg-transparent hover:bg-slate-200
+}
+
 button:disabled {
   @apply bg-slate-300 hover:cursor-not-allowed !important
 }

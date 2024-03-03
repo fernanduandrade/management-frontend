@@ -70,7 +70,6 @@ async function createClient() {
 
 .wrapper {
   width: 600px;
-  height: 650px;
   display: flex;
   flex-direction: column;
   gap: 2rem;

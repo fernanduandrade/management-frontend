@@ -2,27 +2,22 @@
 <template>
   <div id="autocomplete-container">
     <section id="autocomplete-input">
+      <label class="font-semibold text-[#333]">
+        {{ label }}
+      </label>
       <input
         ref="input"
         :class="`search-input ${hasInput ? 'active' : ''}`"
+        class="font-semibold"
         type="text"
         :value="keyword"
         :disabled="disabled"
-        style="height: 40px;"
+        :placeholder="label"
         @input="onInput($event.target)"
         @focus="focusInput"
         @blur="onBlur"
         @keydown="onKeydown"
       />
-
-      <label :class="`search-label ${hasInput ? 'active' : '' }`">
-        {{ label }}
-      </label>
-      <div class="autocomplete-icon">
-        <ClearInputSVG v-if="!loadingResult && modelValue?.length" @click="onClear" />
-        <InputLoading v-else-if="loadingResult && modelValue?.length" />
-        <SearchSVG v-else :svg-color="currentColor" />
-      </div>
     </section>
     <transition>
       <div v-if="mutableOptions?.length" id="autocomplete-options">
@@ -32,6 +27,7 @@
             :key="value.toString() + index"
             :ref="el => { refs[index] = el }"
             :class="{ 'autocomplete-option' : true, 'background-option' : arrowCount === index }"
+            class="font-semibold"
             tabindex="0"
             @click="onSelect(value)"
             @mouseover="setArrowCounter(index)"
@@ -85,23 +81,14 @@ const props = defineProps({
     required: true,
     default: '',
   },
-  /**
-   * Indicates whether the component is fetching for information
-   * @type {boolean}
-   */
-  loadingResult: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
 })
 
 const keyword = ref('')
 const mutableOptions = ref([])
 const clonedOptions = ref([])
-const focusColor = ref('#732690')
-const defaultColor = ref('#A0A0A0')
-const currentColor = ref('#A0A0A0')
+const focusColor = ref('#333')
+const defaultColor = ref('#dfdede')
+const currentColor = ref('#dfdede')
 const arrowCount = ref(0)
 const refs = ref([])
 const input = ref()
@@ -277,6 +264,7 @@ button {
 
 #autocomplete-input {
   display: flex;
+  gap: 3px;
   flex-direction: column;
   position: absolute;
   border-radius: .5rem;
@@ -284,26 +272,26 @@ button {
 }
 .search-input {
   box-shadow: none;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   font-family: 'Nunito', sans-serif;
-  border: 1px solid #A0A0A0;
+  border: 1px solid #dfdede;
   border-radius: 8px;
-  background-color: #fcfcfc;
+  background-color: #FFFFFF;
   display: block;
   transition: all .3s;
-  height: 40px;
+  height: 48px;
   padding-left: 17px;
   padding-right: 30px;
 }
 
 .search-input:hover {
-  border: 1px solid #732690;
+  border: 1px solid #333;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: #732690;
+  border-color: #333;
 }
 
 .search-input.active {
@@ -311,37 +299,8 @@ button {
 }
 
 .search-input.active:focus {
-  border-color: #732690;
-  color: #732690;
-}
-.search-label {
-  position: relative;
-  font-size: 14px;
-  font-weight: 400;
-  left: 10px;
-  padding: 0 5px;
-  display: block;
-  transition: all 0.3s;
-  color: #A0A0A0;
-  pointer-events: none;
-  font-family: 'Nunito', sans-serif;
-  top: -30px;
-  background-color: #FCFCFC;
-  width: fit-content;
-}
-
-.search-label.active {
-  color: #161617;
-  font-size: 12px;
-  width: fit-content;
-  transform: translateY(-135%);
-}
-
-.search-input:focus + .search-label {
-  transform: translateY(-135%);
-  color: #732690;
-  width: fit-content;
-  font-size: 12px;
+  border-color: #333;
+  color: #333;
 }
 
 .input-disabled, .search-input input:disabled {
@@ -363,13 +322,13 @@ button {
 }
 
 .autocomplete-option:hover {
-  background: #E1CEE8;
+  @apply bg-gray-200;
   cursor: pointer;
   border-radius: 3px;
 }
 
 .background-option {
-  background: #E1CEE8;
+  background: #FFF;
   border-radius: 3px;
 }
 
@@ -386,7 +345,9 @@ button {
 #autocomplete-options {
   box-sizing: border-box;
   position: absolute;
-  top: 44px;
+  font-weight: 600;
+  top: 70px;
+  font-family: 'Nunito', sans-serif;
   background: #FFFFFF;
   border: 1px solid #F1F1F1;
   overflow-x: hidden;
@@ -396,7 +357,7 @@ button {
   max-height: 92px;
   padding: 8px 9px;
   width: 100%;
-  border: 1px solid #732690;
+  border: 1px solid #333;
 }
 
 /* SCROLL */

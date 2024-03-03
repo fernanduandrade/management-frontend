@@ -2,7 +2,7 @@ export type SaleDTO = {
   id: number
   saleDate: string
   clientName: string
-  productId: number
+  productId: string
   quantity: number
   pricePerUnit: number
   totalPrice?: number

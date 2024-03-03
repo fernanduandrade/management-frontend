@@ -46,7 +46,7 @@ onMounted(async() => {
 
 </script>
 <template>
-  <main class="container">
+  <main class="container shadow-md">
     <div class="product__header">
       <h3 class="text-[25px]">
         Cadastrado de produtos

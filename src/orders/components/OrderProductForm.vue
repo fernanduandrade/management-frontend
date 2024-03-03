@@ -63,12 +63,12 @@ const searchAutocomplete = async(input: string) => {
   width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 5rem;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.2rem;
 }
 </style>
