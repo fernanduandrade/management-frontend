@@ -27,7 +27,7 @@ const modifySideNav = () => {
           {{ t(`pages.${router.currentRoute.value.name as string}`) }}
         </h1>
       </div>
-      <h1>user vai aqui</h1>
+      <!-- <h1>user vai aqui</h1> -->
     </header>
   </main>
 </template>
