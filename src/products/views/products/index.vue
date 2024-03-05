@@ -47,16 +47,14 @@ onMounted(async() => {
 </script>
 <template>
   <main class="container shadow-md">
-    <div class="product__header">
-      <h3 class="text-[25px]">
-        Cadastrado de produtos
-      </h3>
-      <div class="product__actions">
-        <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
-        <VButton @click="createProductModal">
-          Adicionar produto
-        </VButton>
-      </div>
+    <div class="product__actions self-end">
+      <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
+      <VButton :transparent="true" :outline="true">
+        Deletar pedido(s)
+      </VButton>
+      <VButton @click="createProductModal">
+        Adicionar produto
+      </VButton>
     </div>
     <VTable
       :columns="productsColumn"
@@ -83,13 +81,6 @@ onMounted(async() => {
   border-radius: 10px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   padding: 1.5rem;
-}
-.product__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  gap: 10px;
 }
 
 .product__actions {

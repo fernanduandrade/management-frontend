@@ -22,7 +22,7 @@ const sortedItems = ref<any[]>([])
 watch(
   () => props.data,
   (newItems) => {
-    sortedItems.value = newItems
+    sortedItems.value = newItems.map(x => ({ ...x, select: false }))
   },
 )
 
@@ -43,12 +43,17 @@ const sortTable = (column: string) => {
 function goTo(id: string) {
   router.push(`/${props.page}/${id}`)
 }
+
+const selectAll = ref(false)
 </script>
 
 <template>
   <table id="tableComponent">
     <thead class="table__header">
       <tr>
+        <th>
+          <VCheckbox v-model="selectAll" />
+        </th>
         <th v-for="(field, index) in columns" :key="index">
           {{ t(`default_domain_keys.${field.toLowerCase()}`) }} <em class="table__sort-icon">
             <font-awesome-icon
@@ -59,11 +64,13 @@ function goTo(id: string) {
             />
           </em>
         </th>
-        <th>{{ t('table.actions') }}</th>
       </tr>
     </thead>
     <tbody class="table__body">
       <tr v-for="item in sortedItems" :key="item.id">
+        <td>
+          <VCheckbox v-model="item.select" />
+        </td>
         <td v-for="field in columns" :key="field">
           <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">
             {{ formatCurrency(item[field]) }}

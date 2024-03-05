@@ -2,6 +2,7 @@
 import OrderForm from '~/orders/components/OrderForm.vue'
 import OrderApi from '~/api/Order/OrderApi'
 import { OrderDto, OrderStatus } from '~/orders/types'
+import OrderDeleteForm from '~/orders/components/OrderDeleteForm.vue'
 const storeModal = useModal()
 
 const orderColumns = ref<string[]>([
@@ -22,6 +23,10 @@ const { search, data } = useFilter(orders, 'clientName')
 
 function createOrderModal() {
   storeModal.openModal({ component: markRaw(OrderForm), title: 'Cadastro de pedido' })
+}
+
+function deleteOrdersModal() {
+  storeModal.openModal({ component: markRaw(OrderDeleteForm), title: 'Exclusão de pedidos', description: 'Você irá excluir todos os pedidos selecionados.' })
 }
 
 async function getOrders(pageSize: number, pageNumber: number) {
@@ -59,6 +64,7 @@ async function filterByStatus(status: OrderStatus) {
 <template>
   <main class="container shadow-md">
     <div class="order__actions">
+      <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
       <div class="order__status">
         <span
           class="order__status__item"
@@ -76,7 +82,9 @@ async function filterByStatus(status: OrderStatus) {
           @click="filterByStatus('FECHADO')"
         >FECHADO</span>
       </div>
-      <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
+      <VButton :transparent="true" :outline="true" @click="deleteOrdersModal">
+        Deletar pedido(s)
+      </VButton>
       <VButton @click="createOrderModal">
         Novo pedido
       </VButton>

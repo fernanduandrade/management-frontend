@@ -8,6 +8,7 @@ declare module 'vue' {
     ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
     Header: typeof import('./src/common/components/Header/header.vue')['default']
     Order: typeof import('./src/orders/components/Order.vue')['default']
+    OrderDeleteForm: typeof import('./src/orders/components/OrderDeleteForm.vue')['default']
     OrderForm: typeof import('./src/orders/components/OrderForm.vue')['default']
     OrderProductForm: typeof import('./src/orders/components/OrderProductForm.vue')['default']
     Pagination: typeof import('./src/common/components/Pagination/pagination.vue')['default']

@@ -4,18 +4,21 @@ type ButtonProps = {
   backgroundColor?: string
   disabled?: boolean
   transparent?: boolean
+  outline?: boolean
   funcCallBack?: Function
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   backgroundColor: '#6552C5',
   transparent: false,
+  outline: false,
 })
 
 const cssClasses = computed(() => {
   return {
     primary: !props.transparent,
     transparent: props.transparent,
+    outline: props.transparent && props.outline,
   }
 })
 
@@ -49,6 +52,10 @@ const cssClasses = computed(() => {
 
 button:disabled {
   @apply bg-slate-300 hover:cursor-not-allowed !important
+}
+
+.outline {
+  @apply border-solid border-[1px] border-cyan-950;
 }
 
 button:hover {

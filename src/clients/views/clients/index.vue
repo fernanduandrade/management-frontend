@@ -51,6 +51,9 @@ async function changeClientPage(evt: any) {
   <main class="container">
     <div class="client__actions">
       <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
+      <VButton :transparent="true" :outline="true">
+        Deletar pedido(s)
+      </VButton>
       <VButton @click="createClientModal">
         Novo cliente
       </VButton>

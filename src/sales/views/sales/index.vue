@@ -52,6 +52,9 @@ async function changeSalesPage(evt: any) {
     <div class="sale__actions">
       <div class="sale__inputs">
         <VInputSearch v-model="search" placeholder="Nome do cliente" />
+        <VButton :transparent="true" :outline="true">
+          Deletar pedido(s)
+        </VButton>
         <VButton @click="createSaleModal">
           Nova venda
         </VButton>
