@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Boolean,
     required: true,
@@ -11,6 +11,13 @@ defineProps({
   },
 })
 
+const classes = computed(() => {
+  const cssClasses = {
+    checked_input: !!props.modelValue,
+  }
+
+  return cssClasses
+})
 defineEmits(['update:modelValue'])
 </script>
 
@@ -21,7 +28,9 @@ defineEmits(['update:modelValue'])
         id="check"
         type="checkbox"
         :value="modelValue"
-        class="before:content[''] peer relative h-6 w-6 cursor-pointer appearance-none rounded-md border border-gray-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900 hover:before:opacity-10"
+        :class="[classes]"
+        :checked="modelValue"
+        class="before:content[''] peer relative h-6 w-6 cursor-pointer appearance-none rounded-md border border-gray-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity hover:before:opacity-10"
         @input="$emit('update:modelValue', ($event.target as HTMLInputElement).checked)"
       />
       <span
@@ -50,4 +59,9 @@ defineEmits(['update:modelValue'])
 </template>
 
 <style scoped>
+
+.checked_input {
+  @apply checked:border-gray-900 checked:bg-gray-900 checked:before:bg-gray-900
+}
+
 </style>

@@ -2,6 +2,7 @@
 import TheSideNav from '../components/SideNav/TheSideNav.vue'
 
 const router = useRouter()
+const modal = useModal()
 onMounted(() => router.push('dashboards'))
 
 const showSideNav = ref(true)
@@ -9,10 +10,17 @@ const changeSideNavState = (state: boolean) => {
   showSideNav.value = state
 }
 
+const cssClasses = computed(() => {
+  const classes = {
+    'open-modal': modal.modalState.opened,
+  }
+
+  return classes
+})
 </script>
 
 <template>
-  <main id="container">
+  <main id="container" :class="[cssClasses]">
     <Transition name="slide-fade" mode="out-in">
       <TheSideNav v-show="showSideNav" />
     </Transition>
@@ -30,6 +38,10 @@ const changeSideNavState = (state: boolean) => {
 #container {
   display: flex;
 }
+.open-modal {
+  filter: blur(4px);
+}
+
 .main-content {
   display: flex;
   flex-direction: column;

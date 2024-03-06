@@ -28,7 +28,7 @@ onUnmounted(() => {
         tabindex="-1"
         @click.self="store.closeModal"
       >
-        <div class="p-4 shadow-sm bg-white rounded-md flex flex-col gap-3">
+        <div class="p-4 shadow-xl bg-white rounded-md flex flex-col gap-3">
           <header class="flex justify-between">
             <div class="self-center">
               <h4 class="font-bold text-[20px]">
@@ -78,7 +78,6 @@ onUnmounted(() => {
   top: 0;
   z-index: 500;
   width: 100vw;
-  background: rgba(0, 0, 0, 0.2);
   height: 100vh;
   display: grid;
   place-items: center;

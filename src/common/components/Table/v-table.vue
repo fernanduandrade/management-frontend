@@ -45,6 +45,13 @@ function goTo(id: string) {
 }
 
 const selectAll = ref(false)
+
+watch(selectAll, (newValue) => {
+  sortedItems.value.forEach((item) => {
+    item.select = newValue
+  })
+})
+
 </script>
 
 <template>
@@ -81,9 +88,9 @@ const selectAll = ref(false)
           <span
             v-else-if="field==='status'"
             :style="`background-color: ${(orderStatus as any)[item[field]].bg}; color: ${(orderStatus as any)[item[field]].color}`"
-            :class="`block rounded-md p-1 w-fit font-bold`"
+            :class="`block text-center rounded-md w-[120px] p-1 font-bold`"
           >
-            {{ item[field] }} {{ }}
+            {{ item[field] }}
           </span>
           <span v-else-if="field.toLowerCase().includes('date')">
             {{ new Date(item[field]).toLocaleDateString('pt-BR') }}

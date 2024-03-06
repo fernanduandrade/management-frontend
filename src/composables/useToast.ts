@@ -1,7 +1,7 @@
 import { ToastOptions, toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
-const options: ToastOptions = { theme: 'dark', position: 'top-center' }
+const options: ToastOptions = { theme: 'light', position: 'top-center' }
 
 const alert = () => ({
   info: (message: string) => (toast.warning(message, options)),
