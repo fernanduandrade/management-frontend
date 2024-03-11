@@ -29,6 +29,12 @@ async function createClient() {
       break
   }
 }
+
+watch(() => form.phone, (newValue) => {
+  form.phone = newValue.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')
+})
+
+// return value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')
 </script>
 
 <template>
@@ -52,7 +58,7 @@ async function createClient() {
       </div>
       <div>
         <label for="">Telefone</label>
-        <VInputText v-model="form.phone" type="number" placeholder="Telefone" />
+        <VInputText v-model="form.phone" type="text" placeholder="Telefone" />
       </div>
     </form>
     <div class="flex items-center gap-2 self-center">
