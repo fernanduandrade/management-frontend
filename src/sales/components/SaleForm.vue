@@ -33,7 +33,7 @@ async function createSale() {
     case ResultType.success:
       toast.success(response.message)
       modal.setFormValue(response.data)
-      modal.closeModal()
+      modal.close()
       break
     case ResultType.warning:
       toast.warning(response.message)
@@ -94,7 +94,7 @@ const searchAutocomplete = async(input: string) => {
     <div class="form__button">
       <span class="font-bold text-gray-700 text-xl">Total - {{ totalSold }}</span>
       <div class="flex items-center gap-2 self-center">
-        <VButton :transparent="true" @click="modal.closeModal">
+        <VButton :transparent="true" @click="modal.close">
           Cancelar
         </VButton>
         <VButton @click="createSale">

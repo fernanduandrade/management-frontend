@@ -1,10 +1,12 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
+import { v4 as uuidv4 } from 'uuid'
 import OrderForm from '~/orders/components/OrderForm.vue'
 import OrderApi from '~/api/Order/OrderApi'
 import { OrderDto, OrderStatus } from '~/orders/types'
 import OrderDeleteForm from '~/orders/components/OrderDeleteForm.vue'
-const storeModal = useModal()
-
+const modal = useModal()
+const toast = useToast()
 const orderColumns = ref<string[]>([
   'clientName', 'date', 'status',
 ])
@@ -18,15 +20,29 @@ const hasPreviousPage = ref(false)
 const hasNextPage = ref(false)
 const totalPages = ref(0)
 const totalCount = ref(0)
+const ids = ref<string[]>([])
 
 const { search, data } = useFilter(orders, 'clientName')
 
 function createOrderModal() {
-  storeModal.openModal({ component: markRaw(OrderForm), title: 'Cadastro de pedido' })
+  modal.open({ component: markRaw(OrderForm), title: 'Cadastro de pedido' })
 }
 
+const onDeleteSub = ref('')
+
 function deleteOrdersModal() {
-  storeModal.openModal({ component: markRaw(OrderDeleteForm), title: 'Exclusão de pedidos', description: 'Você irá excluir todos os pedidos selecionados.' })
+  if (!ids.value.length) {
+    toast.info('Nenhum registro selecionado')
+    return
+  }
+  onDeleteSub.value = uuidv4()
+  modal.open({
+    component: markRaw(OrderDeleteForm),
+    props: { ids: ids.value },
+    title: 'Exclusão de pedidos',
+    description: 'Você irá excluir todos os pedidos selecionados.',
+    subscribe: onDeleteSub.value,
+  })
 }
 
 async function getOrders(pageSize: number, pageNumber: number) {
@@ -40,6 +56,15 @@ async function getOrders(pageSize: number, pageNumber: number) {
 
 onMounted(async() => {
   await getOrders(10, 1)
+})
+
+const { modalEmitValue } = storeToRefs(modal)
+
+watch(modalEmitValue, async(newValue) => {
+  if (newValue === onDeleteSub.value) {
+    await getOrders(10, 1)
+    ids.value = []
+  }
 })
 
 async function changeOrderPage(evt: any) {
@@ -59,6 +84,10 @@ async function filterByStatus(status: OrderStatus) {
   currentStatus.value = status
   await getOrders(currentPageSize.value, currentPage.value)
 }
+
+function onSelectId(evt: string[]) {
+  ids.value = evt
+}
 </script>
 
 <template>
@@ -68,17 +97,17 @@ async function filterByStatus(status: OrderStatus) {
       <div class="order__status">
         <span
           class="order__status__item"
-          :class="{active : currentStatus === 'TODOS'}"
+          :class="{ active: currentStatus === 'TODOS' }"
           @click="filterByStatus('TODOS')"
         >TODOS</span>
         <span
           class="order__status__item"
-          :class="{active : currentStatus === 'ABERTO'}"
+          :class="{ active: currentStatus === 'ABERTO' }"
           @click="filterByStatus('ABERTO')"
         >ABERTO</span>
         <span
           class="order__status__item"
-          :class="{active : currentStatus === 'FECHADO'}"
+          :class="{ active: currentStatus === 'FECHADO' }"
           @click="filterByStatus('FECHADO')"
         >FECHADO</span>
       </div>
@@ -89,11 +118,7 @@ async function filterByStatus(status: OrderStatus) {
         Novo pedido
       </VButton>
     </div>
-    <VTable
-      :columns="orderColumns"
-      :data="data"
-      page="orders"
-    >
+    <VTable :columns="orderColumns" :data="data" page="orders" @select-ids="onSelectId">
     </VTable>
     <Pagination
       :total-count="totalCount"
@@ -106,7 +131,6 @@ async function filterByStatus(status: OrderStatus) {
 </template>
 
 <style scoped>
-
 .container {
   display: flex;
   flex-direction: column;

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { v4 as uuidv4 } from 'uuid'
 import ClientApi from '~/api/Client/ClientApi'
 import { ClientDTO } from '~/clients/types/index'
 import ClientForm from '~/clients/components/ClientForm.vue'
+import DeleteClientForm from '~/clients/components/DeleteClientForm.vue'
 const clientColumn = ref<string[]>([
   'name', 'lastName', 'isActive', 'phone', 'debt', 'credit',
 ])
@@ -16,6 +18,7 @@ const hasPreviousPage = ref(false)
 const hasNextPage = ref(false)
 const totalPages = ref(0)
 const totalCount = ref(0)
+const ids = ref<string[]>([])
 
 async function getClients(pageNumber: number, pageSize: number) {
   const { data } = await ClientApi.getClientsPaginate({ pageNumber, pageSize })
@@ -30,13 +33,15 @@ onMounted(async() => {
   await getClients(1, 10)
 })
 
-const storeModal = useModal()
+const modal = useModal()
+const toast = useToast()
+const onDeleteSub = ref('')
 
 function createClientModal() {
-  storeModal.openModal({ component: markRaw(ClientForm), title: 'Cadastro de Cliente' })
+  modal.open({ component: markRaw(ClientForm), title: 'Cadastro de Cliente' })
 }
 
-const { modalEmitValue } = storeToRefs(storeModal)
+const { modalEmitValue } = storeToRefs(modal)
 
 watch(modalEmitValue, (value) => {
   clients.value.push(value as ClientDTO)
@@ -46,12 +51,38 @@ async function changeClientPage(evt: any) {
   await getClients(evt.pageNumber, evt.pageSize)
 }
 
+function deleteClientsModal() {
+  if (!ids.value.length) {
+    toast.info('Nenhum registro selecionado')
+    return
+  }
+  onDeleteSub.value = uuidv4()
+  modal.open({
+    component: markRaw(DeleteClientForm),
+    props: { ids: ids.value },
+    title: 'Exclusão de clientes',
+    description: 'Você irá excluir todos os clientes selecionados.',
+    subscribe: onDeleteSub.value,
+  })
+}
+
+watch(modalEmitValue, async(newValue) => {
+  if (newValue === onDeleteSub.value) {
+    await getClients(1, 10)
+    ids.value = []
+  }
+})
+
+function onSelectId(evt: string[]) {
+  ids.value = evt
+}
+
 </script>
 <template>
   <main class="container">
     <div class="client__actions">
       <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
-      <VButton :transparent="true" :outline="true">
+      <VButton :transparent="true" :outline="true" @click="deleteClientsModal">
         Deletar pedido(s)
       </VButton>
       <VButton @click="createClientModal">
@@ -62,6 +93,7 @@ async function changeClientPage(evt: any) {
       :columns="clientColumn"
       :data="data"
       page="clients"
+      @select-ids="onSelectId"
     />
     <Pagination
       :total-count="totalCount"

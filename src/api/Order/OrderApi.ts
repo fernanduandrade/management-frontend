@@ -57,6 +57,11 @@ class OrderApi {
     const response = await apiService.get<IResponseDTO<AnalyticsDto>>(url)
     return response.get()
   }
+
+  async deleteBulk(ids: unknown): Promise<void> {
+    const url = `${this.uri}orders/bulk`
+    await apiService.delete(url, ids)
+  }
 }
 
 export default new OrderApi()

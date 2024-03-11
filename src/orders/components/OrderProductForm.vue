@@ -14,7 +14,7 @@ const clearInput = () => {
 const modal = useModal()
 async function addProduct() {
   modal.setFormValue(selectedProduct.value)
-  modal.closeModal()
+  modal.close()
 }
 
 const onSelectProduct = (evt: string) => {
@@ -48,7 +48,7 @@ const searchAutocomplete = async(input: string) => {
       </div>
     </form>
     <div class="flex items-center gap-2 self-center">
-      <VButton :transparent="true" @click="modal.closeModal">
+      <VButton :transparent="true" @click="modal.close">
         Cancelar
       </VButton>
       <VButton @click="addProduct">

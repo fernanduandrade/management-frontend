@@ -11,6 +11,7 @@ specifiers:
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
   '@types/ramda': ^0.29.3
+  '@types/uuid': ^9.0.8
   '@vitejs/plugin-vue': ^1.9.1
   '@vue/compiler-sfc': ^3.2.16
   '@vue/server-renderer': ^3.2.16
@@ -35,6 +36,7 @@ specifiers:
   unplugin-auto-import: ^0.16.6
   unplugin-icons: ^0.7.6
   unplugin-vue-components: ^0.15.3
+  uuid: ^9.0.1
   vite: ^2.5.10
   vite-plugin-inspect: ^0.3.6
   vite-plugin-md: ^0.11.1
@@ -51,6 +53,7 @@ specifiers:
   vue3-toastify: ^0.1.12
 
 dependencies:
+  '@types/uuid': 9.0.8
   '@vueuse/core': 6.7.3_vue@3.2.20
   '@vueuse/head': 0.6.0_vue@3.2.20
   nprogress: 0.2.0
@@ -58,6 +61,7 @@ dependencies:
   primevue: 3.48.1_vue@3.2.20
   prism-theme-vars: 0.2.2
   ramda: 0.29.0
+  uuid: 9.0.1
   vue: 3.2.20
   vue-demi: 0.11.4_vue@3.2.20
   vue-i18n: 9.1.9_vue@3.2.20
@@ -1745,6 +1749,10 @@ packages:
   /@types/trusted-types/2.0.2:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
     dev: true
+
+  /@types/uuid/9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+    dev: false
 
   /@typescript-eslint/eslint-plugin/4.33.0_zrqxgwgitu7trrjeml3nqco3jq:
     resolution: {integrity: sha512-aINiAxGVdOl1eJyVjaWn/YcVAq4Gi/Yo35qHGCnqbWVz61g39D0h23veY/MA0rFFGfxK7TySg2uwDeNv+JgVpg==}
@@ -6544,6 +6552,11 @@ packages:
     resolution: {integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=}
     engines: {node: '>= 0.4.0'}
     dev: true
+
+  /uuid/9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
+    dev: false
 
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}

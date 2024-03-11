@@ -20,7 +20,7 @@ const modal = useModal()
 const selectPayment = ref<{name: string; value: PaymentType | null}>({ name: '', value: null })
 
 function addProduct() {
-  return modal.openModal(
+  return modal.open(
     {
       component: markRaw(OrderProductForm),
       title: 'Adicionar produtos ao pedido',
@@ -127,17 +127,17 @@ const paymentOptions = [
           </span>
           <div class="rounded-md border-solid border-2 border-gray-200 p-1 flex gap-2 items-center">
             <PrimeButton
-              label="+"
-              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
-              :disabled="order?.status === 'FECHADO'"
-              @click="incrementProduct(product.id)"
-            />
-            <span>{{ product.quantity }}</span>
-            <PrimeButton
               label="-"
               class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
               :disabled="order?.status === 'FECHADO'"
               @click="decrementProduct(product.id)"
+            />
+            <span>{{ product.quantity }}</span>
+            <PrimeButton
+              label="+"
+              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
+              :disabled="order?.status === 'FECHADO'"
+              @click="incrementProduct(product.id)"
             />
           </div>
         </div>

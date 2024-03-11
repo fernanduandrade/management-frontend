@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import OrderApi from '~/api/Order/OrderApi'
+import SaleApi from '~/api/Sale/SaleApi'
 
 const props = defineProps({
   ids: {
@@ -10,8 +10,8 @@ const props = defineProps({
 })
 
 const modal = useModal()
-async function deleteOrder() {
-  await OrderApi.deleteBulk({ ids: props.ids })
+async function deleteSale() {
+  await SaleApi.deleteBulk({ ids: props.ids })
   modal.close()
 }
 </script>
@@ -23,7 +23,7 @@ async function deleteOrder() {
       <VButton :transparent="true" @click="modal.close">
         Cancelar
       </VButton>
-      <VButton @click="deleteOrder">
+      <VButton @click="deleteSale">
         Excluir?
       </VButton>
     </div>

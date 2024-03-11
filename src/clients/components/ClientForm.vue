@@ -20,7 +20,7 @@ async function createClient() {
     case ResultType.success:
       toast.success(response.message)
       modal.setFormValue(response.data)
-      modal.closeModal()
+      modal.close()
       break
     case ResultType.warning:
       toast.warning(response.message)
@@ -56,7 +56,7 @@ async function createClient() {
       </div>
     </form>
     <div class="flex items-center gap-2 self-center">
-      <VButton :transparent="true" @click="modal.closeModal">
+      <VButton :transparent="true" @click="modal.close">
         Cancelar
       </VButton>
       <VButton @click="createClient">

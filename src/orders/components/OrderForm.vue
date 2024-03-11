@@ -9,7 +9,7 @@ async function createOrder() {
   const { data } = await OrderApi.addOrder({ clientName: clientName.value })
   router.push(`/orders/${data.id}`)
 
-  modal.closeModal()
+  modal.close()
 }
 </script>
 
@@ -21,7 +21,7 @@ async function createOrder() {
       </div>
     </form>
     <div class="self-center flex justify-between gap-4">
-      <VButton :transparent="true" @click="modal.closeModal">
+      <VButton :transparent="true" @click="modal.close">
         Cancelar
       </VButton>
       <VButton @click="createOrder">

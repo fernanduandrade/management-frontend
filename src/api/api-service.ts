@@ -19,13 +19,14 @@ export default {
       return Either.left({ kind: 'UnexpectedError', error })
     }
   },
-  async delete<TResult>(route: string): Promise<Either<DataError, TResult>> {
+  async delete<TResult>(route: string, payload: any = null): Promise<Either<DataError, TResult>> {
     try {
       const response = await fetch(route, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: payload ? JSON.stringify(payload) : null,
       })
       this.statusCode = response.status
       const result = await response.json()

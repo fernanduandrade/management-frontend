@@ -9,12 +9,15 @@ type TableProps<T> = {
   page: string
 }
 
+const ids = ref<string[]>([])
+
 const orderStatus = {
   ABERTO: { bg: '#E3E5FC', color: '#537BFA' },
   FECHADO: { bg: '#DFEDE6', color: '#7FB48E' },
   AGUARDANDO: { bg: '#FFF2E3', color: '#333' },
 }
 
+const emits = defineEmits(['selectIds'])
 const props = defineProps<TableProps<any>>()
 
 const sortedItems = ref<any[]>([])
@@ -23,6 +26,7 @@ watch(
   () => props.data,
   (newItems) => {
     sortedItems.value = newItems.map(x => ({ ...x, select: false }))
+    ids.value = []
   },
 )
 
@@ -50,7 +54,22 @@ watch(selectAll, (newValue) => {
   sortedItems.value.forEach((item) => {
     item.select = newValue
   })
+
+  ids.value = sortedItems.value.filter(x => x.select)
+  emits('selectIds', ids.value)
 })
+
+function onSelectItem(evt: boolean, id: string) {
+  if (evt) {
+    ids.value.push(id)
+    emits('selectIds', ids.value)
+    return
+  }
+
+  const idIndex = ids.value.findIndex(x => x === id)
+  ids.value.splice(idIndex, 1)
+  emits('selectIds', ids.value)
+}
 
 </script>
 
@@ -76,7 +95,7 @@ watch(selectAll, (newValue) => {
     <tbody class="table__body">
       <tr v-for="item in sortedItems" :key="item.id">
         <td>
-          <VCheckbox v-model="item.select" />
+          <VCheckbox v-model="item.select" @update:model-value="onSelectItem($event, item.id)" />
         </td>
         <td v-for="field in columns" :key="field">
           <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">

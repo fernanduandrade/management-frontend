@@ -61,7 +61,7 @@ const cssClasses = computed(() => {
 }
 
 .content {
-  background-color: #F9FAFE;
+  background-color: #F6F7FB;
   padding: 2rem;
   height: 100%;
 }

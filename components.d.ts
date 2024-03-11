@@ -6,6 +6,9 @@ declare module 'vue' {
   export interface GlobalComponents {
     AutoComplete: typeof import('./src/common/components/AutoComplete/auto-complete.vue')['default']
     ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
+    DeleteClientForm: typeof import('./src/clients/components/DeleteClientForm.vue')['default']
+    DeleteProductForm: typeof import('./src/products/components/DeleteProductForm.vue')['default']
+    DeleteSaleForm: typeof import('./src/sales/components/DeleteSaleForm.vue')['default']
     Header: typeof import('./src/common/components/Header/header.vue')['default']
     Order: typeof import('./src/orders/components/Order.vue')['default']
     OrderDeleteForm: typeof import('./src/orders/components/OrderDeleteForm.vue')['default']

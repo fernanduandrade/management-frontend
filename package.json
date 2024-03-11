@@ -7,6 +7,7 @@
     "preview-https": "serve dist"
   },
   "dependencies": {
+    "@types/uuid": "^9.0.8",
     "@vueuse/core": "^6.4.1",
     "@vueuse/head": "^0.6.0",
     "nprogress": "^0.2.0",
@@ -14,6 +15,7 @@
     "primevue": "^3.48.1",
     "prism-theme-vars": "^0.2.2",
     "ramda": "^0.29.0",
+    "uuid": "^9.0.1",
     "vue": "^3.2.16",
     "vue-demi": "^0.11.4",
     "vue-i18n": "^9.1.7",

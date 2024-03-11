@@ -51,6 +51,11 @@ class SaleApi implements ISaleApi {
   getSaleById(): Promise<void> {
     throw new Error('Method not implemented.')
   }
+
+  async deleteBulk(ids: unknown): Promise<void> {
+    const url = `${this.uri}saleshistory/bulk`
+    await apiService.delete(url, ids)
+  }
 }
 
 export default new SaleApi()

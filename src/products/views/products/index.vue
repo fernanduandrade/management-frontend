@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { v4 as uuidv4 } from 'uuid'
 import ProductApi from '~/api/Product/ProductApi'
+import DeleteProductForm from '~/products/components/DeleteProductForm.vue'
 import { ProductDTO } from '~/products/types/index'
 import ProductForm from '~/products/components/ProductForm.vue'
 import { useFilter } from '~/composables/useFilter'
 const productsColumn = ref<string[]>([
   'name', 'price', 'description', 'quantity',
 ])
+
+const modal = useModal()
+const toast = useToast()
 
 const currentPage = ref(1)
 const pageSize = ref(10)
@@ -18,13 +23,13 @@ const products = ref<ProductDTO[]>([])
 const { search, data } = useFilter(products, 'name')
 const storeModal = useModal()
 const { modalEmitValue } = storeToRefs(storeModal)
-
+const ids = ref<string[]>([])
 watch(modalEmitValue, (value) => {
   products.value.push(value as ProductDTO)
 })
 
 function createProductModal() {
-  storeModal.openModal({ component: markRaw(ProductForm), title: 'Cadastro de Produto' })
+  storeModal.open({ component: markRaw(ProductForm), title: 'Cadastro de Produto' })
 }
 
 async function getProducts(pageNumber: number, pageSize: number) {
@@ -44,12 +49,40 @@ onMounted(async() => {
   await getProducts(1, 10)
 })
 
+const onDeleteSub = ref('')
+
+function deleteProductsModal() {
+  if (!ids.value.length) {
+    toast.info('Nenhum registro selecionado')
+    return
+  }
+  onDeleteSub.value = uuidv4()
+  modal.open({
+    component: markRaw(DeleteProductForm),
+    props: { ids: ids.value },
+    title: 'Exclusão de produtos',
+    description: 'Você irá excluir todos os produtos selecionados.',
+    subscribe: onDeleteSub.value,
+  })
+}
+
+watch(modalEmitValue, async(newValue) => {
+  if (newValue === onDeleteSub.value) {
+    await getProducts(1, 10)
+    ids.value = []
+  }
+})
+
+function onSelectId(evt: string[]) {
+  ids.value = evt
+}
+
 </script>
 <template>
   <main class="container shadow-md">
     <div class="product__actions self-end">
       <VInputSearch v-model="search" placeholder="Pesquise pelo nome" />
-      <VButton :transparent="true" :outline="true">
+      <VButton :transparent="true" :outline="true" @click="deleteProductsModal">
         Deletar pedido(s)
       </VButton>
       <VButton @click="createProductModal">
@@ -60,6 +93,7 @@ onMounted(async() => {
       :columns="productsColumn"
       :data="data"
       page="products"
+      @select-ids="onSelectId"
     >
     </VTable>
     <Pagination

@@ -18,7 +18,7 @@ onMounted(() => {
 })
 const pages: Page[] = [
   { name: 'Dashboard', link: '/dashboards', icon: 'fa-home' },
-  { name: 'Mensagens', link: '/messages', icon: 'fa-message' },
+  // { name: 'Mensagens', link: '/messages', icon: 'fa-message' },
   { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
   { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
   { name: 'Clientes', link: '/clients', icon: 'fa-users' },

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
+import { v4 as uuidv4 } from 'uuid'
 import SaleApi from '~/api/Sale/SaleApi'
 import { SaleDTO } from '~/sales/types/index'
 import SaleForm from '~/sales/components/SaleForm.vue'
+import DeleteSaleForm from '~/sales/components/DeleteSaleForm.vue'
 const saleColumn = ref<string[]>([
   'clientName', 'totalPrice', 'pricePerUnit', 'productName', 'date', 'quantity',
 ])
@@ -30,20 +32,50 @@ onMounted(async() => {
   await getSales(1, 10)
 })
 
-const storeModal = useModal()
+const modal = useModal()
+const toast = useToast()
+const ids = ref<string[]>([])
 
-const { modalEmitValue } = storeToRefs(storeModal)
+const { modalEmitValue } = storeToRefs(modal)
 
 watch(modalEmitValue, (value) => {
   sales.value.push(value as SaleDTO)
 })
 
 function createSaleModal() {
-  storeModal.openModal({ component: markRaw(SaleForm), title: 'Cadastro de Vendas' })
+  modal.open({ component: markRaw(SaleForm), title: 'Cadastro de Vendas' })
 }
 
 async function changeSalesPage(evt: any) {
   await getSales(evt.pageNumber, evt.pageSize)
+}
+
+const onDeleteSub = ref('')
+
+function deleteSaleModal() {
+  if (!ids.value.length) {
+    toast.info('Nenhum registro selecionado')
+    return
+  }
+  onDeleteSub.value = uuidv4()
+  modal.open({
+    component: markRaw(DeleteSaleForm),
+    props: { ids: ids.value },
+    title: 'Exclusão de vendas',
+    description: 'Você irá excluir todos os vendas selecionados.',
+    subscribe: onDeleteSub.value,
+  })
+}
+
+watch(modalEmitValue, async(newValue) => {
+  if (newValue === onDeleteSub.value) {
+    await getSales(1, 10)
+    ids.value = []
+  }
+})
+
+function onSelectId(evt: string[]) {
+  ids.value = evt
 }
 
 </script>
@@ -52,7 +84,7 @@ async function changeSalesPage(evt: any) {
     <div class="sale__actions">
       <div class="sale__inputs">
         <VInputSearch v-model="search" placeholder="Nome do cliente" />
-        <VButton :transparent="true" :outline="true">
+        <VButton :transparent="true" :outline="true" @click="deleteSaleModal">
           Deletar pedido(s)
         </VButton>
         <VButton @click="createSaleModal">
@@ -64,6 +96,7 @@ async function changeSalesPage(evt: any) {
       :columns="saleColumn"
       :data="data"
       page="sales"
+      :select-ids="onSelectId"
     >
       <template #actions>
       </template>

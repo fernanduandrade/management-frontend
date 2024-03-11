@@ -4,7 +4,7 @@ const store = useModal()
 
 function keyDownListener(event: KeyboardEvent) {
   if (event.key === 'Escape')
-    store.closeModal()
+    store.close()
 }
 
 onMounted(() => {
@@ -26,7 +26,7 @@ onUnmounted(() => {
         aria-modal="true"
         role="dialog"
         tabindex="-1"
-        @click.self="store.closeModal"
+        @click.self="store.close"
       >
         <div class="p-4 shadow-xl bg-white rounded-md flex flex-col gap-3">
           <header class="flex justify-between">
@@ -40,7 +40,7 @@ onUnmounted(() => {
             </div>
             <div
               class="hover:cursor-pointer rounded-full hover:bg-slate-200 w-[30px] h-[30px] flex justify-center items-center"
-              @click="store.closeModal()"
+              @click="store.close()"
             >
               <font-awesome-icon icon="fa-xmark" color="#858585" />
             </div>

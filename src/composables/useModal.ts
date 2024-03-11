@@ -5,12 +5,14 @@ const component = extend({})
 
 type VueComponent = InstanceType<typeof component>
 
-interface IModalProps {
+type IModalProps = {
   component: null | VueComponent
   props?: object
   title?: string
   description?: string
   opened?: boolean
+  subscribe?: string
+
 }
 
 interface IModalState {
@@ -18,16 +20,20 @@ interface IModalState {
   modalEmitValue: unknown
 }
 
-const basicState = { component: null, title: '', description: '', props: { }, opened: false }
+const basicState = { component: null, subscribe: '', title: '', description: '', props: { }, opened: false }
 
 export default defineStore('modal-store', {
   state: (): IModalState => ({ modalState: basicState, modalEmitValue: null }),
   actions: {
-    openModal(payload: IModalProps) {
-      const { props, component, title, description } = payload
-      this.modalState = { component, props: props || {}, title, description, opened: true }
+    open(payload: IModalProps) {
+      const { props, component, title, description, subscribe } = payload
+      this.modalState = { component, props: props || {}, title, subscribe, description, opened: true }
     },
-    closeModal() {
+    async close() {
+      const { subscribe } = this.modalState
+      if (subscribe)
+        this.modalEmitValue = subscribe
+
       this.modalState = basicState
     },
     setFormValue(value: unknown) {

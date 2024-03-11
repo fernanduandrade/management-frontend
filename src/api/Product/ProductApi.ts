@@ -45,6 +45,11 @@ class ProductApi implements IProductApi {
     const result = reponse.get()
     return result
   }
+
+  async deleteBulk(ids: unknown): Promise<void> {
+    const url = `${this.uri}products/bulk`
+    await apiService.delete(url, ids)
+  }
 }
 
 export default new ProductApi()

@@ -37,6 +37,11 @@ class ClientApi implements IClientApi {
   getClientById(): Promise<void> {
     throw new Error('Method not implemented.')
   }
+
+  async deleteBulk(ids: unknown): Promise<void> {
+    const url = `${this.uri}clients/bulk`
+    await apiService.delete(url, ids)
+  }
 }
 
 export default new ClientApi()
