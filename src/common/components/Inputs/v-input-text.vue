@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 const attrs = useAttrs()
 
 type InputSearchProp = {
@@ -25,11 +26,13 @@ const cssClasses = computed(() => {
   }
   return classs
 })
+
 </script>
 
 <template>
   <div>
     <input
+      id="custom-input"
       :class="cssClasses"
       :placeholder="placeholder"
       :value="modelValue"

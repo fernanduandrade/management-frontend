@@ -18,7 +18,6 @@ onMounted(() => {
 })
 const pages: Page[] = [
   { name: 'Dashboard', link: '/dashboards', icon: 'fa-home' },
-  // { name: 'Mensagens', link: '/messages', icon: 'fa-message' },
   { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
   { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
   { name: 'Clientes', link: '/clients', icon: 'fa-users' },
@@ -85,7 +84,7 @@ const pages: Page[] = [
   gap: 1rem;
   font-size: 1.2rem;
   padding: 1rem;
-  border-radius: 18px;
+  border-radius: 40px;
   transition: ease-in .2s;
   font-weight: 400;
   width: 100%;

@@ -11,6 +11,13 @@ type TableProps<T> = {
 
 const ids = ref<string[]>([])
 
+// const userStatusClasses = computed((aa) => {
+//   return {
+//     'table__user__status active': aa,
+//     'table__user__status inactive': !aa,
+//   }
+// })
+
 const orderStatus = {
   ABERTO: { bg: '#E3E5FC', color: '#537BFA' },
   FECHADO: { bg: '#DFEDE6', color: '#7FB48E' },
@@ -71,6 +78,13 @@ function onSelectItem(evt: boolean, id: string) {
   emits('selectIds', ids.value)
 }
 
+function userStatus(status: boolean) {
+  return {
+    'table__user__status active': status,
+    'table__user__status inactive': !status,
+  }
+}
+
 </script>
 
 <template>
@@ -101,8 +115,12 @@ function onSelectItem(evt: boolean, id: string) {
           <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">
             {{ formatCurrency(item[field]) }}
           </span>
-          <span v-else-if="field==='isActive'">
-            {{ item[field] ? 'ativo' : 'desativado' }}
+          <span
+            v-else-if="field === 'isActive'"
+            :class="userStatus(item[field])"
+            class="uppercase"
+          >
+            {{ item[field] ? 'ativo' : 'inativo' }}
           </span>
           <span
             v-else-if="field==='status'"
@@ -190,7 +208,18 @@ table {
 
 .table__actions:hover {
   cursor: pointer;
-  transform-origin: left top;
-  scale: 1.1;
+  background-color: #bec1ca;
+}
+
+.table__user__status.active {
+  background-color: #fca5a5;
+  color: #f87171;
+  @apply rounded-md w-[120px] p-1 font-bold
+}
+
+.table__user__status.inactive {
+  background-color: #DFEDE6;
+  color: #7FB48E;
+  @apply rounded-md w-[120px] p-1 font-bold
 }
 </style>

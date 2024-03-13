@@ -6,7 +6,7 @@ import { ClientDTO } from '~/clients/types/index'
 import ClientForm from '~/clients/components/ClientForm.vue'
 import DeleteClientForm from '~/clients/components/DeleteClientForm.vue'
 const clientColumn = ref<string[]>([
-  'name', 'lastName', 'isActive', 'phone', 'debt', 'credit',
+  'name', 'debt', 'credit', 'phone', 'isActive',
 ])
 
 const clients = ref<ClientDTO[]>([])

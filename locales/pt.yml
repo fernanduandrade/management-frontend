@@ -3,6 +3,7 @@ pages:
   sales: Vendas e Ganhos
   reports: Relátorios
   clients: Clientes
+  clients-id: Clientes
   orders: Pedidos
   orders-id: Pedido
   messages: Mensagens

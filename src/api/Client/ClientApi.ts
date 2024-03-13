@@ -1,11 +1,10 @@
 import apiService from '../api-service'
-import IClientApi from './IClientApi'
 import { PostClientRequest } from './request'
 import { GetClientPaginateResponse } from './response/IGetClientPaginateResponse'
 import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { ClientDTO } from '~/clients/types'
 
-class ClientApi implements IClientApi {
+class ClientApi {
   private uri: string
 
   constructor() {
@@ -30,12 +29,15 @@ class ClientApi implements IClientApi {
     throw new Error('Method not implemented.')
   }
 
-  deleteClient(): Promise<void> {
+  delete(): Promise<void> {
     throw new Error('Method not implemented.')
   }
 
-  getClientById(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async getById(id: string): Promise<IResponseDTO<ClientDTO>> {
+    const url = `${this.uri}clients/${id}`
+    const reponse = await apiService.get<IResponseDTO<ClientDTO>>(url)
+    const result = reponse.get()
+    return result
   }
 
   async deleteBulk(ids: unknown): Promise<void> {

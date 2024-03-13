@@ -6,12 +6,14 @@ type ButtonProps = {
   transparent?: boolean
   outline?: boolean
   funcCallBack?: Function
+  icon?: string
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   backgroundColor: '#6552C5',
   transparent: false,
   outline: false,
+  icon: '',
 })
 
 const cssClasses = computed(() => {
@@ -29,11 +31,11 @@ const cssClasses = computed(() => {
     <button
       type="button"
       class="font-bold p-3 border-none
-        rounded-lg transition-all active:translate-y-1"
+        rounded-lg transition-all active:translate-y-1 flex justify-between items-center gap-3"
       :class="[cssClasses]"
       :disabled="disabled"
     >
-      <slot></slot>
+      <font-awesome-icon v-if="icon" :icon="icon" :color="transparent ? '#333' : '#ffffff'" /><slot></slot>
     </button>
   </div>
 </template>
