@@ -1,19 +1,34 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import { formatCurrency } from '~/common/logic'
 import ClientApi from '~/api/Client/ClientApi'
 import { ClientDTO } from '~/clients/types'
-
+import AddClientInputForm from '~/clients/components/AddClientInputForm.vue'
 const route = useRoute()
+const modal = useModal()
 
 const client = ref<ClientDTO>()
-
+const editClientData = ref<ClientDTO>()
 const onEditing = ref(false)
+
+function editInfo() {
+  onEditing.value = !onEditing.value
+  editClientData.value = client.value
+}
+
 onMounted(async() => {
   const orderId = route.params.id as string
   const { data } = await ClientApi.getById(orderId)
   client.value = data
 })
+const openInputModal = () => {
+  modal.open({ component: markRaw(AddClientInputForm), props: { id: client.value?.id } })
+}
+
+async function updateStatus() {
+  client.value!.isActive = !client.value?.isActive
+  await ClientApi.updateStatus({ id: client.value?.id })
+}
+
 </script>
 
 <template>
@@ -23,7 +38,15 @@ onMounted(async() => {
         {{ client?.name }} {{ client?.lastName }}
       </h1>
       <div class="flex items-center gap-3">
-        <VButton v-if="!onEditing" icon="fa-pen" :transparent="true" :outline="true" @click="onEditing = !onEditing">
+        <VButton
+          v-if="!onEditing"
+          :transparent="true"
+          :outline="true"
+          @click="updateStatus"
+        >
+          {{ client?.isActive ? 'INATIVAR' : 'ATIVAR' }}
+        </VButton>
+        <VButton v-if="!onEditing" icon="fa-pen" :transparent="true" :outline="true" @click="editInfo">
           Editar
         </VButton>
         <VButton v-if="onEditing" icon="fa-xmark" background-color="red" @click="onEditing = !onEditing">
@@ -32,7 +55,7 @@ onMounted(async() => {
         <VButton v-if="onEditing">
           Salvar
         </VButton>
-        <VButton v-if="!onEditing">
+        <VButton v-if="!onEditing" :disabled="!client?.isActive" @click="openInputModal">
           Adicionar insumo
         </VButton>
       </div>
@@ -42,47 +65,37 @@ onMounted(async() => {
       <h3 class="text-[30px] font-semibold">
         Dados:
       </h3>
-      <span>Débito {{ formatCurrency(client?.debt) }}</span>
-      <span>Credito {{ formatCurrency(client?.credit) }}</span>
-      <!-- <div v-for="product in order?.products" :key="product.id" class="flex gap-1 flex-col">
-        <div class="flex items-center gap-1">
-          <span>
-            {{ product.name }}
-          </span>
-          <div class="rounded-md border-solid border-2 border-gray-200 p-1 flex gap-2 items-center">
-            <PrimeButton
-              label="-"
-              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
-              :disabled="order?.status === 'FECHADO'"
-              @click="decrementProduct(product.id)"
-            />
-            <span>{{ product.quantity }}</span>
-            <PrimeButton
-              label="+"
-              class="w-[20px] font-bold text-xl text-blue-500 h-[25px] hover:bg-slate-300"
-              :disabled="order?.status === 'FECHADO'"
-              @click="incrementProduct(product.id)"
-            />
-          </div>
-        </div>
-      </div> -->
-
-      <hr class="w-[30%]" />
+      <div class="flex flex-col gap-3">
+        <span class="text-xl">Débito: {{ formatCurrency(client?.debt) }}</span>
+        <span class="text-xl">Credito: {{ formatCurrency(client?.credit) }}</span>
+        <span class="text-xl">
+          Telefone: {{ client?.phone ? client.phone.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3') : 'Não informado' }}
+        </span>
+      </div>
     </div>
 
-    <div class="client__actions">
-      <div></div>
-      <div class="flex gap-2">
-        <!-- <Dropdown
-          v-model="selectPayment"
-          class="shadow-md w-[150px]"
-          :options="paymentOptions"
-          option-label="name"
-          placeholder="Forma de pagamento"
+    <div v-else class="flex gap-2 flex-col">
+      <div class="flex flex-col gap-2">
+        <VInputText
+          v-model="editClientData!.name"
+          type="text"
+          placeholder="Sobrenome"
         />
-        <VButton background-color="#f87171" :disabled="order?.status === 'FECHADO'" @click="closeOrder">
-          ENCERRAR
-        </VButton> -->
+      </div>
+      <div class="flex flex-col gap-2">
+        <VInputText
+          v-model="editClientData!.lastName"
+          type="text"
+          placeholder="Sobrenome"
+        />
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <VInputText
+          v-model="editClientData!.phone"
+          type="text"
+          placeholder="Sobrenome"
+        />
       </div>
     </div>
   </main>

@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AddClientInputForm: typeof import('./src/clients/components/AddClientInputForm.vue')['default']
     AutoComplete: typeof import('./src/common/components/AutoComplete/auto-complete.vue')['default']
     ClientForm: typeof import('./src/clients/components/ClientForm.vue')['default']
     DeleteClientForm: typeof import('./src/clients/components/DeleteClientForm.vue')['default']

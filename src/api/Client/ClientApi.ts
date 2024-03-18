@@ -44,6 +44,16 @@ class ClientApi {
     const url = `${this.uri}clients/bulk`
     await apiService.delete(url, ids)
   }
+
+  async updateBalance(payload: unknown): Promise<void> {
+    const url = `${this.uri}clients/update-balance`
+    await apiService.post(url, payload)
+  }
+
+  async updateStatus(payload: unknown): Promise<void> {
+    const url = `${this.uri}clients/update-status`
+    await apiService.post(url, payload)
+  }
 }
 
 export default new ClientApi()

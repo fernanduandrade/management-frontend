@@ -211,13 +211,13 @@ table {
   background-color: #bec1ca;
 }
 
-.table__user__status.active {
+.table__user__status.inactive {
   background-color: #fca5a5;
   color: #f87171;
   @apply rounded-md w-[120px] p-1 font-bold
 }
 
-.table__user__status.inactive {
+.table__user__status.active {
   background-color: #DFEDE6;
   color: #7FB48E;
   @apply rounded-md w-[120px] p-1 font-bold

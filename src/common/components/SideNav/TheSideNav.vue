@@ -30,7 +30,7 @@ const pages: Page[] = [
 <template>
   <nav class="sidenav">
     <h1 class="sidenav__app_name">
-      Bar Zaza
+      Logo aqui
     </h1>
     <div class="sindenav__links">
       <ul v-for="(page, i) in pages" :key="i">
