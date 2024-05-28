@@ -25,8 +25,11 @@ class ClientApi {
     return result
   }
 
-  updateClient(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async updateClient(payload: unknown): Promise<IResponseDTO<ClientDTO>> {
+    const url = `${this.uri}clients`
+    const reponse = await apiService.put<unknown, IResponseDTO<ClientDTO>>(url, payload)
+    const result = reponse.get()
+    return result
   }
 
   delete(): Promise<void> {

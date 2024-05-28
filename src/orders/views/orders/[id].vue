@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
 import * as R from 'ramda'
-import Dropdown from 'primevue/dropdown'
-import PrimeButton from 'primevue/button'
 import OrderProductForm from '~/orders/components/OrderProductForm.vue'
 import { OrderDto } from '~/orders/types'
 import OrderApi from '~/api/Order/OrderApi'
@@ -45,6 +43,7 @@ async function closeOrder() {
     toast.info('Selecione a forma do pagamento')
     return
   }
+
   await OrderApi.closeOrder(order.value!.id, selectPayment.value!.value!)
   router.back()
 }
@@ -100,6 +99,7 @@ const paymentOptions = [
   { value: 'PIX', name: 'PIX' },
   { value: 'CARTAO', name: 'CARTÃO' },
   { value: 'DINHEIRO', name: 'DINHEIRO' },
+  { value: 'CANCELAR', name: 'CANCELAR' },
 ]
 
 </script>

@@ -112,7 +112,7 @@ function userStatus(status: boolean) {
           <VCheckbox v-model="item.select" @update:model-value="onSelectItem($event, item.id)" />
         </td>
         <td v-for="field in columns" :key="field">
-          <span v-if="['pricePerUnit', 'price', 'totalPrice'].includes(field)">
+          <span v-if="['pricePerUnit', 'price', 'totalPrice', 'debt', 'credit'].includes(field)">
             {{ formatCurrency(item[field]) }}
           </span>
           <span

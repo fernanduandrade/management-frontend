@@ -53,4 +53,21 @@ export default {
       return Either.left({ kind: 'UnexpectedError', error })
     }
   },
+  async put<TRequest, TResult>(route: string, payload: TRequest): Promise<Either<DataError, TResult>> {
+    try {
+      const response = await fetch(route, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json()
+      this.statusCode = response.status
+      return Either.right(result)
+    }
+    catch (error: any) {
+      return Either.left({ kind: 'UnexpectedError', error })
+    }
+  },
 }

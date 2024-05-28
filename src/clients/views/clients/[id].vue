@@ -1,10 +1,15 @@
 <script lang="ts" setup>
+import { v4 as uuidv4 } from 'uuid'
+import { storeToRefs } from 'pinia'
 import { formatCurrency } from '~/common/logic'
 import ClientApi from '~/api/Client/ClientApi'
 import { ClientDTO } from '~/clients/types'
 import AddClientInputForm from '~/clients/components/AddClientInputForm.vue'
+
 const route = useRoute()
 const modal = useModal()
+
+const { modalEmitValue } = storeToRefs(modal)
 
 const client = ref<ClientDTO>()
 const editClientData = ref<ClientDTO>()
@@ -12,16 +17,29 @@ const onEditing = ref(false)
 
 function editInfo() {
   onEditing.value = !onEditing.value
-  editClientData.value = client.value
+  editClientData.value = { ...client.value! }
 }
 
-onMounted(async() => {
+const onSubscribeEvent = ref('')
+
+async function getClient() {
   const orderId = route.params.id as string
   const { data } = await ClientApi.getById(orderId)
   client.value = data
+}
+
+async function updateClient() {
+  client.value = { ...editClientData.value! }
+  await ClientApi.updateClient(client.value)
+  editClientData.value = undefined
+}
+
+onMounted(async() => {
+  await getClient()
 })
 const openInputModal = () => {
-  modal.open({ component: markRaw(AddClientInputForm), props: { id: client.value?.id } })
+  onSubscribeEvent.value = uuidv4()
+  modal.open({ component: markRaw(AddClientInputForm), props: { id: client.value?.id }, subscribe: onSubscribeEvent.value })
 }
 
 async function updateStatus() {
@@ -29,6 +47,10 @@ async function updateStatus() {
   await ClientApi.updateStatus({ id: client.value?.id })
 }
 
+watch(modalEmitValue, async(newValue) => {
+  if (newValue === onSubscribeEvent.value)
+    await getClient()
+})
 </script>
 
 <template>
@@ -52,7 +74,7 @@ async function updateStatus() {
         <VButton v-if="onEditing" icon="fa-xmark" background-color="red" @click="onEditing = !onEditing">
           Cancelar
         </VButton>
-        <VButton v-if="onEditing">
+        <VButton v-if="onEditing" @click="updateClient">
           Salvar
         </VButton>
         <VButton v-if="!onEditing" :disabled="!client?.isActive" @click="openInputModal">
@@ -79,7 +101,7 @@ async function updateStatus() {
         <VInputText
           v-model="editClientData!.name"
           type="text"
-          placeholder="Sobrenome"
+          placeholder="Nome"
         />
       </div>
       <div class="flex flex-col gap-2">
@@ -94,7 +116,7 @@ async function updateStatus() {
         <VInputText
           v-model="editClientData!.phone"
           type="text"
-          placeholder="Sobrenome"
+          placeholder="Telefone"
         />
       </div>
     </div>

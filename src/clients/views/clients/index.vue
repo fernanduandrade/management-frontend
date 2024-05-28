@@ -35,10 +35,11 @@ onMounted(async() => {
 
 const modal = useModal()
 const toast = useToast()
-const onDeleteSub = ref('')
+const onSubscribeEvent = ref('')
 
 function createClientModal() {
-  modal.open({ component: markRaw(ClientForm), title: 'Cadastro de Cliente' })
+  onSubscribeEvent.value = uuidv4()
+  modal.open({ component: markRaw(ClientForm), title: 'Cadastro de Cliente', subscribe: onSubscribeEvent.value })
 }
 
 const { modalEmitValue } = storeToRefs(modal)
@@ -56,18 +57,18 @@ function deleteClientsModal() {
     toast.info('Nenhum registro selecionado')
     return
   }
-  onDeleteSub.value = uuidv4()
+  onSubscribeEvent.value = uuidv4()
   modal.open({
     component: markRaw(DeleteClientForm),
     props: { ids: ids.value },
     title: 'Exclusão de clientes',
     description: 'Você irá excluir todos os clientes selecionados.',
-    subscribe: onDeleteSub.value,
+    subscribe: onSubscribeEvent.value,
   })
 }
 
 watch(modalEmitValue, async(newValue) => {
-  if (newValue === onDeleteSub.value) {
+  if (newValue === onSubscribeEvent.value) {
     await getClients(1, 10)
     ids.value = []
   }

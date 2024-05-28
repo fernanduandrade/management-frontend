@@ -34,7 +34,6 @@ watch(() => form.phone, (newValue) => {
   form.phone = newValue.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')
 })
 
-// return value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1)$2-$3')
 </script>
 
 <template>
