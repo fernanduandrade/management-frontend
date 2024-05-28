@@ -71,7 +71,9 @@ watch(modalEmitValue, async(newValue) => {
   if (newValue === onSubscribeEvent.value) {
     await getClients(1, 10)
     ids.value = []
+    return
   }
+  await getClients(1, 10)
 })
 
 function onSelectId(evt: string[]) {

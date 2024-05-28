@@ -70,7 +70,10 @@ watch(modalEmitValue, async(newValue) => {
   if (newValue === onDeleteSub.value) {
     await getProducts(1, 10)
     ids.value = []
+    return
   }
+
+  await getProducts(1, 10)
 })
 
 function onSelectId(evt: string[]) {
