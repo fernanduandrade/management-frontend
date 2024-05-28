@@ -8,6 +8,7 @@ import AddClientInputForm from '~/clients/components/AddClientInputForm.vue'
 
 const route = useRoute()
 const modal = useModal()
+const toast = useToast()
 
 const { modalEmitValue } = storeToRefs(modal)
 
@@ -32,6 +33,8 @@ async function updateClient() {
   client.value = { ...editClientData.value! }
   await ClientApi.updateClient(client.value)
   editClientData.value = undefined
+  toast.success('Dados atualizados')
+  onEditing.value = !onEditing.value
 }
 
 onMounted(async() => {
@@ -48,8 +51,10 @@ async function updateStatus() {
 }
 
 watch(modalEmitValue, async(newValue) => {
-  if (newValue === onSubscribeEvent.value)
+  if (newValue === onSubscribeEvent.value) {
+    toast.success('Valor atualizado')
     await getClient()
+  }
 })
 </script>
 

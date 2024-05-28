@@ -57,7 +57,7 @@ watch(() => form.phone, (newValue) => {
       </div>
       <div>
         <label for="">Telefone</label>
-        <VInputText v-model="form.phone" type="text" placeholder="Telefone" />
+        <VInputText v-model="form.phone" type="text" placeholder="Telefone" :max-length="14" />
       </div>
     </form>
     <div class="flex items-center gap-2 self-center">

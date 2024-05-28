@@ -6,6 +6,7 @@ type InputSearchProp = {
   placeholder: string
   modelValue: string | number
   type?: string
+  maxLength?: number
 }
 const props = withDefaults(defineProps<InputSearchProp>(), {
   type: 'text',
@@ -38,6 +39,7 @@ const cssClasses = computed(() => {
       :value="modelValue"
       v-bind="$attrs"
       :type="type"
+      :maxlength="maxLength"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </div>

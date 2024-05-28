@@ -73,7 +73,7 @@ watch(modalEmitValue, async(newValue) => {
     ids.value = []
     return
   }
-  await getClients(1, 10)
+  clients.value.splice(0, 0, newValue as ClientDTO)
 })
 
 function onSelectId(evt: string[]) {

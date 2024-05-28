@@ -73,7 +73,7 @@ watch(modalEmitValue, async(newValue) => {
     return
   }
 
-  await getProducts(1, 10)
+  products.value.splice(0, 0, newValue as ProductDTO)
 })
 
 function onSelectId(evt: string[]) {
