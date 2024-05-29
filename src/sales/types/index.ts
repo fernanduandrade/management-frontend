@@ -6,6 +6,7 @@ export type SaleDTO = {
   quantity: number
   pricePerUnit: number
   totalPrice?: number
+  productName?: string
 }
 
 export type CreateSaleDTO = Omit<SaleDTO, 'id'>

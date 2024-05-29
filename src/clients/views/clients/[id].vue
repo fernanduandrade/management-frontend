@@ -51,10 +51,8 @@ async function updateStatus() {
 }
 
 watch(modalEmitValue, async(newValue) => {
-  if (newValue === onSubscribeEvent.value) {
-    toast.success('Valor atualizado')
+  if (newValue === onSubscribeEvent.value)
     await getClient()
-  }
 })
 </script>
 

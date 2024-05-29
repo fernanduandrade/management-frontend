@@ -2,7 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 import ProductApi from '~/api/Product/ProductApi'
-import DeleteProductForm from '~/products/components/DeleteProductForm.vue'
+import DeleteProductsForm from '~/products/components/DeleteProductsForm.vue'
 import { ProductDTO } from '~/products/types/index'
 import ProductForm from '~/products/components/ProductForm.vue'
 import { useFilter } from '~/composables/useFilter'
@@ -58,7 +58,7 @@ function deleteProductsModal() {
   }
   onDeleteSub.value = uuidv4()
   modal.open({
-    component: markRaw(DeleteProductForm),
+    component: markRaw(DeleteProductsForm),
     props: { ids: ids.value },
     title: 'Exclusão de produtos',
     description: 'Você irá excluir todos os produtos selecionados.',

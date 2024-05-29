@@ -20,16 +20,23 @@ class ProductApi implements IProductApi {
     return result
   }
 
-  updateProduct(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async updateProduct(payload: unknown): Promise<IResponseDTO<ProductDTO>> {
+    const url = `${this.uri}clients`
+    const reponse = await apiService.put<unknown, IResponseDTO<ProductDTO>>(url, payload)
+    const result = reponse.get()
+    return result
   }
 
-  deleteProduct(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async deleteProduct(id: string): Promise<void> {
+    const url = `${this.uri}products/${id}`
+    await apiService.delete(url)
   }
 
-  getProductById(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async getProductById(id: string): Promise<IResponseDTO<ProductDTO>> {
+    const url = `${this.uri}products/${id}`
+    const reponse = await apiService.get<IResponseDTO<ProductDTO>>(url)
+    const result = reponse.get()
+    return result
   }
 
   async getProductsPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse> {

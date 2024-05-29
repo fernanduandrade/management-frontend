@@ -40,16 +40,18 @@ class SaleApi implements ISaleApi {
     return result
   }
 
-  updateSale(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async update(payload: unknown): Promise<IResponseDTO<SaleDTO>> {
+    const url = `${this.uri}saleshistory`
+    const reponse = await apiService.put<unknown, IResponseDTO<SaleDTO>>(url, payload)
+    const result = reponse.get()
+    return result
   }
 
-  deleteSale(): Promise<void> {
-    throw new Error('Method not implemented.')
-  }
-
-  getSaleById(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async getById(id: string): Promise<IResponseDTO<SaleDTO>> {
+    const url = `${this.uri}saleshistory/${id}`
+    const reponse = await apiService.get<IResponseDTO<SaleDTO>>(url)
+    const result = reponse.get()
+    return result
   }
 
   async deleteBulk(ids: unknown): Promise<void> {

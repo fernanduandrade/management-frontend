@@ -6,6 +6,8 @@ pages:
   clients-id: Cliente
   orders: Pedidos
   orders-id: Pedido
+  products-id: Produto
+  sales-id: Venda
   messages: Mensagens
   dashboards: Dashboard
 default_domain_keys:

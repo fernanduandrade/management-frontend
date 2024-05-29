@@ -19,6 +19,7 @@ import {
   faSearch,
   faMagnifyingGlass,
   faPen,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons'
 import { UserModule } from '~/types'
 
@@ -41,6 +42,7 @@ library.add(
   faSearch,
   faMagnifyingGlass,
   faPen,
+  faTrash,
 )
 
 export const install: UserModule = ({ app }) => {

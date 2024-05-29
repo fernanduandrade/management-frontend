@@ -6,7 +6,7 @@ import { ProductDTO } from '~/products/types'
 export default interface IProductApi {
   getProductsPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse>
   createProduct(payload: PostProductRequest): Promise<IResponseDTO<ProductDTO>>
-  updateProduct(): Promise<void>
-  deleteProduct(): Promise<void>
-  getProductById(): Promise<void>
+  updateProduct(payload: unknown): Promise<IResponseDTO<ProductDTO>>
+  deleteProduct(id: string): Promise<void>
+  getProductById(id: string): Promise<IResponseDTO<ProductDTO>>
 }

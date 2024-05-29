@@ -6,7 +6,6 @@ import { SaleDTO } from '~/sales/types'
 export default interface ISaleApi {
   getSalesPaginate(query: PaginateRequest): Promise<GetSalePaginateResponse>
   createSale(payload: PostSaleRequest): Promise<IResponseDTO<SaleDTO>>
-  updateSale(): Promise<void>
-  deleteSale(): Promise<void>
-  getSaleById(): Promise<void>
+  update(payload: unknown): Promise<IResponseDTO<SaleDTO>>
+  getById(id: string): Promise<IResponseDTO<SaleDTO>>
 }
