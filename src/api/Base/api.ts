@@ -8,8 +8,8 @@ export class BaseApi {
     this.resource = resource
   }
 
-  async delete(ids: string): Promise<void> {
-    const url = `${this.uri}/${this.resource}/bulk`
-    await apiService.delete(url, ids)
+  async delete(id: string): Promise<void> {
+    const url = `${this.uri}${this.resource}/${id}`
+    await apiService.delete(url)
   }
 }

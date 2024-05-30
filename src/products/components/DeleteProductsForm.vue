@@ -12,6 +12,7 @@ const props = defineProps({
 const modal = useModal()
 async function deleteProduct() {
   await ProductApi.deleteBulk({ ids: props.ids })
+  modal.$state.modalState.hasSelectAll = false
   modal.close()
 }
 </script>

@@ -12,6 +12,7 @@ type IModalProps = {
   description?: string
   opened?: boolean
   subscribe?: string
+  hasSelectAll?: boolean
 
 }
 
@@ -20,14 +21,14 @@ interface IModalState {
   modalEmitValue: unknown
 }
 
-const basicState = { component: null, subscribe: '', title: '', description: '', props: { }, opened: false }
+const basicState = { component: null, subscribe: '', title: '', description: '', props: { }, opened: false, hasSelectAll: false }
 
 export default defineStore('modal-store', {
   state: (): IModalState => ({ modalState: basicState, modalEmitValue: null }),
   actions: {
     open(payload: IModalProps) {
       const { props, component, title, description, subscribe } = payload
-      this.modalState = { component, props: props || {}, title, subscribe, description, opened: true }
+      this.modalState = { component, props: props || {}, title, subscribe, description, opened: true, hasSelectAll: false }
     },
     async close() {
       const { subscribe } = this.modalState

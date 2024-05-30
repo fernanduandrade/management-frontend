@@ -28,6 +28,9 @@ async function updateSale() {
   editSaleData.value = undefined
   toast.success('Dados atualizados')
   onEditing.value = !onEditing.value
+  const saleId = route.params.id as string
+  const { data } = await SaleApi.getById(saleId)
+  sale.value = data
 }
 
 onMounted(async() => {

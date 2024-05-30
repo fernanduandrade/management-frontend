@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { sort, prop, ascend, descend } from 'ramda'
+import { storeToRefs } from 'pinia'
 import { formatCurrency } from '~/common/logic'
 const { t } = useI18n()
 const router = useRouter()
@@ -9,15 +10,11 @@ type TableProps<T> = {
   page: string
 }
 
+const modal = useModal()
+
+const { modalState: { value: { hasSelectAll } } } = storeToRefs(modal)
+
 const ids = ref<string[]>([])
-
-// const userStatusClasses = computed((aa) => {
-//   return {
-//     'table__user__status active': aa,
-//     'table__user__status inactive': !aa,
-//   }
-// })
-
 const orderStatus = {
   ABERTO: { bg: '#E3E5FC', color: '#537BFA' },
   FECHADO: { bg: '#DFEDE6', color: '#7FB48E' },
@@ -62,7 +59,7 @@ watch(selectAll, (newValue) => {
     item.select = newValue
   })
 
-  ids.value = sortedItems.value.filter(x => x.select)
+  ids.value = sortedItems.value.filter(x => x.select).map(x => x.id)
   emits('selectIds', ids.value)
 })
 
@@ -77,6 +74,11 @@ function onSelectItem(evt: boolean, id: string) {
   ids.value.splice(idIndex, 1)
   emits('selectIds', ids.value)
 }
+
+watch(() => hasSelectAll, (newValue) => {
+  if (!newValue && selectAll.value)
+    selectAll.value = newValue!
+})
 
 function userStatus(status: boolean) {
   return {

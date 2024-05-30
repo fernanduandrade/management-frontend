@@ -20,8 +20,8 @@ class ProductApi implements IProductApi {
     return result
   }
 
-  async updateProduct(payload: unknown): Promise<IResponseDTO<ProductDTO>> {
-    const url = `${this.uri}clients`
+  async update(payload: unknown): Promise<IResponseDTO<ProductDTO>> {
+    const url = `${this.uri}products`
     const reponse = await apiService.put<unknown, IResponseDTO<ProductDTO>>(url, payload)
     const result = reponse.get()
     return result

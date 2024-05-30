@@ -63,6 +63,7 @@ function deleteProductsModal() {
     title: 'Exclusão de produtos',
     description: 'Você irá excluir todos os produtos selecionados.',
     subscribe: onDeleteSub.value,
+    hasSelectAll: true,
   })
 }
 

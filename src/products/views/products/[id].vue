@@ -27,7 +27,7 @@ async function getProduct() {
 
 async function updateProduct() {
   product.value = { ...editProductData.value! }
-  await ProductApi.updateProduct(product.value)
+  await ProductApi.update(product.value)
   editProductData.value = undefined
   toast.success('Dados atualizados')
   onEditing.value = !onEditing.value
@@ -94,6 +94,13 @@ const openDeleteProductModal = () => {
           v-model="editProductData!.name"
           type="text"
           placeholder="Nome"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <VInputText
+          v-model="editProductData!.description"
+          type="text"
+          placeholder="Descrição"
         />
       </div>
       <div class="flex flex-col gap-2">

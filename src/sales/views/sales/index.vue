@@ -72,6 +72,8 @@ watch(modalEmitValue, async(newValue) => {
     await getSales(1, 10)
     ids.value = []
   }
+
+  sales.value.splice(0, 0, newValue as SaleDTO)
 })
 
 function onSelectId(evt: string[]) {
@@ -96,7 +98,7 @@ function onSelectId(evt: string[]) {
       :columns="saleColumn"
       :data="data"
       page="sales"
-      :select-ids="onSelectId"
+      @select-ids="onSelectId"
     >
       <template #actions>
       </template>
