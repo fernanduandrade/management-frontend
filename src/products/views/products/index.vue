@@ -12,7 +12,7 @@ const productsColumn = ref<string[]>([
 
 const modal = useModal()
 const toast = useToast()
-
+const isLoading = ref(false)
 const currentPage = ref(1)
 const pageSize = ref(10)
 const hasPreviousPage = ref(false)
@@ -33,12 +33,14 @@ function createProductModal() {
 }
 
 async function getProducts(pageNumber: number, pageSize: number) {
+  isLoading.value = true
   const { data } = await ProductApi.getProductsPaginate({ pageNumber, pageSize })
   products.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
   totalPages.value = data.totalPages
   totalCount.value = data.totalCount
+  isLoading.value = false
 }
 
 async function changeProductPage(evt: any) {
@@ -97,6 +99,7 @@ function onSelectId(evt: string[]) {
       :columns="productsColumn"
       :data="data"
       page="products"
+      :is-loading="isLoading"
       @select-ids="onSelectId"
     >
     </VTable>

@@ -8,6 +8,7 @@ type TableProps<T> = {
   columns: string[]
   data: T[]
   page: string
+  isLoading: boolean
 }
 
 const modal = useModal()
@@ -90,7 +91,16 @@ function userStatus(status: boolean) {
 </script>
 
 <template>
-  <table id="tableComponent">
+  <div
+    v-if="isLoading"
+    style="left: 50%; position: relative;"
+  >
+    <i
+      class="
+      gg-spinner-alt"
+    />
+  </div>
+  <table v-else-if="sortedItems.length > 0" id="tableComponent">
     <thead class="table__header">
       <tr>
         <th>
@@ -108,6 +118,7 @@ function userStatus(status: boolean) {
         </th>
       </tr>
     </thead>
+
     <tbody class="table__body">
       <tr v-for="item in sortedItems" :key="item.id">
         <td>
@@ -150,6 +161,7 @@ function userStatus(status: boolean) {
       </tr>
     </tbody>
   </table>
+  <span class="text-center text-xl text-gray-600">N tem dados aqui fodase</span>
 </template>
 
 <style scoped>
