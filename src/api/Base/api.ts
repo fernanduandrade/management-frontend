@@ -1,4 +1,3 @@
-import apiService from '../api-service'
 export class BaseApi {
   private uri
   private resource
@@ -10,6 +9,7 @@ export class BaseApi {
 
   async delete(id: string): Promise<void> {
     const url = `${this.uri}${this.resource}/${id}`
-    await apiService.delete(url)
+    const { fetchData } = useFetch(url, { method: 'DELETE' })
+    await fetchData()
   }
 }

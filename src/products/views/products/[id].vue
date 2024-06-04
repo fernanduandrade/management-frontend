@@ -51,6 +51,16 @@ const openDeleteProductModal = () => {
 
 <template>
   <main class="wrapper shadow-sm">
+    <div
+      v-if="product?.quantity == 0"
+      class="flex p-3 rounded-md gap-4 bg-red-300 text-red-700 items-center"
+    >
+      <font-awesome-icon
+        class="text-xl"
+        icon="fa-circle-exclamation"
+      />
+      <span>O seguinte produto está não há em estoque</span>
+    </div>
     <div class="client__actions">
       <div class="flex flex-col">
         <h1 class="text-2xl font-mono">

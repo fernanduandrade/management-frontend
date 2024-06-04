@@ -1,6 +1,6 @@
 import { isEmpty } from 'ramda'
 
-type HttpRequest = 'POST' | 'DELETE' | 'GET' | 'PUT'
+type HttpRequest = 'POST' | 'DELETE' | 'GET' | 'PUT' | 'PATCH'
 
 interface Options {
   headers?: Record<string, string>
@@ -41,6 +41,7 @@ export default function useFetch<TResult>(url: string, options: Options = {}) {
       data.value = options.returnBlob ? await response.blob() : await response.json()
     }
     catch (exception: any) {
+      // TODO refatorar esse cara
       error.value = exception.message
       toast.warning('Serviço indisponível no momento')
     }

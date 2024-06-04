@@ -1,62 +1,62 @@
-import apiService from '../api-service'
-import ISaleApi from './ISaleApi'
 import { PostSaleRequest } from './request'
 import { GetSalePaginateResponse } from './response/IGetSalePaginateResponse'
 import { IResponseDTO, PaginateRequest } from '~/common/types'
 import { SaleDTO } from '~/sales/types'
 
-class SaleApi implements ISaleApi {
+class SaleApi {
   private uri
 
   constructor() {
-    this.uri = import.meta.env.VITE_API
+    this.uri = `${import.meta.env.VITE_API}saleshistory`
   }
 
   async getPaginate(query: PaginateRequest): Promise<GetSalePaginateResponse> {
-    const url = `${this.uri}saleshistory?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
-    const reponse = await apiService.get<GetSalePaginateResponse>(url)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
+    const { data, fetchData } = useFetch<GetSalePaginateResponse>(url)
+    await fetchData()
+
+    return data.value
   }
 
   async create(payload: PostSaleRequest): Promise<IResponseDTO<SaleDTO>> {
-    const url = `${this.uri}saleshistory`
-    const reponse = await apiService.post<PostSaleRequest, IResponseDTO<SaleDTO>>(url, payload)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}`
+    const { data, fetchData } = useFetch<IResponseDTO<SaleDTO>>(url, { method: 'POST', body: JSON.stringify(payload) })
+    await fetchData()
+    return data.value!
   }
 
   async todaySales(): Promise<IResponseDTO<number>> {
-    const url = `${this.uri}saleshistory/today`
-    const reponse = await apiService.get<IResponseDTO<number>>(url)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}/today`
+    const { data, fetchData } = useFetch<IResponseDTO<number>>(url)
+    await fetchData()
+    return data.value!
   }
 
   async monthSales(): Promise<IResponseDTO<number>> {
-    const url = `${this.uri}saleshistory/month`
-    const reponse = await apiService.get<IResponseDTO<number>>(url)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}/month`
+    const { data, fetchData } = useFetch<IResponseDTO<number>>(url)
+    await fetchData()
+    return data.value!
   }
 
   async update(payload: unknown): Promise<IResponseDTO<SaleDTO>> {
-    const url = `${this.uri}saleshistory`
-    const reponse = await apiService.put<unknown, IResponseDTO<SaleDTO>>(url, payload)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}`
+    const { data, fetchData } = useFetch<IResponseDTO<SaleDTO>>(url, { method: 'PUT', body: JSON.stringify(payload) })
+    await fetchData()
+    return data.value!
   }
 
   async getById(id: string): Promise<IResponseDTO<SaleDTO>> {
-    const url = `${this.uri}saleshistory/${id}`
-    const reponse = await apiService.get<IResponseDTO<SaleDTO>>(url)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}/${id}`
+    const { data, fetchData } = useFetch<IResponseDTO<SaleDTO>>(url)
+    await fetchData()
+    return data.value!
   }
 
   async deleteBulk(ids: unknown): Promise<void> {
-    const url = `${this.uri}saleshistory/bulk`
-    await apiService.delete(url, ids)
+    const url = `${this.uri}/bulk`
+    const { fetchData } = useFetch(url, { method: 'DELETE', body: JSON.stringify(ids) })
+    await fetchData()
   }
 }
 

@@ -1,4 +1,3 @@
-import apiService from '../api-service'
 import { PostClientRequest } from './request'
 import { GetClientPaginateResponse } from './response/IGetClientPaginateResponse'
 import { IResponseDTO, PaginateRequest } from '~/common/types'
@@ -8,54 +7,53 @@ class ClientApi {
   private uri: string
 
   constructor() {
-    this.uri = import.meta.env.VITE_API
+    this.uri = `${import.meta.env.VITE_API}clients`
   }
 
-  async getClientsPaginate(query: PaginateRequest): Promise<GetClientPaginateResponse> {
-    const url = `${this.uri}clients?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
-    const reponse = await apiService.get<GetClientPaginateResponse>(url)
-    const result = reponse.get()
-    return result
+  async getPaginate(query: PaginateRequest): Promise<GetClientPaginateResponse> {
+    const url = `${this.uri}?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
+    const { data, fetchData } = useFetch<GetClientPaginateResponse>(url)
+    await fetchData()
+    return data.value!
   }
 
-  async createClient(payload: PostClientRequest): Promise<IResponseDTO<ClientDTO>> {
-    const url = `${this.uri}clients`
-    const reponse = await apiService.post<PostClientRequest, IResponseDTO<ClientDTO>>(url, payload)
-    const result = reponse.get()
-    return result
+  async create(payload: PostClientRequest): Promise<IResponseDTO<ClientDTO>> {
+    const url = `${this.uri}`
+    const { data, fetchData } = useFetch<IResponseDTO<ClientDTO>>(url, { method: 'POST', body: JSON.stringify(payload) })
+    await fetchData()
+    return data.value!
   }
 
-  async updateClient(payload: unknown): Promise<IResponseDTO<ClientDTO>> {
-    const url = `${this.uri}clients`
-    const reponse = await apiService.put<unknown, IResponseDTO<ClientDTO>>(url, payload)
-    const result = reponse.get()
-    return result
-  }
-
-  delete(): Promise<void> {
-    throw new Error('Method not implemented.')
+  async update(payload: unknown): Promise<IResponseDTO<ClientDTO>> {
+    const url = `${this.uri}`
+    const { data, fetchData } = useFetch<IResponseDTO<ClientDTO>>(url, { method: 'PUT', body: JSON.stringify(payload) })
+    await fetchData()
+    return data.value!
   }
 
   async getById(id: string): Promise<IResponseDTO<ClientDTO>> {
-    const url = `${this.uri}clients/${id}`
-    const reponse = await apiService.get<IResponseDTO<ClientDTO>>(url)
-    const result = reponse.get()
-    return result
+    const url = `${this.uri}/${id}`
+    const { data, fetchData } = useFetch<IResponseDTO<ClientDTO>>(url)
+    await fetchData()
+    return data.value!
   }
 
   async deleteBulk(ids: unknown): Promise<void> {
-    const url = `${this.uri}clients/bulk`
-    await apiService.delete(url, ids)
+    const url = `${this.uri}/bulk`
+    const { fetchData } = useFetch(url, { method: 'DELETE', body: JSON.stringify(ids) })
+    await fetchData()
   }
 
   async updateBalance(payload: unknown): Promise<void> {
-    const url = `${this.uri}clients/update-balance`
-    await apiService.post(url, payload)
+    const url = `${this.uri}/balance`
+    const { fetchData } = useFetch(url, { method: 'PATCH', body: JSON.stringify(payload) })
+    await fetchData()
   }
 
   async updateStatus(payload: unknown): Promise<void> {
-    const url = `${this.uri}clients/update-status`
-    await apiService.post(url, payload)
+    const url = `${this.uri}/status`
+    const { fetchData } = useFetch(url, { method: 'PATCH', body: JSON.stringify(payload) })
+    await fetchData()
   }
 }
 

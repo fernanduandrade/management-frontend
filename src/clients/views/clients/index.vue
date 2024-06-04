@@ -23,7 +23,7 @@ const ids = ref<string[]>([])
 
 async function getClients(pageNumber: number, pageSize: number) {
   isLoading.value = !isLoading.value
-  const { data } = await ClientApi.getClientsPaginate({ pageNumber, pageSize })
+  const { data } = await ClientApi.getPaginate({ pageNumber, pageSize })
   clients.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage

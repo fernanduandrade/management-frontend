@@ -31,7 +31,7 @@ async function getClient() {
 
 async function updateClient() {
   client.value = { ...editClientData.value! }
-  await ClientApi.updateClient(client.value)
+  await ClientApi.update(client.value)
   editClientData.value = undefined
   toast.success('Dados atualizados')
   onEditing.value = !onEditing.value

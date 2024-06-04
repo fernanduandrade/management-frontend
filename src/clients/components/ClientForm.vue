@@ -15,7 +15,7 @@ const form = reactive<CreateClientDTO>({
   phone: '',
 })
 async function createClient() {
-  const response = await ClientApi.createClient(form)
+  const response = await ClientApi.create(form)
   switch (response.type) {
     case ResultType.success:
       toast.success(response.message)

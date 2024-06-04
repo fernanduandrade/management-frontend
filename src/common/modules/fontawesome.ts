@@ -22,6 +22,7 @@ import {
   faTrash,
   faFileArrowDown,
   faCircleNotch,
+  faCircleExclamation,
 } from '@fortawesome/free-solid-svg-icons'
 import { UserModule } from '~/types'
 
@@ -47,6 +48,7 @@ library.add(
   faTrash,
   faFileArrowDown,
   faCircleNotch,
+  faCircleExclamation,
 )
 
 export const install: UserModule = ({ app }) => {
