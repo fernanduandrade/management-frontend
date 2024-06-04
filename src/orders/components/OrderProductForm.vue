@@ -33,7 +33,7 @@ const searchAutocomplete = async(input: string) => {
 </script>
 
 <template>
-  <main class="container">
+  <main class="main">
     <form class="form">
       <div>
         <AutoComplete
@@ -59,7 +59,7 @@ const searchAutocomplete = async(input: string) => {
 </template>
 
 <style scoped>
-.container {
+.main {
   width: 600px;
   display: flex;
   flex-direction: column;

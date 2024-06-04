@@ -17,7 +17,7 @@ async function deleteOrder() {
 </script>
 
 <template>
-  <main class="container">
+  <main class="main">
     <span class="self-center text-lg">Deseja excluir todos os <strong>{{ ids.length }}</strong> registros selecionados?</span>
     <div class="self-center flex justify-between gap-4">
       <VButton :transparent="true" @click="modal.close">
@@ -31,7 +31,7 @@ async function deleteOrder() {
 </template>
 
 <style scoped>
-.container {
+.main {
   width: 600px;
 
   display: flex;

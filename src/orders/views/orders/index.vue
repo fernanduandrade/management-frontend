@@ -131,15 +131,6 @@ function onSelectId(evt: string[]) {
 </template>
 
 <style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: var(--background-color-primary);
-  border-radius: 10px;
-  padding: 1.5rem;
-}
-
 .order {
   display: flex;
   flex-wrap: wrap;

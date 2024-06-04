@@ -14,7 +14,7 @@ async function createOrder() {
 </script>
 
 <template>
-  <main class="container">
+  <main class="main">
     <form class="form">
       <div>
         <VInputText v-model="clientName" type="text" placeholder="Nome" />
@@ -32,7 +32,7 @@ async function createOrder() {
 </template>
 
 <style scoped>
-.container {
+.main {
   width: 600px;
 
   display: flex;

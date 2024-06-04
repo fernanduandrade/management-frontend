@@ -115,7 +115,7 @@ declare global {
   const useEventListener: typeof import('@vueuse/core')['useEventListener']
   const useEventSource: typeof import('@vueuse/core')['useEventSource']
   const useFavicon: typeof import('@vueuse/core')['useFavicon']
-  const useFetch: typeof import('@vueuse/core')['useFetch']
+  const useFetch: typeof import('./src/composables/useFetch')['default']
   const useFilter: typeof import('./src/composables/useFilter')['useFilter']
   const useFullscreen: typeof import('@vueuse/core')['useFullscreen']
   const useGeolocation: typeof import('@vueuse/core')['useGeolocation']
