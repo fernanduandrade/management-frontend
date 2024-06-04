@@ -20,6 +20,8 @@ import {
   faMagnifyingGlass,
   faPen,
   faTrash,
+  faFileArrowDown,
+  faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons'
 import { UserModule } from '~/types'
 
@@ -43,6 +45,8 @@ library.add(
   faMagnifyingGlass,
   faPen,
   faTrash,
+  faFileArrowDown,
+  faCircleNotch,
 )
 
 export const install: UserModule = ({ app }) => {

@@ -24,9 +24,6 @@ const { search, data } = useFilter(products, 'name')
 const storeModal = useModal()
 const { modalEmitValue } = storeToRefs(storeModal)
 const ids = ref<string[]>([])
-watch(modalEmitValue, (value) => {
-  products.value.push(value as ProductDTO)
-})
 
 function createProductModal() {
   storeModal.open({ component: markRaw(ProductForm), title: 'Cadastro de Produto' })
@@ -34,7 +31,7 @@ function createProductModal() {
 
 async function getProducts(pageNumber: number, pageSize: number) {
   isLoading.value = true
-  const { data } = await ProductApi.getProductsPaginate({ pageNumber, pageSize })
+  const { data } = await ProductApi.getPaginate({ pageNumber, pageSize })
   products.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
@@ -72,6 +69,7 @@ function deleteProductsModal() {
 watch(modalEmitValue, async(newValue) => {
   if (newValue === onDeleteSub.value) {
     await getProducts(1, 10)
+
     ids.value = []
     return
   }

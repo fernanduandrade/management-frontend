@@ -13,7 +13,7 @@ class ProductApi implements IProductApi {
     this.uri = import.meta.env.VITE_API
   }
 
-  async createProduct(payload: PostProductRequest): Promise<IResponseDTO<ProductDTO>> {
+  async create(payload: PostProductRequest): Promise<IResponseDTO<ProductDTO>> {
     const url = `${this.uri}products`
     const reponse = await apiService.post<PostProductRequest, IResponseDTO<ProductDTO>>(url, payload)
     const result = reponse.get()
@@ -27,26 +27,26 @@ class ProductApi implements IProductApi {
     return result
   }
 
-  async deleteProduct(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     const url = `${this.uri}products/${id}`
     await apiService.delete(url)
   }
 
-  async getProductById(id: string): Promise<IResponseDTO<ProductDTO>> {
+  async getById(id: string): Promise<IResponseDTO<ProductDTO>> {
     const url = `${this.uri}products/${id}`
     const reponse = await apiService.get<IResponseDTO<ProductDTO>>(url)
     const result = reponse.get()
     return result
   }
 
-  async getProductsPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse> {
+  async getPaginate(query: PaginateRequest): Promise<GetProductPaginateResponse> {
     const url = `${this.uri}Products?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetProductPaginateResponse>(url)
     const result = reponse.get()
     return result
   }
 
-  async getProductAutoComplete(search: string): Promise<GetProductAutoCompleteResponse> {
+  async getAutoComplete(search: string): Promise<GetProductAutoCompleteResponse> {
     const url = `${this.uri}Products/AutoComplete?search=${search}`
     const reponse = await apiService.get<GetProductAutoCompleteResponse>(url)
     const result = reponse.get()

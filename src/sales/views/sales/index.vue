@@ -11,6 +11,7 @@ const saleColumn = ref<string[]>([
 
 const sales = ref<SaleDTO[]>([])
 const currentPage = ref(1)
+const isLoading = ref(false)
 const pageSize = ref(10)
 const hasPreviousPage = ref(false)
 const hasNextPage = ref(false)
@@ -20,12 +21,14 @@ const totalCount = ref(0)
 const { search, data } = useFilter(sales, 'clientName')
 
 async function getSales(pageNumber: number, pageSize: number) {
-  const { data } = await SaleApi.getSalesPaginate({ pageNumber, pageSize })
+  isLoading.value = !isLoading.value
+  const { data } = await SaleApi.getPaginate({ pageNumber, pageSize })
   sales.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
   totalPages.value = data.totalPages
   totalCount.value = data.totalCount
+  isLoading.value = !isLoading.value
 }
 
 onMounted(async() => {
@@ -37,10 +40,6 @@ const toast = useToast()
 const ids = ref<string[]>([])
 
 const { modalEmitValue } = storeToRefs(modal)
-
-watch(modalEmitValue, (value) => {
-  sales.value.push(value as SaleDTO)
-})
 
 function createSaleModal() {
   modal.open({ component: markRaw(SaleForm), title: 'Cadastro de Vendas' })
@@ -98,6 +97,7 @@ function onSelectId(evt: string[]) {
       :columns="saleColumn"
       :data="data"
       page="sales"
+      :is-loading="isLoading"
       @select-ids="onSelectId"
     >
       <template #actions>

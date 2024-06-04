@@ -14,6 +14,7 @@ const { search, data } = useFilter(clients, 'name')
 
 const currentPage = ref(1)
 const pageSize = ref(10)
+const isLoading = ref(false)
 const hasPreviousPage = ref(false)
 const hasNextPage = ref(false)
 const totalPages = ref(0)
@@ -21,12 +22,14 @@ const totalCount = ref(0)
 const ids = ref<string[]>([])
 
 async function getClients(pageNumber: number, pageSize: number) {
+  isLoading.value = !isLoading.value
   const { data } = await ClientApi.getClientsPaginate({ pageNumber, pageSize })
   clients.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
   totalPages.value = data.totalPages
   totalCount.value = data.totalCount
+  isLoading.value = !isLoading.value
 }
 
 onMounted(async() => {
@@ -43,10 +46,6 @@ function createClientModal() {
 }
 
 const { modalEmitValue } = storeToRefs(modal)
-
-watch(modalEmitValue, (value) => {
-  clients.value.push(value as ClientDTO)
-})
 
 async function changeClientPage(evt: any) {
   await getClients(evt.pageNumber, evt.pageSize)
@@ -96,6 +95,7 @@ function onSelectId(evt: string[]) {
       :columns="clientColumn"
       :data="data"
       page="clients"
+      :is-loading="isLoading"
       @select-ids="onSelectId"
     />
     <Pagination

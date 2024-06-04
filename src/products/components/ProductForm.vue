@@ -13,7 +13,7 @@ const form = reactive<CreateProductDTO>({
   quantity: 0,
 })
 async function createProduct() {
-  const response = await ProductApi.createProduct(form)
+  const response = await ProductApi.create(form)
   switch (response.type) {
     case ResultType.success:
       toast.success(response.message)

@@ -161,7 +161,7 @@ function userStatus(status: boolean) {
       </tr>
     </tbody>
   </table>
-  <span class="text-center text-xl text-gray-600">N tem dados aqui fodase</span>
+  <span v-else class="text-center text-xl text-gray-600">N tem dados aqui fodase</span>
 </template>
 
 <style scoped>

@@ -7,6 +7,7 @@ type ButtonProps = {
   outline?: boolean
   funcCallBack?: Function
   icon?: string
+  loading?: boolean
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   transparent: false,
   outline: false,
   icon: '',
+  loading: false,
 })
 
 const cssClasses = computed(() => {
@@ -24,6 +26,11 @@ const cssClasses = computed(() => {
   }
 })
 
+const animationClasses = computed(() => {
+  return {
+    'spinner-animation': props.loading,
+  }
+})
 </script>
 
 <template>
@@ -35,7 +42,13 @@ const cssClasses = computed(() => {
       :class="[cssClasses]"
       :disabled="disabled"
     >
-      <font-awesome-icon v-if="icon" :icon="icon" :color="transparent ? '#333' : '#ffffff'" /><slot></slot>
+      <font-awesome-icon
+        v-if="icon"
+        :class="[animationClasses]"
+        :icon="icon && loading ? 'fa-circle-notch' : icon"
+        :color="transparent ? '#333' : '#ffffff'"
+      />
+      <slot></slot>
     </button>
   </div>
 </template>
@@ -62,5 +75,19 @@ button:disabled {
 
 button:hover {
   opacity: 0.9 !important;
+}
+
+.spinner-animation {
+  animation: spinner 2s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
 }
 </style>

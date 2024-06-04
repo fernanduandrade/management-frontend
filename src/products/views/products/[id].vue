@@ -21,7 +21,7 @@ const onSubscribeEvent = ref('')
 
 async function getProduct() {
   const productId = route.params.id as string
-  const { data } = await ProductApi.getProductById(productId)
+  const { data } = await ProductApi.getById(productId)
   product.value = data
 }
 

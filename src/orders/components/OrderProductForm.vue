@@ -25,7 +25,7 @@ const onSelectProduct = (evt: string) => {
 const searchAutocomplete = async(input: string) => {
   isLoadingAutoComplete.value = true
 
-  const result = await ProductApi.getProductAutoComplete(input)
+  const result = await ProductApi.getAutoComplete(input)
   productOptions.value = result.data
   autocompleteOptions.value = result.data.map(product => product.name)
   isLoadingAutoComplete.value = false

@@ -28,7 +28,7 @@ const totalSold = computed(() => {
 })
 
 async function createSale() {
-  const response = await SaleApi.createSale(form)
+  const response = await SaleApi.create(form)
   switch (response.type) {
     case ResultType.success:
       toast.success(response.message)
@@ -51,10 +51,11 @@ const clearInput = () => {
 const onSelectProduct = (evt: string) => {
   const product = productOptions.value.find(x => x.name === evt)
   form.productId = product!.id
+  form.pricePerUnit = product!.price
 }
 
 const searchAutocomplete = async(input: string) => {
-  const result = await ProductApi.getProductAutoComplete(input)
+  const result = await ProductApi.getAutoComplete(input)
   productOptions.value = result.data
   autocompleteOptions.value = result.data.map(product => product.name)
 }
@@ -69,18 +70,6 @@ const searchAutocomplete = async(input: string) => {
         <VInputText v-model="form.clientName" placeholder="Nome do cliente" />
       </div>
       <div>
-        <label class="font-semibold" for="">Preço da unidade</label>
-        <VInputText v-model="form.pricePerUnit" placeholder="Preço da unidade" />
-      </div>
-      <div>
-        <label class="font-semibold" for="">Quantidade vendida</label>
-        <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
-      </div>
-      <div>
-        <label class="font-semibold" for="">Data da venda</label>
-        <VInputText v-model="form.saleDate" type="date" placeholder="Data da venda" />
-      </div>
-      <div>
         <AutoComplete
           v-model="searchInput"
           :options="autocompleteOptions"
@@ -89,6 +78,18 @@ const searchAutocomplete = async(input: string) => {
           @select="onSelectProduct"
           @clearInput="clearInput"
         />
+      </div>
+      <div style="margin-top: 65px;">
+        <label class="font-semibold" for="">Preço da unidade</label>
+        <VInputText v-model="form.pricePerUnit" :disabled="true" placeholder="Preço da unidade" />
+      </div>
+      <div>
+        <label class="font-semibold" for="">Quantidade vendida</label>
+        <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
+      </div>
+      <div>
+        <label class="font-semibold" for="">Data da venda</label>
+        <VInputText v-model="form.saleDate" type="date" placeholder="Data da venda" />
       </div>
     </form>
     <div class="form__button">

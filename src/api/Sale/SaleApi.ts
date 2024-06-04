@@ -12,14 +12,14 @@ class SaleApi implements ISaleApi {
     this.uri = import.meta.env.VITE_API
   }
 
-  async getSalesPaginate(query: PaginateRequest): Promise<GetSalePaginateResponse> {
+  async getPaginate(query: PaginateRequest): Promise<GetSalePaginateResponse> {
     const url = `${this.uri}saleshistory?PageNumber=${query.pageNumber}&PageSize=${query.pageSize}`
     const reponse = await apiService.get<GetSalePaginateResponse>(url)
     const result = reponse.get()
     return result
   }
 
-  async createSale(payload: PostSaleRequest): Promise<IResponseDTO<SaleDTO>> {
+  async create(payload: PostSaleRequest): Promise<IResponseDTO<SaleDTO>> {
     const url = `${this.uri}saleshistory`
     const reponse = await apiService.post<PostSaleRequest, IResponseDTO<SaleDTO>>(url, payload)
     const result = reponse.get()

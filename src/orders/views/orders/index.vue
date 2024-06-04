@@ -16,6 +16,7 @@ const currentPage = ref(1)
 const currentPageSize = ref(10)
 const currentStatus = ref<OrderStatus>('TODOS')
 const pageSize = ref(10)
+const isLoading = ref(false)
 const hasPreviousPage = ref(false)
 const hasNextPage = ref(false)
 const totalPages = ref(0)
@@ -46,12 +47,14 @@ function deleteOrdersModal() {
 }
 
 async function getOrders(pageSize: number, pageNumber: number) {
+  isLoading.value = !isLoading.value
   const { data } = await OrderApi.getOrderStatusPaginated({ pageNumber, pageSize, status: currentStatus.value })
   orders.value = data.items
   hasPreviousPage.value = data.hasPreviousPage
   hasNextPage.value = data.hasNextPage
   totalPages.value = data.totalPages
   totalCount.value = data.totalCount
+  isLoading.value = !isLoading.value
 }
 
 onMounted(async() => {
@@ -118,7 +121,7 @@ function onSelectId(evt: string[]) {
         Novo pedido
       </VButton>
     </div>
-    <VTable :columns="orderColumns" :data="data" page="orders" @select-ids="onSelectId">
+    <VTable :columns="orderColumns" :data="data" page="orders" :is-loading="isLoading" @select-ids="onSelectId">
     </VTable>
     <Pagination
       :total-count="totalCount"

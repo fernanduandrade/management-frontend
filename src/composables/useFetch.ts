@@ -14,12 +14,10 @@ const toast = useToast()
 export default function useFetch<TResult>(url: string, options: Options = {}) {
   const data = ref<TResult>()
   const error = ref('')
-  const isLoading = ref(false)
 
   const { signal, abort } = new AbortController()
 
   const fetchData = async() => {
-    isLoading.value = !isLoading.value
     const defaultOption: Options = {
       returnBlob: false,
       headers: {
@@ -41,7 +39,6 @@ export default function useFetch<TResult>(url: string, options: Options = {}) {
       const response = await fetch(url, { signal, ...options })
 
       data.value = options.returnBlob ? await response.blob() : await response.json()
-      isLoading.value = !isLoading.value
     }
     catch (exception: any) {
       error.value = exception.message
@@ -49,5 +46,5 @@ export default function useFetch<TResult>(url: string, options: Options = {}) {
     }
   }
 
-  return { data, error, abort, fetchData, isLoading }
+  return { data, error, abort, fetchData }
 }
