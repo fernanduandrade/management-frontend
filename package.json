@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --port 3009 --open",
-    "build": "cross-env NODE_ENV=production vite-ssg build",
+    "build": "vite build",
     "preview": "vite preview",
     "preview-https": "serve dist"
   },
@@ -10,6 +10,7 @@
     "@types/uuid": "^9.0.8",
     "@vueuse/core": "^6.4.1",
     "@vueuse/head": "^0.6.0",
+    "http-server": "^14.1.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.0-rc.9",
     "primevue": "^3.48.1",
