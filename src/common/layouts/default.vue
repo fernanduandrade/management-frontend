@@ -5,10 +5,7 @@ const router = useRouter()
 const modal = useModal()
 onMounted(() => router.push('dashboards'))
 
-const showSideNav = ref(true)
-const changeSideNavState = (state: boolean) => {
-  showSideNav.value = state
-}
+
 
 const cssClasses = computed(() => {
   const classes = {
@@ -21,11 +18,10 @@ const cssClasses = computed(() => {
 
 <template>
   <main id="container" :class="[cssClasses]">
-    <Transition name="slide-fade" mode="out-in">
-      <TheSideNav v-show="showSideNav" />
-    </Transition>
+
+    <TheSideNav />
     <div class="main-content">
-      <TheHeader @side-nav-event="changeSideNavState" />
+      <TheHeader />
       <div class="content">
         <router-view />
         <VModalWindow />
@@ -38,6 +34,7 @@ const cssClasses = computed(() => {
 #container {
   display: flex;
 }
+
 .open-modal {
   filter: blur(4px);
 }
@@ -47,17 +44,19 @@ const cssClasses = computed(() => {
   flex-direction: column;
   width: 100%;
 }
-.slide-fade-enter-active, .slide-fade-leave-active {
-  transition: opacity 0.1s, transform 0.1s;
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: opacity 0.4s;
 }
-.slide-fade-enter, .slide-fade-leave-to {
+.slide-fade-enter,
+.slide-fade-leave-to {
   opacity: 0;
-  transform: translateX(100%);
 }
 
-.slide-fade-enter-from, .slide-fade-leave-to {
+.slide-fade-enter-from,
+.slide-fade-leave-to {
   opacity: 0;
-  transform: translateX(-100%);
 }
 
 .content {

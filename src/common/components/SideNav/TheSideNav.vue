@@ -25,17 +25,36 @@ const pages: Page[] = [
   { name: 'Relatórios', link: '/reports', icon: 'fa-file-lines' },
 ]
 
+const hideSideNav = ref(false)
+
+const cssClasses = computed(() => {
+  return {
+    'hide_nav': hideSideNav.value
+  }
+})
+
+const modifySideNav = () => {
+  hideSideNav.value = !hideSideNav.value
+  console.log(hideSideNav.value)
+}
+
 </script>
 
 <template>
-  <nav class="sidenav">
-    <h1 class="sidenav__app_name">
-      Logo aqui
-    </h1>
+  <nav class="sidenav" :class="[cssClasses]">
     <div class="sindenav__links">
+      <div class="header__sidenav--modify flex items-center" @click="modifySideNav">
+        <font-awesome-icon
+        icon="fa-bars"
+        color="#707070"
+        />
+      </div>
       <ul v-for="(page, i) in pages" :key="i">
         <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em> &nbsp; {{ page.name }}
+          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em> &nbsp;
+          <Transition name="slide-fade" mode="out-in">
+            <span v-if="!hideSideNav" class="page__text">{{ page.name }}</span>
+          </Transition>
         </li>
       </ul>
     </div>
@@ -44,18 +63,50 @@ const pages: Page[] = [
 
 <style scoped>
 
+.header__sidenav--modify {
+  padding: 6px;
+  font-size: 1rem;
+  height: 3rem;
+  cursor: pointer;
+  width: 3rem;
+  justify-content: center;
+  border-radius: 6px;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+
 .sidenav {
   height: 100vh;
-  background-color: var(--background-color-primary);
+  background-color: #315CA7;
   color: var(--text-black);
-  padding: 20px;
+  padding: 20px 0px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 0 17%;
+  flex: 0 0 12%;
   gap: 3rem;
   border-right: var(--accent-color) solid 1px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: ease-in-out .2s;
+}
+
+@keyframes show_links {
+0% {
+  display: none;
+}
+  100% {
+    display: block;
+  }
+}
+
+.hide_nav {
+  flex: 0 0 5%;
+}
+
+.sidenav.hide_nav .sindenav__link .page__text {
+  display: none;
 }
 
 @media(max-width: 1280px) {
@@ -64,42 +115,35 @@ const pages: Page[] = [
   }
 }
 
-.sidenav__app_name {
-  color: var(--background--hover--text);
-  font-weight: 600;
-  font-size: 3rem;
-  display: block;
-  user-select: none;
-}
-
 .sindenav__links {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
 }
 
 .sindenav__link {
   display: flex;
-  gap: 1rem;
+  gap: .2rem;
   font-size: 1.2rem;
-  padding: 1rem;
-  border-radius: 40px;
+  padding-left: 1rem;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   transition: ease-in .2s;
   font-weight: 400;
   width: 100%;
-  color: var(--text-secondary-dark);
+  color: var(--accent-color);
 }
 
 .sindenav__link.active {
-  color: var(--background--hover--text);
-  background-color: var(--background--hover);
+  color: var(--accent-color);
+  background-color: hsla(0, 0%, 100%, .16);;
 }
 
 .sindenav__link:hover {
   cursor: pointer;
-  color: var(--background--hover--text);
-  background-color: var(--background--hover);
+  color: var(--accent-color);
+  background-color: hsla(0, 0%, 100%, .16);;
 }
 
 .sindenav__link:not(:last-child) {

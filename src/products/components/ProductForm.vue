@@ -49,7 +49,7 @@ async function createProduct() {
         <VInputText v-model="form.quantity" type="number" placeholder="Quantidade" />
       </div>
     </form>
-    <div class="flex items-center gap-2 self-center">
+    <div class="flex items-center self-center gap-4">
       <VButton :transparent="true" @click="modal.close">
         Cancelar
       </VButton>
@@ -64,7 +64,7 @@ async function createProduct() {
 
 .wrapper {
   width: 600px;
-  height: 450px;
+  min-height: 450px;
   display: flex;
   flex-direction: column;
   gap: 2rem;

@@ -2,27 +2,12 @@
 const router = useRouter()
 const { t } = useI18n()
 
-const sideNavState = ref(true)
-
-const emit = defineEmits<{
-  (event: 'sideNavEvent', value: boolean): void
-}>()
-
-const modifySideNav = () => {
-  sideNavState.value = !sideNavState.value
-  emit('sideNavEvent', sideNavState.value)
-}
 </script>
 
 <template>
   <main id="container">
     <header class="header">
       <div class="header__content">
-        <font-awesome-icon
-          class="header__sidenav--modify"
-          icon="fa-bars"
-          @click="modifySideNav"
-        />
         <h1 class="text-[25px] font-bold">
           {{ t(`pages.${router.currentRoute.value.name as string}`) }}
         </h1>
@@ -44,11 +29,6 @@ const modifySideNav = () => {
   justify-content: space-between;
   width: 100%;
   align-items: center;
-}
-
-.header__sidenav--modify {
-  cursor: pointer;
-  font-size: 30px;
 }
 
 .header__content {
