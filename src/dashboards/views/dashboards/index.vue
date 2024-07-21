@@ -70,8 +70,9 @@ onMounted(async() => {
 <style>
 .wrapper {
   display: flex;
+  background-color: #F6F7FB;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 9rem;
 }
 
 .today__sale__stats {
@@ -82,6 +83,11 @@ onMounted(async() => {
   border-radius: 10px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   padding: 1.5rem;
+  transition: .2s ease;
+}
+
+.today__sale__stats:hover {
+  transform: scale(1.2);
 }
 
 .today__sale__header {
