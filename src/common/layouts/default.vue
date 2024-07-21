@@ -5,8 +5,6 @@ const router = useRouter()
 const modal = useModal()
 onMounted(() => router.push('dashboards'))
 
-
-
 const cssClasses = computed(() => {
   const classes = {
     'open-modal': modal.modalState.opened,
@@ -18,7 +16,6 @@ const cssClasses = computed(() => {
 
 <template>
   <main id="container" :class="[cssClasses]">
-
     <TheSideNav />
     <div class="main-content">
       <TheHeader />

@@ -29,13 +29,12 @@ const hideSideNav = ref(false)
 
 const cssClasses = computed(() => {
   return {
-    'hide_nav': hideSideNav.value
+    hide_nav: hideSideNav.value,
   }
 })
 
 const modifySideNav = () => {
   hideSideNav.value = !hideSideNav.value
-  console.log(hideSideNav.value)
 }
 
 </script>
@@ -45,8 +44,8 @@ const modifySideNav = () => {
     <div class="sindenav__links">
       <div class="header__sidenav--modify flex items-center" @click="modifySideNav">
         <font-awesome-icon
-        icon="fa-bars"
-        color="#707070"
+          icon="fa-bars"
+          color="#707070"
         />
       </div>
       <ul v-for="(page, i) in pages" :key="i">

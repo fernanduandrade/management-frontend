@@ -73,6 +73,7 @@ onUnmounted(() => {
 }
 
 .modal-wrapper {
+  background: rgba(0, 0, 0, 0.6);
   position: fixed;
   left: 0;
   top: 0;
