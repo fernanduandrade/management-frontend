@@ -97,4 +97,7 @@ function generatePdf(blob: Blob) {
 </template>
 
 <style scoped>
+.wrapper {
+  background-color: #fff;
+}
 </style>
