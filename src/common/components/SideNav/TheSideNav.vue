@@ -1,57 +1,59 @@
 <script lang="ts" setup>
-const router = useRouter()
-const currentPage = ref('')
+const router = useRouter();
+const currentPage = ref("");
 
 interface Page {
-  icon: string
-  link: string
-  name: string
+  icon: string;
+  link: string;
+  name: string;
 }
 
 const goTo = (page: Page) => {
-  currentPage.value = page.name
-  router.push(page.link)
-}
+  currentPage.value = page.name;
+  router.push(page.link);
+};
 
 onMounted(() => {
-  currentPage.value = 'dashboards'
-})
+  currentPage.value = "dashboards";
+});
 const pages: Page[] = [
-  { name: 'Dashboard', link: '/dashboards', icon: 'fa-home' },
-  { name: 'Pedidos', link: '/orders', icon: 'fa-note-sticky' },
-  { name: 'Produtos', link: '/products', icon: 'fa-box-open' },
-  { name: 'Clientes', link: '/clients', icon: 'fa-users' },
-  { name: 'Vendas', link: '/sales', icon: 'fa-dollar-sign' },
-  { name: 'Relatórios', link: '/reports', icon: 'fa-file-lines' },
-]
+  { name: "Dashboard", link: "/dashboards", icon: "fa-home" },
+  { name: "Pedidos", link: "/orders", icon: "fa-note-sticky" },
+  { name: "Produtos", link: "/products", icon: "fa-box-open" },
+  { name: "Clientes", link: "/clients", icon: "fa-users" },
+  { name: "Vendas", link: "/sales", icon: "fa-dollar-sign" },
+  { name: "Relatórios", link: "/reports", icon: "fa-file-lines" },
+];
 
-const hideSideNav = ref(false)
-
-const cssClasses = computed(() => {
-  return {
-    hide_nav: hideSideNav.value,
-  }
-})
+const hideSideNav = ref(false);
 
 const modifySideNav = () => {
-  hideSideNav.value = !hideSideNav.value
-}
-
+  hideSideNav.value = !hideSideNav.value;
+};
 </script>
 
 <template>
-  <nav class="sidenav" :class="[cssClasses]">
+  <nav class="sidenav" >
     <div class="sindenav__links">
-      <div class="header__sidenav--modify flex items-center" @click="modifySideNav">
-        <font-awesome-icon
-          icon="fa-bars"
-          color="#707070"
-        />
+      <div
+        class="header__sidenav--modify flex items-center"
+        @click="modifySideNav"
+      >
+        <font-awesome-icon icon="fa-bars" color="#707070" />
       </div>
-      <ul v-for="(page, i) in pages" :key="i">
-        <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em>
-          <span v-if="!hideSideNav" class="fade-in">{{ page.name }}</span>
+      <ul>
+        <li
+          v-for="(page, i) in pages"
+          :key="i"
+          class="sindenav__link"
+          :class="{ active: currentPage === page.name }"
+          @click="goTo(page)"
+        >
+          <em
+            ><font-awesome-icon :icon="`${page.icon}`" width="35" height="35"
+          /></em>
+
+          <span v-if="!hideSideNav" class="page__text">{{ page.name }}</span>
         </li>
       </ul>
     </div>
@@ -59,20 +61,6 @@ const modifySideNav = () => {
 </template>
 
 <style scoped>
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  animation: fadeIn .2s ease;
-}
-
 .header__sidenav--modify {
   padding: 6px;
   font-size: 1rem;
@@ -87,37 +75,37 @@ const modifySideNav = () => {
 
 .sidenav {
   height: 100vh;
-  background-color: #315CA7;
+  background-color: #315ca7;
   color: var(--text-black);
   padding: 20px 0px 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 0 15%;
+  max-width: 200px;
   gap: 3rem;
   border-right: var(--accent-color) solid 1px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  transition: ease-in-out .2s;
+  
 }
 
-@keyframes show_links {
-0% {
-  display: none;
-}
-  100% {
-    display: block;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
-
-.hide_nav {
-  flex: 0 0 5%;
+.page__text {
+  animation: fadeIn 0.5s ease-in-out forwards;
+  width: 125px;
 }
 
-@media(max-width: 1280px) {
+@media (max-width: 1280px) {
   .sidenav {
-    flex: 0 0 20%
+    flex: 0 0 20%;
   }
 }
 
@@ -130,26 +118,26 @@ const modifySideNav = () => {
 
 .sindenav__link {
   display: flex;
-  gap: 20px;
-  font-size: 1.2rem;
+  width: 100%;
   padding-left: 1rem;
+  padding-right: 1rem;
+  gap: 0.2rem;
+  font-size: 1.2rem;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  transition: ease-in .2s;
   font-weight: 400;
-  width: 100%;
   color: var(--accent-color);
 }
 
 .sindenav__link.active {
   color: var(--accent-color);
-  background-color: hsla(0, 0%, 100%, .16);;
+  background-color: hsla(0, 0%, 100%, 0.16);
 }
 
 .sindenav__link:hover {
   cursor: pointer;
   color: var(--accent-color);
-  background-color: hsla(0, 0%, 100%, .16);;
+  background-color: hsla(0, 0%, 100%, 0.16);
 }
 
 .sindenav__link:not(:last-child) {
@@ -167,5 +155,4 @@ const modifySideNav = () => {
   display: block;
   padding: 10px 0;
 }
-
 </style>
