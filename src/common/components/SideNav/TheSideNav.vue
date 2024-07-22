@@ -48,10 +48,10 @@ const modifySideNav = () => {
           color="#707070"
         />
       </div>
-      <ul v-for="(page, i) in pages" :key="i">
-        <li class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
-          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em> &nbsp;
-          <Transition name="slide-fade" mode="out-in">
+      <ul>
+        <li v-for="(page, i) in pages" :key="i" class="sindenav__link" :class="{ active: (currentPage === page.name) }" @click="goTo(page)">
+          <em><font-awesome-icon :icon="`${page.icon}`" width="35" height="35" /></em>
+          <Transition name="slide-fade" mode="in-out">
             <span v-if="!hideSideNav" class="page__text">{{ page.name }}</span>
           </Transition>
         </li>
@@ -82,7 +82,7 @@ const modifySideNav = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 0 12%;
+  flex: 0 0 15%;
   gap: 3rem;
   border-right: var(--accent-color) solid 1px;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
